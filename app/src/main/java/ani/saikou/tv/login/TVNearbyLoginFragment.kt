@@ -1,39 +1,68 @@
-package ani.saikou.tv
+package ani.saikou.tv.login
 
 import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ani.saikou.anilist.Anilist
 import ani.saikou.databinding.TvLoginFragmentBinding
-import ani.saikou.tv.utils.TVConnection
+import ani.saikou.databinding.TvNearbyLoginFragmentBinding
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 
 
-class TVLoginFragment() : Fragment() {
+class TVNearbyLoginFragment() : Fragment() {
 
     val connectionCallback = ConnectionCallback()
-    lateinit var binding: TvLoginFragmentBinding
+    lateinit var binding: TvNearbyLoginFragmentBinding
 
-    val singlePermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+    val finePermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         when {
             granted -> {
-                startDiscovery()
+                    startDiscovery()
             }
-            !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION) -> {
-                binding.progress.visibility = View.GONE
+            !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
+                binding.progress.visibility = View.INVISIBLE
                 binding.text.visibility = View.VISIBLE
                 binding.text.text = "Permission denied"
             }
             else -> {
-                binding.progress.visibility = View.GONE
+                binding.progress.visibility = View.INVISIBLE
+                binding.text.visibility = View.VISIBLE
+                binding.text.text = "Permission denied"
+            }
+        }
+    }
+
+    val coarsePermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        when {
+            granted -> {
+
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    startDiscovery()
+                } else {
+                    finePermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
+            }
+            !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION) -> {
+                binding.progress.visibility = View.INVISIBLE
+                binding.text.visibility = View.VISIBLE
+                binding.text.text = "Permission denied"
+            }
+            else -> {
+                binding.progress.visibility = View.INVISIBLE
                 binding.text.visibility = View.VISIBLE
                 binding.text.text = "Permission denied"
             }
@@ -45,26 +74,26 @@ class TVLoginFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = TvLoginFragmentBinding.inflate(inflater)
+        binding = TvNearbyLoginFragmentBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        singlePermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        coarsePermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     private fun startDiscovery() {
-        binding.text.text = "Initializing...\nPlease make sure you have Saikou installed on your phone and logged in"
+        binding.text.text = "Initializing...\nThis could take some time\nPlease make sure you have Saikou installed on your phone and logged in"
         val discoveryOptions = DiscoveryOptions.Builder().setStrategy(Strategy.P2P_POINT_TO_POINT).build()
         Nearby.getConnectionsClient(requireContext())
-            .startDiscovery(TVConnection.SERVICE_ID, object : EndpointDiscoveryCallback() {
+            .startDiscovery(NearbyTVConnection.SERVICE_ID, object : EndpointDiscoveryCallback() {
                 override fun onEndpointFound(p0: String, p1: DiscoveredEndpointInfo) {
-                    if(p1.serviceId == TVConnection.SERVICE_ID && p1.endpointName == TVConnection.PHONE_NAME) {
+                    if(p1.serviceId == NearbyTVConnection.SERVICE_ID && p1.endpointName == NearbyTVConnection.PHONE_NAME) {
                         binding.text.text = "Connecting to " + p1.endpointName + "..."
                         Nearby.getConnectionsClient(context!!)
                             .requestConnection(
-                                TVConnection.TV_NAME,
+                                NearbyTVConnection.TV_NAME,
                                 p0,
                                 connectionCallback
                             )
@@ -101,7 +130,7 @@ class TVLoginFragment() : Fragment() {
                                 val token = String(it)
                                 saveToken(token)
                                 Nearby.getConnectionsClient(requireContext()).disconnectFromEndpoint(p0)
-                                TVAnimeFragment.shouldReload = true
+                                //TVAnimeFragment.shouldReload = true
                                 requireActivity().supportFragmentManager.popBackStack()
                             } ?: run {
                                 binding.text.text = "Something went wrong while processing your login info"
@@ -141,5 +170,10 @@ class TVLoginFragment() : Fragment() {
         requireActivity().openFileOutput(filename, Context.MODE_PRIVATE).use {
             it.write(token.toByteArray())
         }
+    }
+
+    override fun onDestroy() {
+        Nearby.getConnectionsClient(requireContext()).stopDiscovery()
+        super.onDestroy()
     }
 }

@@ -1,15 +1,14 @@
-package ani.saikou.tv.utils
+package ani.saikou.tv.login
 
 import android.app.Activity
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import ani.saikou.R
 import ani.saikou.anilist.Anilist
 import ani.saikou.toastString
 import com.google.android.gms.nearby.Nearby
 import com.google.android.gms.nearby.connection.*
 
-object TVConnection {
+object NearbyTVConnection {
 
     val SERVICE_ID = "SaikouTV"
     val TV_NAME = "TV"
