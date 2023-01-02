@@ -24,17 +24,13 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Cook KeyStore
-      run:  echo "${{ secrets.KEYSTORE_B64 }}" | base64 -d > $GITHUB_WORKSPACE/signing-key.jks
-
     - name: Enable Reports
       run: sed "s/DisabledReports=true/DisabledReports=false/g" -i app/src/main/java/ani/saikou/others/DisabledReports.kt
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
-      shell: bash
+      run: ./gradlew build
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.0.0
