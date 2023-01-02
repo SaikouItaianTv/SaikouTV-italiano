@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="pink_200">#FF5DAE</color>
-    <color name="pink_500">#FF007F</color>
-    <color name="pink_500_25">#40FF007F</color>
-    <color name="pink_700">#C50053</color>
+    <color name="pink_200">#5D78FF</color>
+    <color name="pink_500">#0037FF</color>
+    <color name="pink_500_25">#400022FF</color>
+    <color name="pink_700">#0014C5</color>
     <color name="violet_400">#91A6FF</color>
     <color name="violet_700">#3358FF</color>
     <color name="violet_400_50">#8091A6FF</color>
@@ -19,6 +19,6 @@
     <color name="status">#54EEEEEE</color>
     <color name="button_icon">#A9FFFFFF</color>
     <color name="nav_status">#80FFFFFF</color>
-    <color name="fav">#E63956</color>
+    <color name="fav">#395EE6</color>
     <color name="filler">#54FF8400</color>
 </resources>
