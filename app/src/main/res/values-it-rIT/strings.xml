@@ -96,7 +96,7 @@
     <string name="chap">Capitolo</string>
     <string name="wrong"><u>Titolo Sbagliato?</u></string>
     <string name="source_not_found">"         Nessun Elemento Trovato. X(           Prova con un altra fonte.     "</string>
-    <string name="not_supported">%1$s non è ancora supportato!</string>
+    <string name="not_supported">%1$ non è ancora supportato!</string>
     <string name="server_selector">Seleziona il Server</string>
     <string name="auto_select_server">Server automatico</string>
     <string name="make_default">Rendi Predefinito</string>
