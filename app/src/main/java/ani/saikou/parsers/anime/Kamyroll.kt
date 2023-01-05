@@ -202,7 +202,7 @@ class Kamyroll : AnimeParser() {
                 saveShowResponse(mediaObj.id, response, true)
             } else {
                 response = if (mediaObj.crunchySlug != null || mediaObj.vrvId != null) ShowResponse(
-                    "Automatically",
+                    "Trovato automaticamente",
                     mediaObj.vrvId ?: mediaObj.crunchySlug!!,
                     "",
                     extra = mapOf(
@@ -211,11 +211,11 @@ class Kamyroll : AnimeParser() {
                     )
                 ) else null
                 if (response == null) {
-                    setUserText("Searching : ${mediaObj.mainName()}")
+                    setUserText("Cercando : ${mediaObj.mainName()}")
                     response = search("$" + mediaObj.mainName()).let { if (it.isNotEmpty()) it[0] else null }
                 }
                 if (response == null) {
-                    setUserText("Searching : ${mediaObj.nameRomaji}")
+                    setUserText("Cercando : ${mediaObj.nameRomaji}")
                     response = search("$" + mediaObj.nameRomaji).let { if (it.isNotEmpty()) it[0] else null }
                 }
                 saveShowResponse(mediaObj.id, response)
