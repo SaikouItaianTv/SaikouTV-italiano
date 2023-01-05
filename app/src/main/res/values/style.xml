@@ -38,7 +38,7 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:background">@drawable/round_corner</item>
     </style>
-    <string name="MySnackBarText" parent="Widget.MaterialComponents.Snackbar.TextView">
+    <string name="MySnackBarText" parent="Widget.MaterialComponents.Snackbar.TextView" translatable="false">
         <item name="android:textColor">@color/bg_opp</item>
     </string>
     
