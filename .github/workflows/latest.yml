@@ -2,7 +2,7 @@ name: Android CI Latest
 
 on:
   push:
-    branches: [  ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -22,23 +22,37 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Cook KeyStore
-      run:  echo "${{ secrets.KEYSTORE_B64 }}" | base64 -d > $GITHUB_WORKSPACE/signing-key.jks
-
     - name: Enable Reports
       run: sed "s/DisabledReports=true/DisabledReports=false/g" -i app/src/main/java/ani/saikou/others/DisabledReports.kt
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
-        -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks 
-        -Pandroid.injected.signing.store.password=${{ secrets.PASSWORD }} 
-        -Pandroid.injected.signing.key.alias=key0
-        -Pandroid.injected.signing.key.password=${{ secrets.PASSWORD }}
-      shell: bash
+      run: ./gradlew build
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.0.0
       with:
         path: "app/build/outputs/apk/debug/app-debug.apk"
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ env.VERSION }}
+        release_name: Saikou Beta ${{ env.VERSION }}
+        body_path: "beta.md"
+        draft: false
+        prerelease: true
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: "app/build/outputs/apk/debug/app-debug.apk"
+        asset_name: Saikou-${{ env.VERSION }}.apk
+        asset_content_type: application/vnd.android.package-archive
