@@ -51,7 +51,7 @@ Architecture: ${getArch()}
 OS Version: $CODENAME $RELEASE ($SDK_INT)
             """.trimIndent()
             copyToClipboard(info, false)
-            toast("Copied device info")
+            toast("info dispositivo copiati")
             return@setOnLongClickListener true
         }
 

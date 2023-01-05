@@ -118,7 +118,7 @@ class AllAnime : AnimeParser() {
                 show.nativeName?.let { otherNames.add(it) }
                 show.altNames?.forEach { otherNames.add(it) }
                 if (show.thumbnail == null) {
-                    toastString(""""Could not get thumbnail for ${show.id}""")
+                    toastString(""""Impossibile ottenere il poster per ${show.id}""")
                     continue
                 }
                 responseArray.add(

@@ -21,9 +21,13 @@ class CharacterDetailsAdapter(private val character: Character, private val acti
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
         val binding = holder.binding
         val desc =
-            (if (character.age != "null") "__Age:__ " + character.age else "") +
-                    (if (character.dateOfBirth.toString() != "") "\n__Birthday:__ " + character.dateOfBirth.toString() else "") +
-                    (if (character.gender != "null") "\n__Gender:__ " + character.gender else "") + "\n" + character.description
+            (if (character.age != "null") "__Età:__ " + character.age else "") +
+                    (if (character.dateOfBirth.toString() != "") "\n__Compleanno:__ " + character.dateOfBirth.toString() else "") +
+                    (if (character.gender != "null") "\n__Genere:__ " + when(character.gender){
+                        "Male" -> "Uomo"
+                        "Female" -> "Donna"
+                        else -> character.gender
+                    } else "") + "\n" + character.description
 
         binding.characterDesc.isTextSelectable
         val markWon = Markwon.builder(activity).usePlugin(SoftBreakAddsNewLinePlugin.create()).usePlugin(SpoilerPlugin()).build()

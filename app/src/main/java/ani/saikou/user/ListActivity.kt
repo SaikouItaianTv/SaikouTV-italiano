@@ -46,7 +46,18 @@ class ListActivity : AppCompatActivity() {
             if (it != null) {
                 binding.listProgressBar.visibility = View.GONE
                 binding.listViewPager.adapter = ListViewPagerAdapter(it.size, false,this)
-                val keys = it.keys.toList()
+                val keys = it.keys.map { it -> when(it){
+                    "Reading" -> "Leggendo"
+                    "Watching" -> "Guardando"
+                    "Completed" -> "Completati"
+                    "Paused" -> "In Pausa"
+                    "Dropped" -> "Abbandonati"
+                    "Planning" -> "Da Vedere"
+                    "Favourites" -> "Preferiti"
+                    "Rewatching" -> "Riguardando"
+                    "All" -> "Tutto"
+                    else -> it}
+                }
                 val values = it.values.toList()
                 val savedTab = this.selectedTabIdx
                 TabLayoutMediator(binding.listTabLayout, binding.listViewPager) { tab, position ->

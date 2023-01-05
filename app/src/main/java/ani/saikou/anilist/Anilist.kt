@@ -24,12 +24,12 @@ object Anilist {
     var tags: Map<Boolean, List<String>>? = null
 
     val sortBy = mapOf(
-        "Score" to "SCORE_DESC",
-        "Popular" to "POPULARITY_DESC",
-        "Trending" to "TRENDING_DESC",
+        "Voto" to "SCORE_DESC",
+        "Popolarità" to "POPULARITY_DESC",
+        "In Tendenza" to "TRENDING_DESC",
         "A-Z" to "TITLE_ENGLISH",
         "Z-A" to "TITLE_ENGLISH_DESC",
-        "What?" to "SCORE",
+        "Che?" to "SCORE",
     )
 
     val seasons = listOf(
