@@ -224,7 +224,7 @@ class MangaReaderActivity : AppCompatActivity() {
         }
         binding.mangaReaderNextChapter.setOnClickListener {
             if (chaptersArr.size > currentChapterIndex + 1) progress { change(currentChapterIndex + 1) }
-            else toastString("Next Chapter Not Found")
+            else toastString("Prossimo Capitolo Non Trovato")
         }
         //Prev Chapter
         binding.mangaReaderPrevChap.setOnClickListener {
@@ -232,7 +232,7 @@ class MangaReaderActivity : AppCompatActivity() {
         }
         binding.mangaReaderPreviousChapter.setOnClickListener {
             if (currentChapterIndex > 0) change(currentChapterIndex - 1)
-            else toastString("This is the 1st Chapter!")
+            else toastString("Questo è il primo capitolo!")
         }
 
         val chapterObserverRunnable = Runnable {
@@ -315,8 +315,8 @@ class MangaReaderActivity : AppCompatActivity() {
         if ((settings.default.direction == TOP_TO_BOTTOM || settings.default.direction == BOTTOM_TO_TOP)) {
             binding.mangaReaderSwipy.vertical = true
             if (settings.default.direction == TOP_TO_BOTTOM) {
-                binding.BottomSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "No Chapter"
-                binding.TopSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "No Chapter"
+                binding.BottomSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "Nessun Capitolo"
+                binding.TopSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "Nessun Capitolo"
                 binding.mangaReaderSwipy.onTopSwiped = {
                     binding.mangaReaderPreviousChapter.performClick()
                 }
@@ -324,8 +324,8 @@ class MangaReaderActivity : AppCompatActivity() {
                     binding.mangaReaderNextChapter.performClick()
                 }
             } else {
-                binding.BottomSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "No Chapter"
-                binding.TopSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "No Chapter"
+                binding.BottomSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "Nessun Capitolo"
+                binding.TopSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "Nessun Capitolo"
                 binding.mangaReaderSwipy.onTopSwiped = {
                     binding.mangaReaderNextChapter.performClick()
                 }
@@ -349,8 +349,8 @@ class MangaReaderActivity : AppCompatActivity() {
         else {
             binding.mangaReaderSwipy.vertical = false
             if (settings.default.direction == RIGHT_TO_LEFT) {
-                binding.LeftSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "No Chapter"
-                binding.RightSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "No Chapter"
+                binding.LeftSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "Nessun Capitolo"
+                binding.RightSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "Nessun Capitolo"
                 binding.mangaReaderSwipy.onLeftSwiped = {
                     binding.mangaReaderNextChapter.performClick()
                 }
@@ -359,8 +359,8 @@ class MangaReaderActivity : AppCompatActivity() {
                 }
             }
             else {
-                binding.LeftSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "No Chapter"
-                binding.RightSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "No Chapter"
+                binding.LeftSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex - 1) ?: "Nessun Capitolo"
+                binding.RightSwipeText.text = chaptersTitleArr.getOrNull(currentChapterIndex + 1) ?: "Nessun Capitolo"
                 binding.mangaReaderSwipy.onLeftSwiped = {
                     binding.mangaReaderPreviousChapter.performClick()
                 }

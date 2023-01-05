@@ -162,7 +162,7 @@ class MangaReadAdapter(
                     val ep = media.manga.chapters!![continueEp]!!
                     binding.itemEpisodeImage.loadImage(media.banner ?: media.cover)
                     binding.animeSourceContinueText.text =
-                        "Continue : Chapter ${ep.number}${if (!ep.title.isNullOrEmpty()) "\n${ep.title}" else ""}"
+                        "Continua : Capitolo ${ep.number}${if (!ep.title.isNullOrEmpty()) "\n${ep.title}" else ""}"
                     binding.animeSourceContinue.setOnClickListener {
                         fragment.onMangaChapterClick(continueEp)
                     }

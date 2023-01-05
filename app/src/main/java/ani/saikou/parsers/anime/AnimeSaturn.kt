@@ -76,17 +76,45 @@ class AnimeSaturn : AnimeParser() {
             ShowResponse(title, link, cover)
         }
     }
-    override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
-        val response = search(mediaObj.nameRomaji) + search(mediaObj.name!!)
-        if (response.isNotEmpty()) {
-            val media = response.first {
-                getId(client.get(it.link).document) == mediaObj.id
+
+    private suspend fun getMedia(searchList : List<ShowResponse>?, id:Int): ShowResponse?{
+        if (searchList != null) {
+            return searchList.firstOrNull {
+                getID(client.get(it.link).document) == id
             }
+        }
+        return null
+    }
+
+    private suspend fun ArrayList<String>.getMedia(id: Int): ShowResponse?{
+        this.forEach {
+            val media = getMedia(search(it), id)
+            if (media != null) return media
+        }
+        return null
+    }
+
+    override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
+
+        val media =
+            getMedia(search(mediaObj.nameRomaji), mediaObj.id)?:
+            getMedia(mediaObj.name?.let { it1 -> search(it1) }, mediaObj.id)?:
+            when (mediaObj.typeMAL){
+                "Movie" ->
+                    getMedia(search(mediaObj.nameRomaji.substringBeforeLast(":").trim()), mediaObj.id) ?:
+                    getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim())}, mediaObj.id) ?:
+                    getMedia(search(mediaObj.nameRomaji.substringAfterLast(":").trim()), mediaObj.id) ?:
+                    getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim())}, mediaObj.id)
+                else -> null
+            } ?:
+            mediaObj.synonyms.getMedia(mediaObj.id)
+        if (media != null) {
             saveShowResponse(mediaObj.id, media, true)
         }
         return loadSavedShowResponse(mediaObj.id)
     }
-    private fun getId(document: Document): Int? {
+
+    private fun getID(document: Document): Int? {
         var aniListId : Int? = null
         document.select("[rel=\"noopener noreferrer\"]").forEach {
             if(it.attr("href").contains("anilist")) aniListId = it.attr("href").removeSuffix("/").split('/').last().toIntOrNull()

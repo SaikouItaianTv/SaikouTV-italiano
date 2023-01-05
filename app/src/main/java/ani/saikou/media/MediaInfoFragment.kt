@@ -121,7 +121,7 @@ class MediaInfoFragment : Fragment() {
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
                 binding.mediaInfoDescription.text =
-                    "\t\t\t" + if (desc.toString() != "null") desc else "No Description Available"
+                    "\t\t\t" + if (desc.toString() != "null") desc else "Descrizione non Disponibile"
                 binding.mediaInfoDescription.setOnClickListener {
                     if (binding.mediaInfoDescription.maxLines == 5) {
                         ObjectAnimator.ofInt(binding.mediaInfoDescription, "maxLines", 100)

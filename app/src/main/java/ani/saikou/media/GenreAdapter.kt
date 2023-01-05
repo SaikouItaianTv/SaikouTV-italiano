@@ -49,7 +49,7 @@ class GenreAdapter(
                         if (pos[bindingAdapterPosition].lowercase() == "hentai") {
                             if (!Anilist.adult) Toast.makeText(
                                 itemView.context,
-                                "Turn on 18+ Content from your Anilist Settings",
+                                "Attiva i contenuti +18 nelle impostazione del tuo account Anilist",
                                 Toast.LENGTH_SHORT
                             ).show()
                             it.putExtra("hentai", true)

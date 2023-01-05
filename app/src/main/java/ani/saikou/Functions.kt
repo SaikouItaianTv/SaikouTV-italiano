@@ -130,7 +130,7 @@ fun <T> loadData(fileName: String, activity: Context? = null, toast: Boolean = t
                 return data
             }
     } catch (e: Exception) {
-        if (toast) toastString("Error loading data $fileName")
+        if (toast) toastString("Errore nel caricare $fileName")
         e.printStackTrace()
     }
     return null
@@ -635,9 +635,9 @@ fun download(activity: Activity, episode: Episode, animeTitle: String) {
             }
             request.setTitle("$title:$aTitle")
             manager.enqueue(request)
-            toast("Started Downloading\n$title : $aTitle")
+            toast("Download iniziato di \n$title : $aTitle")
         } catch (e: SecurityException) {
-            toast("Please give permission to access Files & Folders from Settings, & Try again.")
+            toast("Si prega di autorizzare l'accesso a file e cartelle da Impostazioni e riprovare.")
         } catch (e: Exception) {
             toast(e.toString())
         }
@@ -678,7 +678,7 @@ fun saveImage(image: Bitmap, path: String, imageFileName: String): File? {
         image.compress(Bitmap.CompressFormat.PNG, 0, fOut)
         fOut.close()
         scanFile(imageFile.absolutePath, currActivity()!!)
-        toast("Saved to:\n$path")
+        toast("Salvato in:\n$path")
         imageFile
     }
 }
@@ -697,15 +697,15 @@ fun updateAnilistProgress(media: Media, number: String) {
                 Anilist.mutation.editList(
                     media.id,
                     a,
-                    status = if (media.userStatus == "REPEATING") media.userStatus else "CURRENT"
+                    status = if (media.userStatus == "RIGUARDANDO") media.userStatus else "GUARDANDO"
                 )
-                toast("Setting progress to $a")
+                toast("Progresso impostato to $a")
             }
             media.userProgress = a
             Refresh.all()
         }
     } else {
-        toast("Please Login into anilist account!")
+        toast("Accedi all'account anilist!")
     }
 }
 
@@ -737,7 +737,7 @@ fun copyToClipboard(string: String, toast: Boolean = true) {
     val clipboard = getSystemService(activity, ClipboardManager::class.java)
     val clip = ClipData.newPlainText("label", string)
     clipboard?.setPrimaryClip(clip)
-    if (toast) toastString("Copied \"$string\"")
+    if (toast) toastString("Copiato \"$string\"")
 }
 
 @SuppressLint("SetTextI18n")
@@ -857,7 +857,7 @@ fun toastString(s: String?, activity: Activity? = null) {
                     }
                     setOnLongClickListener {
                         copyToClipboard(s, false)
-                        toast("Copied to Clipboard")
+                        toast("Copiato nella Clipboard")
                         true
                     }
                 }

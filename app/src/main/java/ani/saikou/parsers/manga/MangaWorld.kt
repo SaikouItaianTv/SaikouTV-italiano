@@ -14,7 +14,7 @@ import kotlinx.serialization.json.Json
 class MangaWorld : MangaParser() {
     override val name = "MangaWorld"
     override val saveName = "mangaworld_manga"
-    override val hostUrl = "https://www.mangaworld.in/"
+    override val hostUrl = "https://www.mangaworld.so/"
 
 
 
@@ -30,6 +30,7 @@ class MangaWorld : MangaParser() {
             ) // need this slug for loadChapters
         }
     }
+
 
     override suspend fun loadChapters(mangaLink: String, extra: Map<String, String>?): List<MangaChapter> {
         val resp = client.get(mangaLink).text

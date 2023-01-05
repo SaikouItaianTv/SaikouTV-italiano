@@ -116,12 +116,12 @@ class MediaAdaptor(
                         (if (media.userScore != 0) R.drawable.item_user_score else R.drawable.item_score)
                     )
                     if (media.anime != null) {
-                        b.itemTotal.text = " Episode${if ((media.anime.totalEpisodes ?: 0) != 1) "s" else ""}"
+                        b.itemTotal.text = " Episod${if ((media.anime.totalEpisodes ?: 0) != 1) "i" else "io"}"
                         b.itemCompactTotal.text =
                             if (media.anime.nextAiringEpisode != null) (media.anime.nextAiringEpisode.toString() + " / " + (media.anime.totalEpisodes
                                 ?: "??").toString()) else (media.anime.totalEpisodes ?: "??").toString()
                     } else if (media.manga != null) {
-                        b.itemTotal.text = " Chapter${if ((media.manga.totalChapters ?: 0) != 1) "s" else ""}"
+                        b.itemTotal.text = " Capitol${if ((media.manga.totalChapters ?: 0) != 1) "i" else "o"}"
                         b.itemCompactTotal.text = "${media.manga.totalChapters ?: "??"}"
                     }
                     @SuppressLint("NotifyDataSetChanged")
@@ -160,12 +160,12 @@ class MediaAdaptor(
                         (if (media.userScore != 0) R.drawable.item_user_score else R.drawable.item_score)
                     )
                     if (media.anime != null) {
-                        b.itemTotal.text = " Episode${if ((media.anime.totalEpisodes ?: 0) != 1) "s" else ""}"
+                        b.itemTotal.text = " Episod${if ((media.anime.totalEpisodes ?: 0) != 1) "io" else "i"}"
                         b.itemCompactTotal.text =
                             if (media.anime.nextAiringEpisode != null) (media.anime.nextAiringEpisode.toString() + " / " + (media.anime.totalEpisodes
                                 ?: "??").toString()) else (media.anime.totalEpisodes ?: "??").toString()
                     } else if (media.manga != null) {
-                        b.itemTotal.text = " Chapter${if ((media.manga.totalChapters ?: 0) != 1) "s" else ""}"
+                        b.itemTotal.text = " Capitol${if ((media.manga.totalChapters ?: 0) != 1) "i" else "o"}"
                         b.itemCompactTotal.text = "${media.manga.totalChapters ?: "??"}"
                     }
                     @SuppressLint("NotifyDataSetChanged")
@@ -214,12 +214,12 @@ class MediaAdaptor(
                     }
                     b.itemCompactStatus.text = media.status ?: ""
                     if (media.anime != null) {
-                        b.itemTotal.text = " Episode${if ((media.anime.totalEpisodes ?: 0) != 1) "s" else ""}"
+                        b.itemTotal.text = " Episodi${if ((media.anime.totalEpisodes ?: 0) != 1) "" else "o"}"
                         b.itemCompactTotal.text =
                             if (media.anime.nextAiringEpisode != null) (media.anime.nextAiringEpisode.toString() + " / " + (media.anime.totalEpisodes
                                 ?: "??").toString()) else (media.anime.totalEpisodes ?: "??").toString()
                     } else if (media.manga != null) {
-                        b.itemTotal.text = " Chapter${if ((media.manga.totalChapters ?: 0) != 1) "s" else ""}"
+                        b.itemTotal.text = " Capitol${if ((media.manga.totalChapters ?: 0) != 1) "i" else "o"}"
                         b.itemCompactTotal.text = "${media.manga.totalChapters ?: "??"}"
                     }
                     @SuppressLint("NotifyDataSetChanged")

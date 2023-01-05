@@ -399,7 +399,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         exoSkipOpEd.alpha = if (settings.autoSkipOPED) 1f else 0.3f
         exoSkipOpEd.setOnClickListener {
             settings.autoSkipOPED = if (settings.autoSkipOPED) {
-                toastString("Disabled Auto Skipping OP & ED")
+                toastString("Auto Skipping OP & ED Disabilitato")
                 false
             } else {
                 toastString("Auto Skipping OP & ED")
@@ -830,7 +830,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
             if (currentEpisodeIndex > 0) {
                 change(currentEpisodeIndex - 1)
             } else
-                toastString("This is the 1st Episode!")
+                toastString("Questo è il primo Episodio!")
         }
 
         model.getEpisode().observe(this) {
@@ -971,7 +971,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
                     setNegativeButton("No") { dialog, _ ->
                         saveData("${media.id}_progressDialog", false)
                         saveData("${media.id}_save_progress", false)
-                        toast("You can long click List Editor button to Reset Auto Update")
+                        toast("Tieni premuto il pulsante di edit della Lista per resettare l'Update Automatico")
                         dialog.dismiss()
                         model.setEpisode(episodes[media.anime!!.selectedEpisode!!]!!, "invoke")
                     }
@@ -1396,7 +1396,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         isBuffering = playbackState == Player.STATE_BUFFERING
         if (playbackState == Player.STATE_ENDED && settings.autoPlay) {
             if (interacted) exoNext.performClick()
-            else toast("Autoplay cancelled, no Interaction for more than 1 Hour.")
+            else toast("Autoplay disabilitato, nessuna interazione per più di 1 ora.")
         }
         super.onPlaybackStateChanged(playbackState)
     }
@@ -1420,7 +1420,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
                 i++
             } else {
                 if (toast)
-                    toast("No next Episode Found!")
+                    toast("Episodio successivo non trovato!")
                 isFiller = false
             }
         }

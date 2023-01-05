@@ -3,10 +3,8 @@ package ani.saikou.parsers.anime
 import ani.saikou.client
 import ani.saikou.media.Media
 import ani.saikou.parsers.*
-import ani.saikou.sortByTitle
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.net.URLEncoder
 
 class AnimeWorld : AnimeParser() {
 
@@ -64,13 +62,43 @@ class AnimeWorld : AnimeParser() {
             ShowResponse(title, link, cover)
         }
     }
-    override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
-        val response = search(mediaObj.nameRomaji!!) + search(mediaObj.name!!)
-        if (response.isNotEmpty()) {
-            val media = response.first {
+
+    private suspend fun getMedia(searchList : List<ShowResponse>?, id:Int): ShowResponse?{
+        if (searchList != null) {
+            return searchList.firstOrNull {
                 client.get(hostUrl + it.link).document.selectFirst("#anilist-button")?.attr("href")?.substringAfterLast("/")
-                    ?.toInt() == mediaObj.id
+                    ?.toInt() == id
             }
+        }
+        return null
+    }
+
+    private suspend fun ArrayList<String>.getMedia(id: Int, mediaType: String): ShowResponse?{
+        this.forEach {
+            val media = getMedia(search(it + mediaType), id)
+            if (media != null) return media
+        }
+        return null
+    }
+
+    override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
+        val mediaType : String =
+            when (mediaObj.typeMAL){
+                "Movie" -> "&type=4"
+                else -> "&type=0&type=1&type=2&type=3&type=5"
+            }
+        val media =
+            getMedia(search(mediaObj.nameRomaji + mediaType), mediaObj.id)?:
+            getMedia(mediaObj.name?.let { it1 -> search(it1 + mediaType) }, mediaObj.id)?:
+            when (mediaObj.typeMAL){
+                "Movie" ->
+                    getMedia(search(mediaObj.nameRomaji.substringBeforeLast(":").trim() + mediaType + "&year=${mediaObj.endDate?.year}"), mediaObj.id) ?:
+                    getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim() + mediaType + "&year=${mediaObj.endDate?.year}")}, mediaObj.id) ?:
+                    getMedia(search(mediaObj.nameRomaji.substringAfterLast(":").trim() + mediaType), mediaObj.id) ?:
+                    getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim() + mediaType)}, mediaObj.id)                 else -> null
+            } ?:
+            mediaObj.synonyms.getMedia(mediaObj.id, mediaType)
+        if (media != null) {
             saveShowResponse(mediaObj.id, media, true)
         }
         return loadSavedShowResponse(mediaObj.id)

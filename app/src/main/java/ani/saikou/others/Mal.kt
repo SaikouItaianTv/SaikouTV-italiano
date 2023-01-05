@@ -44,7 +44,7 @@ object Mal {
                 }
             }
         } catch (e: Exception) {
-            if (e is TimeoutCancellationException) toastString("Failed to load data from MAL")
+            if (e is TimeoutCancellationException) toastString("Errore nel caricare dati da MAL")
         }
     }
 }
