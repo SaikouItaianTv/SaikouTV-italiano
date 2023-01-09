@@ -7,18 +7,18 @@ import ani.saikou.parsers.manga.*
 object MangaSources : MangaReadSources() {
     override val list: List<Lazier<BaseParser>> = lazyList(
         "MangaWorld" to ::MangaWorld,
-        "MangaKakalot" to ::MangaKakalot,
-        "MangaBuddy" to ::MangaBuddy,
-        "MangaPill" to ::MangaPill,
-        "MangaDex" to ::MangaDex,
-        "MangaReaderTo" to ::MangaReaderTo,
-        "AllAnime" to ::AllAnime,
-        "Toonily" to ::Toonily,
-        "MangaHub" to ::MangaHub,
-        "MangaKatana" to ::MangaKatana,
-        "Manga4Life" to ::Manga4Life,
-        "MangaRead" to ::MangaRead,
-        "ComickFun" to ::ComickFun,
+        "INGLESE: MangaKakalot" to ::MangaKakalot,
+        "INGLESE: MangaBuddy" to ::MangaBuddy,
+        "INGLESE: MangaPill" to ::MangaPill,
+        "INGLESE: MangaDex" to ::MangaDex,
+        "INGLESE: MangaReaderTo" to ::MangaReaderTo,
+        "INGLESE: AllAnime" to ::AllAnime,
+        "INGLESE: Toonily" to ::Toonily,
+        "INGLESE: MangaHub" to ::MangaHub,
+        "INGLESE: MangaKatana" to ::MangaKatana,
+        "INGLESE: Manga4Life" to ::Manga4Life,
+        "INGLESE: MangaRead" to ::MangaRead,
+        "INGLESE: ComickFun" to ::ComickFun,
 
     )
 }
@@ -26,9 +26,9 @@ object MangaSources : MangaReadSources() {
 object HMangaSources : MangaReadSources() {
     val aList: List<Lazier<BaseParser>> = lazyList(
         "MangaWorldAdult" to ::MangaWorldAdult,
-        "NineHentai" to ::NineHentai,
-        "Manhwa18" to ::Manhwa18,
-        "NHentai" to ::NHentai,
+        "INGLESE: NineHentai" to ::NineHentai,
+        "INGLESE: Manhwa18" to ::Manhwa18,
+        "INGLESE: NHentai" to ::NHentai,
 
     )
     override val list = listOf(aList,MangaSources.list).flatten()

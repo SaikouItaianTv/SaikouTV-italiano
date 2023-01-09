@@ -16,7 +16,7 @@ import java.net.URLEncoder
 @Suppress("BlockingMethodInNonBlockingContext")
 class Zoro : AnimeParser() {
 
-    override val name = "INGLESE: Zoro"
+    override val name = "Zoro"
     override val saveName = "zoro_to"
     override val hostUrl = "https://zoro.to"
     override val isDubAvailableSeparately = false

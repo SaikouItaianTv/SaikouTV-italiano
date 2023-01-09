@@ -10,7 +10,7 @@ import ani.saikou.parsers.ShowResponse
 
 
 class Manhwa18 : MangaParser() {
-    override val name = "INGLESE: Manhwa18"
+    override val name = "Manhwa18"
     override val saveName = "manhwa_18"
     override val hostUrl = "https://manhwa18.cc/"
     override val isNSFW = true

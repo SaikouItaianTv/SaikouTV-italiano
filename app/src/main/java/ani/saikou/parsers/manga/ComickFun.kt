@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 
 class ComickFun : MangaParser() {
 
-    override val name = "INGLESE: ComickFun"
+    override val name = "ComickFun"
     override val saveName = "comick_fun"
     override val hostUrl = "https://api.comick.fun"
 

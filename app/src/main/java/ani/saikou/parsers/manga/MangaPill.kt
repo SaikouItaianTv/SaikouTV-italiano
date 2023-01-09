@@ -8,7 +8,7 @@ import ani.saikou.parsers.ShowResponse
 
 class MangaPill : MangaParser() {
 
-    override val name = "INGLESE: MangaPill"
+    override val name = "MangaPill"
     override val saveName = "manga_pill"
     override val hostUrl = "https://mangapill.com"
 

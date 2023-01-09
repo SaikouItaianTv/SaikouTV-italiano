@@ -11,7 +11,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 class NineHentai : MangaParser() {
 
-    override val name = "INGLESE: 9Hentai"
+    override val name = "9Hentai"
     override val saveName = "nine_hentai"
     override val hostUrl = "https://9hentai.to"
     override val isNSFW = true

@@ -9,7 +9,7 @@ import ani.saikou.parsers.ShowResponse
 
 class MangaKakalot : MangaParser() {
 
-    override val name = "INGLESE: MangaKakalot"
+    override val name = "MangaKakalot"
     override val saveName = "manga_kakalot"
     override val hostUrl = "https://mangakakalot.com"
 

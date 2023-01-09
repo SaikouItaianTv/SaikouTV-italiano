@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 class AnimePahe : AnimeParser() {
 
     override val hostUrl = "https://animepahe.com"
-    override val name = "INGLESE: AnimePahe"
+    override val name = "AnimePahe"
     override val saveName = "anime_pahe"
     override val isDubAvailableSeparately = false
 
