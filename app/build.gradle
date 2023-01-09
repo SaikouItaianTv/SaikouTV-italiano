@@ -11,7 +11,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "ani.saikou"
+        applicationId "ani.saikouita"
         minSdk 21
         targetSdk 33
         versionCode 63

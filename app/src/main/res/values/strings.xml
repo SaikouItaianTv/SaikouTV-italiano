@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="repo">saikou-app/saikou</string>
+    <string name="repo">antonydp/saikou-Italiano</string>
 
-    <string name="app_name">Saikou</string>
+    <string name="app_name">Saikou IT</string>
     <string name="slogan">The Best Anime &amp; Manga app for Android.</string>
 
     <string name="login">Login</string>
