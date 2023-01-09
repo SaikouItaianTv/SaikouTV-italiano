@@ -7,7 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 class ConsumeBili : AnimeParser() {
-    override val name = "Consume Bili"
+    override val name = "INGLESE: Consume Bili"
     override val saveName = "consume-bili"
     override val isDubAvailableSeparately = false
     override val hostUrl = "https://api.consumet.org/anime/bilibili"

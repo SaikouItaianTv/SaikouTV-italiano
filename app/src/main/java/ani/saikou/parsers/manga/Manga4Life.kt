@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 
 open class Manga4Life : MangaParser() {
 
-    override val name = "Manga4Life"
+    override val name = "INGLESE: Manga4Life"
     override val saveName = "manga_see"
     override val hostUrl = host
 

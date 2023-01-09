@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 
 class NHentai : MangaParser() {
 
-    override val name = "NHentai"
+    override val name = "INGLESE: NHentai"
     override val saveName = "n_hentai"
     override val hostUrl = "https://nhentai.net"
     override val isNSFW = true

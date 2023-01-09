@@ -5,7 +5,7 @@ import ani.saikou.getSize
 import ani.saikou.parsers.*
 
 class Haho : Tenshi() {
-    override val name: String = "H Aho"
+    override val name: String = "INGLESE: H Aho"
     override val saveName: String = "haho_moe"
     override val hostUrl: String = "https://haho.moe"
 

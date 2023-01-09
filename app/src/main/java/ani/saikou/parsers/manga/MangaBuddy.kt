@@ -10,7 +10,7 @@ import ani.saikou.parsers.ShowResponse
 
 class MangaBuddy : MangaParser() {
 
-    override val name = "MangaBuddy"
+    override val name = "INGLESE: MangaBuddy"
     override val saveName = "manga_buddy"
     override val hostUrl = "https://mangabuddy.com"
 

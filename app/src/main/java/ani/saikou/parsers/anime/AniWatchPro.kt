@@ -10,7 +10,7 @@ import ani.saikou.tryWithSuspend
 
 class AniWatchPro : AnimeParser() {
 
-    override val name = "AniWatch.pro"
+    override val name = "INGLESE: AniWatch.pro"
     override val saveName = "ani_watch_pro"
     override val hostUrl = "https://aniwatch.pro"
     override val isDubAvailableSeparately = true

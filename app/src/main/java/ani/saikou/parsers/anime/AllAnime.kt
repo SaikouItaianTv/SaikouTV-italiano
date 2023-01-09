@@ -14,7 +14,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.text.DecimalFormat
 
 class AllAnime : AnimeParser() {
-    override val name = "AllAnime"
+    override val name = "INGLESE: AllAnime"
     override val saveName = "all_anime"
     override val hostUrl = "https://allanime.site"
     override val isDubAvailableSeparately = true
