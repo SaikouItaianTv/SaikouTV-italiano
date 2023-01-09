@@ -10,7 +10,7 @@ import ani.saikou.tryWith
 import java.net.URI
 
 open class HentaiFF : AnimeParser() {
-    override val name: String = "INGLESE: HentaiFF"
+    override val name: String = "HentaiFF"
     override val saveName: String = "hentai_ff"
     override val hostUrl: String = "https://hentaiff.com"
 

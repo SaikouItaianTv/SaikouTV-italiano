@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 
 class Toonily : MangaParser() {
 
-    override val name = "INGLESE: Toonily"
+    override val name = "Toonily"
     override val saveName = "toonily"
     override val hostUrl = "https://toonily.com"
 

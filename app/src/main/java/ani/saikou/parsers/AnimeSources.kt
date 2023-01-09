@@ -9,16 +9,16 @@ object AnimeSources : WatchSources() {
         "AnimeWorld" to ::AnimeWorld,
         "AnyPlay" to ::AniPlay,
         "AnimeSaturn" to ::AnimeSaturn,
-        "Kamyroll" to ::Kamyroll,
+        "MULTILINGUA: Kamyroll" to ::Kamyroll,
 
-        "AllAnime" to ::AllAnime,
-        "Gogo" to ::Gogo,
-        "Zoro" to ::Zoro,
-        "Tenshi" to ::Tenshi,
-        "9Anime" to ::NineAnime,
-        "9Anime Backup" to ::AniWatchPro,
-        "AnimePahe" to ::AnimePahe,
-        "ConsumeBili" to ::ConsumeBili
+        "INGLESE: AllAnime" to ::AllAnime,
+        "INGLESE: Gogo" to ::Gogo,
+        "INGLESE: Zoro" to ::Zoro,
+        "INGLESE: Tenshi" to ::Tenshi,
+        "INGLESE: 9Anime" to ::NineAnime,
+        "INGLESE: 9Anime Backup" to ::AniWatchPro,
+        "INGLESE: AnimePahe" to ::AnimePahe,
+        "INGLESE: ConsumeBili" to ::ConsumeBili
 
     )
 }
@@ -28,10 +28,10 @@ object HAnimeSources : WatchSources() {
         "HentaiWorld" to ::HentaiWorld,
         "HentaiSaturn" to ::HentaiSaturn,
 
-        "HentaiMama" to ::HentaiMama,
-        "Haho" to ::Haho,
-        "HentaiStream" to ::HentaiStream,
-        "HentaiFF" to ::HentaiFF,
+        "INGLESE: HentaiMama" to ::HentaiMama,
+        "INGLESE: Haho" to ::Haho,
+        "INGLESE: HentaiStream" to ::HentaiStream,
+        "INGLESE: HentaiFF" to ::HentaiFF,
 
     )
 

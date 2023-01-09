@@ -8,7 +8,7 @@ import ani.saikou.parsers.ShowResponse
 
 class MangaRead: MangaParser() {
 
-    override val name = "INGLESE: MangaRead"
+    override val name = "MangaRead"
     override val saveName = "manga_read"
     override val hostUrl = "https://mangaread.org"
 

@@ -10,7 +10,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 class HentaiMama : AnimeParser() {
-    override val name = "INGLESE: Hentaimama"
+    override val name = "Hentaimama"
     override val saveName = "hentai_mama"
     override val hostUrl = "https://hentaimama.io"
     override val isDubAvailableSeparately = false

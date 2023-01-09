@@ -13,7 +13,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 import java.text.DecimalFormat
 
 class AllAnime : MangaParser() {
-    override val name = "INGLESE: AllAnime"
+    override val name = "AllAnime"
     override val saveName = "all_anime_manga"
     override val hostUrl = "https://allanime.site"
 
