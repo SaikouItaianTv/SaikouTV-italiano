@@ -8,7 +8,7 @@ import ani.saikou.parsers.ShowResponse
 
 class MangaKatana : MangaParser() {
 
-    override val name = "MangaKatana"
+    override val name = "INGLESE: MangaKatana"
     override val saveName = "manga_katana"
     override val hostUrl = "https://mangakatana.com"
 

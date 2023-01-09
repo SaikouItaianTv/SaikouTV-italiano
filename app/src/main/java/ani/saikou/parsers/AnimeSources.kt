@@ -10,30 +10,29 @@ object AnimeSources : WatchSources() {
         "AnyPlay" to ::AniPlay,
         "AnimeSaturn" to ::AnimeSaturn,
         "Kamyroll" to ::Kamyroll,
-        /*
+
         "AllAnime" to ::AllAnime,
         "Gogo" to ::Gogo,
         "Zoro" to ::Zoro,
-        "Kamyroll" to ::Kamyroll,
         "Tenshi" to ::Tenshi,
         "9Anime" to ::NineAnime,
         "9Anime Backup" to ::AniWatchPro,
         "AnimePahe" to ::AnimePahe,
         "ConsumeBili" to ::ConsumeBili
-         */
+
     )
 }
 
 object HAnimeSources : WatchSources() {
     val aList: List<Lazier<BaseParser>>  = lazyList(
         "HentaiWorld" to ::HentaiWorld,
-        "HentaiSaturn" to ::HentaiSaturn
-        /*
+        "HentaiSaturn" to ::HentaiSaturn,
+
         "HentaiMama" to ::HentaiMama,
         "Haho" to ::Haho,
         "HentaiStream" to ::HentaiStream,
         "HentaiFF" to ::HentaiFF,
-         */
+
     )
 
     override val list = listOf(aList,AnimeSources.list).flatten()

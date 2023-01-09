@@ -7,7 +7,7 @@ import ani.saikou.parsers.manga.*
 object MangaSources : MangaReadSources() {
     override val list: List<Lazier<BaseParser>> = lazyList(
         "MangaWorld" to ::MangaWorld,
-        /*"MangaKakalot" to ::MangaKakalot,
+        "MangaKakalot" to ::MangaKakalot,
         "MangaBuddy" to ::MangaBuddy,
         "MangaPill" to ::MangaPill,
         "MangaDex" to ::MangaDex,
@@ -19,16 +19,16 @@ object MangaSources : MangaReadSources() {
         "Manga4Life" to ::Manga4Life,
         "MangaRead" to ::MangaRead,
         "ComickFun" to ::ComickFun,
-         */
+
     )
 }
 
 object HMangaSources : MangaReadSources() {
     val aList: List<Lazier<BaseParser>> = lazyList(
         "MangaWorldAdult" to ::MangaWorldAdult,
-        // "NineHentai" to ::NineHentai,
-        // "Manhwa18" to ::Manhwa18,
-        // "NHentai" to ::NHentai,
+        "NineHentai" to ::NineHentai,
+        "Manhwa18" to ::Manhwa18,
+        "NHentai" to ::NHentai,
 
     )
     override val list = listOf(aList,MangaSources.list).flatten()

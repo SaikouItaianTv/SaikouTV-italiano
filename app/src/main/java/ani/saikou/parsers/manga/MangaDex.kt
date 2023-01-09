@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 
 class MangaDex : MangaParser() {
 
-    override val name = "MangaDex"
+    override val name = "INGLESE: MangaDex"
     override val saveName = "manga_dex"
     override val hostUrl = "https://mangadex.org"
 

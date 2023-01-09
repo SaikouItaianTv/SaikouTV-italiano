@@ -10,7 +10,7 @@ import java.net.URI
 
 open class Tenshi : AnimeParser() {
 
-    override val name: String = "Tenshi"
+    override val name: String = "INGLESE: Tenshi"
     override val saveName: String = "tenshi_moe"
     override val hostUrl: String = "https://tenshi.moe"
     override val malSyncBackupName: String = "Tenshi"

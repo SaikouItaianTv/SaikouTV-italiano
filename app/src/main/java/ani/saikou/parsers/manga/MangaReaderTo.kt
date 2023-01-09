@@ -26,7 +26,7 @@ import kotlin.math.floor
 
 class MangaReaderTo : MangaParser() {
 
-    override val name = "MangaReaderTo"
+    override val name = "INGLESE: MangaReaderTo"
     override val saveName = "manga_reader_to"
     override val hostUrl = "https://mangareader.to"
 
