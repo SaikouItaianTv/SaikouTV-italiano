@@ -3,6 +3,8 @@
 - Added Italian Language
 - Add AnimeWorld, Aniplay and AnimeSaturn Providers
 - Add MangaWorld Provider
+
+Saikou main app Updates:
 - Add support for all Kamyroll streams
 - Reworked Search, now Filtering is easier
 - Added Seasons Home Page
