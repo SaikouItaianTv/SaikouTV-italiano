@@ -42,8 +42,25 @@ jobs:
       uses: actions/upload-artifact@v3.0.0
       with:
         path: "app/build/outputs/apk/debug/app-debug.apk"
- 
-    - name: Upload APK to Discord
-      shell: bash
-      run: |
-        curl -F 'payload_json={"username": "Saikou Debug Builds", "avatar_url": "https://media.discordapp.net/attachments/927944825016311858/1046676593252253726/saikou.png"}' -F "saikou_debug=@app/build/outputs/apk/debug/app-debug.apk" ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ env.VERSION }}
+        release_name: Saikou Beta ${{ env.VERSION }}
+        body_path: "beta.md"
+        draft: false
+        prerelease: true
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        asset_path: "app/build/outputs/apk/debug/app-debug.apk"
+        asset_name: Saikou-${{ env.VERSION }}.apk
+        asset_content_type: application/vnd.android.package-archive
