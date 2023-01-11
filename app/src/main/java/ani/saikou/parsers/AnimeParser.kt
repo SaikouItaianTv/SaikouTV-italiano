@@ -131,7 +131,7 @@ abstract class AnimeParser : BaseParser() {
     override fun saveShowResponse(mediaId: Int, response: ShowResponse?, selected: Boolean) {
         if (response != null) {
             checkIfVariablesAreEmpty()
-            setUserText("${if (selected) "Selected" else "Found"} : ${response.name}")
+            setUserText("${if (selected) "Selezionato" else "Trovato"} : ${response.name}")
             val dub = if (isDubAvailableSeparately) "_${if (selectDub) "dub" else "sub"}" else ""
             saveData("${saveName}${dub}_$mediaId", response)
         }

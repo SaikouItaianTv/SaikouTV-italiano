@@ -52,9 +52,10 @@ class ListActivity : AppCompatActivity() {
                     "Completed" -> "Completati"
                     "Paused" -> "In Pausa"
                     "Dropped" -> "Abbandonati"
-                    "Planning" -> "Da Vedere"
+                    "Planning" -> "Pianificati"
                     "Favourites" -> "Preferiti"
                     "Rewatching" -> "Riguardando"
+                    "Rereading" -> "Rileggendo"
                     "All" -> "Tutto"
                     else -> it}
                 }

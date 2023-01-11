@@ -745,17 +745,17 @@ fun countDown(media: Media, view: ViewGroup) {
     if (media.anime?.nextAiringEpisode != null && media.anime.nextAiringEpisodeTime != null && (media.anime.nextAiringEpisodeTime!! - System.currentTimeMillis() / 1000) <= 86400 * 7.toLong()) {
         val v = ItemCountDownBinding.inflate(LayoutInflater.from(view.context), view, false)
         view.addView(v.root, 0)
-        v.mediaCountdownText.text = "Episode ${media.anime.nextAiringEpisode!! + 1} will be released in"
+        v.mediaCountdownText.text = "L' episodio ${media.anime.nextAiringEpisode!! + 1} sarà rilasciato tra"
         object : CountDownTimer((media.anime.nextAiringEpisodeTime!! + 10000) * 1000 - System.currentTimeMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val a = millisUntilFinished / 1000
                 v.mediaCountdown.text =
-                    "${a / 86400} days ${a % 86400 / 3600} hrs ${a % 86400 % 3600 / 60} mins ${a % 86400 % 3600 % 60} secs"
+                    "${a / 86400} giorni ${a % 86400 / 3600} ore ${a % 86400 % 3600 / 60} min ${a % 86400 % 3600 % 60} sec"
             }
 
             override fun onFinish() {
                 v.mediaCountdownContainer.visibility = View.GONE
-                toastString("Congrats Vro")
+                toastString("Buona Visione!")
             }
         }.start()
     }

@@ -194,7 +194,15 @@ class MediaDetailsActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLi
         fun progress() {
             if (media.userStatus != null) {
                 binding.mediaTotal.visibility = View.VISIBLE
-                binding.mediaAddToList.text = media.userStatus
+                binding.mediaAddToList.text = when(media!!.userStatus){
+                    "CURRENT" -> if (media?.manga==null) "GUARDANDO" else "LEGGENDO"
+                    "PLANNING" -> "PIANIFICATO"
+                    "COMPLETED" -> "COMPLETATO"
+                    "DROPPED" -> "ABBANDONATO"
+                    "PAUSED" -> "IN PAUSA"
+                    "REPEATING" -> if (media?.manga==null) "RIGUARDANDO" else "RILEGGENDO"
+                    else -> ""
+                }
             } else {
                 binding.mediaAddToList.setText(R.string.add)
             }
