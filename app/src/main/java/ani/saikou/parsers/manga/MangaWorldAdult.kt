@@ -1,6 +1,7 @@
 package ani.saikou.parsers.manga
 
 import ani.saikou.client
+import ani.saikou.media.Media
 import ani.saikou.parsers.MangaChapter
 import ani.saikou.parsers.MangaImage
 import ani.saikou.parsers.MangaParser
@@ -28,6 +29,29 @@ class MangaWorldAdult : MangaParser() {
             ) // need this slug for loadChapters
         }
     }
+
+    override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
+        var response = loadSavedShowResponse(mediaObj.id)
+        if (response != null) {
+            saveShowResponse(mediaObj.id, response, true)
+        } else {
+            setUserText("Cerco : ${mediaObj.mainName()}")
+            response = search(mediaObj.mainName()).let { if (it.isNotEmpty()) it[0] else null }
+
+            if (response == null) {
+                setUserText("Cerco : ${mediaObj.nameRomaji}")
+                response = search(mediaObj.nameRomaji).let { if (it.isNotEmpty()) it[0] else null }
+            }
+
+            if (response == null && mediaObj.name?.isNotEmpty() == true){
+                setUserText("Cerco : ${mediaObj.name}")
+                response = search(mediaObj.name).let { if (it.isNotEmpty()) it[0] else null }
+            }
+            saveShowResponse(mediaObj.id, response)
+        }
+        return response
+    }
+
 
     override suspend fun loadChapters(mangaLink: String, extra: Map<String, String>?): List<MangaChapter> {
         val resp = client.get(mangaLink).text
