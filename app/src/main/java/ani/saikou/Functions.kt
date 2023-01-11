@@ -697,7 +697,7 @@ fun updateAnilistProgress(media: Media, number: String) {
                 Anilist.mutation.editList(
                     media.id,
                     a,
-                    status = if (media.userStatus == "RIGUARDANDO") media.userStatus else "GUARDANDO"
+                    status = if (media.userStatus == "REPEATING") media.userStatus else "CURRENT"
                 )
                 toast("Progresso impostato to $a")
             }

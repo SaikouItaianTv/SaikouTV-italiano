@@ -316,15 +316,7 @@ enum class MediaListStatus {
     CURRENT, PLANNING, COMPLETED, DROPPED, PAUSED, REPEATING;
 
     override fun toString(): String {
-        return when(super.toString()){
-            "CURRENT" -> "GUARDANDO"
-            "PLANNING" -> "DA VEDERE"
-            "COMPLETED" -> "COMPLETATO"
-            "DROPPED" -> "ABBANDONATO"
-            "PAUSED" -> "IN PAUSA"
-            "REPEATING" -> "RIGUARDANDO"
-            else -> ""
-        }
+        return super.toString().replace("_", " ")
     }
 }
 
@@ -450,7 +442,7 @@ enum class MediaRelation {
     ADAPTATION, PREQUEL, SEQUEL, PARENT, SIDE_STORY, CHARACTER, SUMMARY, ALTERNATIVE, SPIN_OFF, OTHER, SOURCE, COMPILATION, CONTAINS;
 
     override fun toString(): String {
-        return return when(super.toString()){
+        return when(super.toString()){
             "ADAPTATION" -> "ADATTAMENTO"
             "PARENT" -> "ORIGINE"
             "CHARACTER" -> "PERSONAGGIO"
