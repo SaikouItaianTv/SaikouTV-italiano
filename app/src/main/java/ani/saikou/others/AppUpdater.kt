@@ -51,12 +51,12 @@ object AppUpdater {
                     setPositiveButton("Let's Go") {
                         MainScope().launch(Dispatchers.IO) {
                             try {
-                                client.get("https://api.github.com/repos/$repo/releases/tags/v$version-ITA")
+                                client.get("https://api.github.com/repos/$repo/releases/tags/v$version")
                                     .parsed<GithubResponse>().assets?.find {
                                     it.browserDownloadURL.endsWith("apk")
                                 }?.browserDownloadURL.apply {
                                     if (this != null) activity.downloadUpdate(version, this)
-                                    else openLinkInBrowser("https://github.com/repos/$repo/releases/tag/v$version-ITA")
+                                    else openLinkInBrowser("https://github.com/repos/$repo/releases/tag/v$version")
                                 }
                             } catch (e: Exception) {
                                 logError(e)
