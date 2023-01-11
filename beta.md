@@ -1,4 +1,4 @@
-# 1.2.0.25
+# 1.2.0.24
 
 - Added Italian Language
 - Add AnimeWorld, Aniplay and AnimeSaturn Providers
