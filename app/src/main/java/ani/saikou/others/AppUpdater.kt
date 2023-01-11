@@ -35,7 +35,7 @@ object AppUpdater {
             val dontShow = loadData("dont_ask_for_update_$version") ?: false
             if (compareVersion(version) && !dontShow && !activity.isDestroyed) activity.runOnUiThread {
                 CustomBottomDialog.newInstance().apply {
-                    setTitleText("${if (!BuildConfig.DEBUG) "" else "Beta "}Update Available")
+                    setTitleText("${if (!BuildConfig.DEBUG) "" else "Beta "}Aggiornamento Disponibile")
                     addView(
                         TextView(activity).apply {
                             val markWon = Markwon.builder(activity).usePlugin(SoftBreakAddsNewLinePlugin.create()).build()
@@ -43,7 +43,7 @@ object AppUpdater {
                         }
                     )
 
-                    setCheck("Don't show again for version $version", false) { isChecked ->
+                    setCheck("Non mostrare più per la versione $version", false) { isChecked ->
                         if (isChecked) {
                             saveData("dont_ask_for_update_$version", isChecked)
                         }
@@ -64,7 +64,7 @@ object AppUpdater {
                         }
                         dismiss()
                     }
-                    setNegativeButton("Cope") {
+                    setNegativeButton("No grazie") {
                         dismiss()
                     }
                     show(activity.supportFragmentManager, "dialog")
@@ -102,7 +102,7 @@ object AppUpdater {
 
         val request = DownloadManager.Request(Uri.parse(url))
             .setMimeType("application/vnd.android.package-archive")
-            .setTitle("Downloading Saikou $version")
+            .setTitle("Scaricando Saikou $version")
             .setDestinationInExternalPublicDir(
                 Environment.DIRECTORY_DOWNLOADS,
                 "Saikou $version.apk"

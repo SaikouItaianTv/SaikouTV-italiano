@@ -958,11 +958,11 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         preloading = false
         val showProgressDialog = if (settings.askIndividual) loadData<Boolean>("${media.id}_progressDialog") ?: true else false
         if (showProgressDialog && Anilist.userid != null && if (media.isAdult) settings.updateForH else true)
-            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Auto Update progress for ${media.userPreferredName}?")
+            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Aggiornare automaticamete i progressi su Anilist? ${media.userPreferredName}?")
                 .apply {
                     setOnCancelListener { hideSystemBars() }
                     setCancelable(false)
-                    setPositiveButton("Yes") { dialog, _ ->
+                    setPositiveButton("Si") { dialog, _ ->
                         saveData("${media.id}_progressDialog", false)
                         saveData("${media.id}_save_progress", true)
                         dialog.dismiss()
@@ -1142,7 +1142,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
                     )
                 )
             )
-            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Continue from ${time}?").apply {
+            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Continua da ${time}?").apply {
                 setCancelable(false)
                 setPositiveButton("Yes") { d, _ ->
                     buildExoplayer()

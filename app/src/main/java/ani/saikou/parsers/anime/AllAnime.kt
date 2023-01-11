@@ -217,7 +217,7 @@ class AllAnime : AnimeParser() {
 
     override fun saveShowResponse(mediaId: Int, response: ShowResponse?, selected: Boolean) {
         if (response != null) {
-            setUserText("${if (selected) "Selected" else "Found"} : ${response.name}")
+            setUserText("${if (selected) "Selezionato" else "Trovato"} : ${response.name}")
             saveData("${saveName}_$mediaId", response)
         }
     }
