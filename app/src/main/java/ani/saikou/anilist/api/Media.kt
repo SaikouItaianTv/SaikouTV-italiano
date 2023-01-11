@@ -203,14 +203,7 @@ enum class MediaStatus {
     FINISHED, RELEASING, NOT_YET_RELEASED, CANCELLED, HIATUS;
 
     override fun toString(): String {
-        return when(super.toString()){
-            "FINISHED" -> "FINITO"
-            "RELEASING" -> "IN CORSO"
-            "NOT_YET_RELEASED" -> "ANCORA NON RILASCIATO"
-            "CANCELLED" -> "CANCELLATO"
-            "HIATUS" -> "HIATUS"
-            else -> ""
-        }
+        return super.toString().replace("_", " ")
     }
 }
 
