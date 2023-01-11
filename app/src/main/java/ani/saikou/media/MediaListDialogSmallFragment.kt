@@ -57,19 +57,7 @@ class MediaListDialogSmallFragment : BottomSheetDialogFragment() {
         binding.mediaListProgressBar.visibility = View.GONE
         binding.mediaListLayout.visibility = View.VISIBLE
 
-        val statuses: Array<String> = resources.getStringArray(R.array.status).toList().map {
-            when(it){
-                "CURRENT" -> "GUARDANDO"
-                "PLANNING" -> "DA VEDERE"
-                "COMPLETED" -> "COMPLETATO"
-                "DROPPED" -> "ABBANDONATO"
-                "PAUSED" -> "IN PAUSA"
-                "REPEATING" -> "RIGUARDANDO"
-                else -> ""
-            }}.toTypedArray()
-
-
-
+        val statuses: Array<String> = resources.getStringArray(R.array.status)
         binding.mediaListStatus.setText(if (media.userStatus != null) media.userStatus else statuses[0])
         binding.mediaListStatus.setAdapter(
             ArrayAdapter(
@@ -142,15 +130,7 @@ class MediaListDialogSmallFragment : BottomSheetDialogFragment() {
                         if (_binding?.mediaListScore?.text.toString() != "") (_binding?.mediaListScore?.text.toString()
                             .toDouble() * 10).toInt() else null,
                         null,
-                        if (_binding?.mediaListStatus?.text.toString() != "") when(_binding?.mediaListStatus?.text.toString()){
-                            "GUARDANDO" -> "CURRENT"
-                            "DA VEDERE" -> "PLANNING"
-                            "COMPLETATO" -> "COMPLETED"
-                            "ABBANDONATO" -> "DROPPED"
-                            "IN PAUSA" -> "PAUSED"
-                            "RIGUARDANDO" -> "REPEATING"
-                            else -> ""
-                        } else null,
+                        if (_binding?.mediaListStatus?.text.toString() != "") _binding?.mediaListStatus?.text.toString() else null,
                         media.isListPrivate
                     )
                 }
