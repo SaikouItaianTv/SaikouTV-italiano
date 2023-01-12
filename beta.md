@@ -1,8 +1,7 @@
-# 1.2.0.23
+# 1.2.0.24
 
-- Added Italian Language
-- Add AnimeWorld, Aniplay and AnimeSaturn Providers
-- Add MangaWorld Provider
+- Fixed Aniplay referrer issue
+- Added the italian version of MangaDex provider
 
 Saikou main app Updates:
 - Add support for all Kamyroll streams
