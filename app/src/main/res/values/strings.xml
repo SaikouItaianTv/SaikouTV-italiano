@@ -140,7 +140,7 @@
     <string name="theme">Theme</string>
     <string name="ui_settings">UI Settings</string>
     <string name="about">About</string>
-    <string name="desc">\u0008\u0008\u0008 Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an Anilist only client, which also lets you stream-download Anime &amp; Manga.\nSaikou literally means the \"best\" in japanese. Well, we would like to say this is the best open source app for anime and manga on Android, what would you say?</string>
+    <string name="desc">\\u0008\\u0008\\u0008 Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an Anilist only client, which also lets you stream-download Anime &amp; Manga. Saikou literally means the \"best\" in japanese. Well, we would like to say this is the best open source app for anime and manga on Android, what would you say?</string>
     <string name="devs">Developers</string>
     <string name="disclaimer">Disclaimer</string>
     <string name="full_disclaimer">
@@ -287,7 +287,6 @@
     <string name="over_scroll">Over Scroll to Next/Previous Chapter</string>
     <string name="volume_buttons">Change pages with Volume Buttons</string>
     <string name="list_private">Private</string>
-    <string name="wrap_images">Wrap Images</string>
     <string name="wrap_images_info">Mostly useful for larger Devices, removes space between images, if they exist.</string>
     <string name="reload">Reload</string>
     <string name="share">Share</string>
@@ -313,6 +312,6 @@
     <string name="release_calendar">Calendar</string>
     <string name="planned_anime">Planned Anime</string>
     <string name="planned_manga">Planned Manga</string>
-    <string name="image_long_clicking">Open image by Long Clicking</string>
+    <string name="wrap_images">Wrap Images</string>
 
 </resources>
