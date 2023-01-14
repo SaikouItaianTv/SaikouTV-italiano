@@ -313,5 +313,6 @@
     <string name="planned_anime">Planned Anime</string>
     <string name="planned_manga">Planned Manga</string>
     <string name="wrap_images">Wrap Images</string>
+    <string name="image_long_clicking">Open image by Long Clicking</string>
 
 </resources>

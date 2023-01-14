@@ -48,7 +48,7 @@ class MediaListDialogFragment : BottomSheetDialogFragment() {
                 val statuses: Array<String> = resources.getStringArray(R.array.status).toList().map {
                     when(it){
                         "CURRENT" -> if (media?.manga==null) "GUARDANDO" else "LEGGENDO"
-                        "PLANNING" -> "PIANIFICAT0"
+                        "PLANNING" -> "PIANIFICATO"
                         "COMPLETED" -> "COMPLETATO"
                         "DROPPED" -> "ABBANDONATO"
                         "PAUSED" -> "IN PAUSA"

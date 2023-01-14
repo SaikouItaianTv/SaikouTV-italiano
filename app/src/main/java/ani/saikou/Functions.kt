@@ -276,7 +276,7 @@ class InputFilterMinMax(private val min: Double, private val max: Double, privat
     @SuppressLint("SetTextI18n")
     private fun isInRange(a: Double, b: Double, c: Double): Boolean {
         if (c == b) {
-            status?.setText("COMPLETED", false)
+            status?.setText("COMPLETATO", false)
             status?.parent?.requestLayout()
         }
         return if (b > a) c in a..b else c in b..a

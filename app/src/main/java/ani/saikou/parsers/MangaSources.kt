@@ -7,6 +7,7 @@ import ani.saikou.parsers.manga.*
 object MangaSources : MangaReadSources() {
     override val list: List<Lazier<BaseParser>> = lazyList(
         "MangaWorld" to ::MangaWorld,
+        "MangaDexIta" to ::MangaDexIta,
         "INGLESE: MangaKakalot" to ::MangaKakalot,
         "INGLESE: MangaBuddy" to ::MangaBuddy,
         "INGLESE: MangaPill" to ::MangaPill,

@@ -1,5 +1,6 @@
 package ani.saikou.parsers.anime
 
+import ani.saikou.FileUrl
 import ani.saikou.client
 import ani.saikou.parsers.*
 import kotlinx.serialization.SerialName
@@ -38,7 +39,7 @@ class AniPlay : AnimeParser() {
 
     override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
         val link = client.get(episodeLink).parsed<ApiEpisodeUrl>().url
-        return  listOf(VideoServer("AniPlay", link))
+        return  listOf(VideoServer("AniPlay",  FileUrl(link, mapOf("referer" to hostUrl))))
 
     }
 
