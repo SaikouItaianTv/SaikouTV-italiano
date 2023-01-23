@@ -14,9 +14,8 @@ object AnimeSources : WatchSources() {
         "INGLESE: AllAnime" to ::AllAnime,
         "INGLESE: Gogo" to ::Gogo,
         "INGLESE: Zoro" to ::Zoro,
-        "INGLESE: Tenshi" to ::Tenshi,
+        "INGLESE: Marin" to ::Marin,
 //        "INGLESE: 9Anime" to ::NineAnime,
-        "INGLESE: 9Anime Backup" to ::AniWatchPro,
         "INGLESE: AnimePahe" to ::AnimePahe,
         "INGLESE: ConsumeBili" to ::ConsumeBili
 
