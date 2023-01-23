@@ -155,20 +155,16 @@
     <string-array name="tips">
         <item>You can Long Click an episode/chapter to Mark it as Read.</item>
         <item>Long Clicking Shows can directly open List Editor.</item>
-        <item>There are few easter eggs hidden in the App.</item>
-        <item>Internet sucks? search taking too much time? try spam-Clicking the Progress Bar</item>
+        <item>There are few more easter eggs hidden in the App.</item>
         <item>Challenge: Go to the very bottom of the Popular Anime &amp; Manga</item>
         <item>Try Long Clicking the Show\'s Title.</item>
         <item>Damn, why are you wasting your Time?</item>
-        <item>Looks like someone likes this Animation.</item>
         <item>You can Long Click to copy this Message.</item>
-        <item>Saikou!</item>
-        <item>OMG LOOK YOU! FOUND AN EASTER EGG!?!?</item>
+        <item>OMG LOOK! YOU FOUND AN EASTER EGG!?</item>
         <item>You know who else likes this Animation?</item>
-        <item>My Mom!</item>
-        <item>9anime be crying</item>
         <item>MAL support? bruh.</item>
         <item>Novels? more like NO vels.</item>
+        <item>Long Click the logo to check for App Update</item>
     </string-array>
 
     <string name="video">Video</string>
@@ -300,7 +296,7 @@
     <string name="total_repeats">TOTAL REPEATS</string>
     <string name="custom_lists">Custom Lists</string>
     <string name="donate_desc">Want to support Saikou\'s Creator?\nConsider Donating</string>
-    <string name="donate_goal">(We just reached a goal of $100!)</string>
+    <string name="donate_goal">(We reached a donation of $500!)</string>
     <string name="filter">Filter</string>
     <string name="year">Year</string>
     <string name="apply">Apply</string>
@@ -314,5 +310,12 @@
     <string name="planned_manga">Planned Manga</string>
     <string name="wrap_images">Wrap Images</string>
     <string name="image_long_clicking">Open image by Long Clicking</string>
+    <string name="always_continue_shows">Always continue Shows</string>
+    <string name="timestamp_proxy_desc">Useful if you are getting Handshake Fails</string>
+    <string name="timestamp_proxy">Use Proxy for Timestamps</string>
+    <string name="check_app_updates">Always check for App Updates</string>
+    <string name="author">Author</string>
+    <string name="forks">Forks</string>
+    <string name="faq">FAQ</string>
 
 </resources>

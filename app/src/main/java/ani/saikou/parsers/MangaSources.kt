@@ -15,7 +15,7 @@ object MangaSources : MangaReadSources() {
         "INGLESE: MangaReaderTo" to ::MangaReaderTo,
         "INGLESE: AllAnime" to ::AllAnime,
         "INGLESE: Toonily" to ::Toonily,
-        "INGLESE: MangaHub" to ::MangaHub,
+//        "INGLESE: MangaHub" to ::MangaHub,
         "INGLESE: MangaKatana" to ::MangaKatana,
         "INGLESE: Manga4Life" to ::Manga4Life,
         "INGLESE: MangaRead" to ::MangaRead,

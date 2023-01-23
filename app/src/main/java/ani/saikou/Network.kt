@@ -15,7 +15,9 @@ import kotlinx.serialization.serializer
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import java.io.File
+import java.io.PrintWriter
 import java.io.Serializable
+import java.io.StringWriter
 import java.util.concurrent.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
@@ -99,7 +101,12 @@ fun <A, B> Collection<A>.asyncMap(f: suspend (A) -> B): List<B> = runBlocking {
 //}
 
 fun logError(e: Exception) {
-    toastString(e.localizedMessage)
+    val sw = StringWriter()
+    val pw = PrintWriter(sw)
+    e.printStackTrace(pw)
+    val stackTrace: String = sw.toString()
+
+    toastString(e.localizedMessage, null , stackTrace)
     e.printStackTrace()
 }
 

@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ani.saikou.loadData
 import ani.saikou.media.Media
 import ani.saikou.others.AppUpdater
 import ani.saikou.toastString
@@ -53,7 +54,7 @@ class AnilistHomeViewModel : ViewModel() {
 
     suspend fun loadMain(context: FragmentActivity) {
         Anilist.getSavedToken(context)
-        AppUpdater.check(context)
+        if(loadData<Boolean>("check_update") != false) AppUpdater.check(context)
         genres.postValue(Anilist.query.getGenresAndTags(context))
     }
 

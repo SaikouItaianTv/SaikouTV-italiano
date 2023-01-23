@@ -1,6 +1,6 @@
 # **Saikou**
 <p align="center">
-   <a href="https://discord.gg/5TXAWTU5qr"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
+   <a href="https://discord.gg/saikou-app"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
    <a href="https://telegram.me/saikou_app" ><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"></a> 
    <a href="https://github.com/saikou-app/saikou/releases"><img src="https://img.shields.io/github/downloads/saikou-app/saikou/total?color=%233DDC84&logo=android&logoColor=%23fff&style=for-the-badge"></a>
 </p>
@@ -39,40 +39,42 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 
 * **Available Anime sources:-**
 
-| SITE                                      | STATUS  | DOWNLOADS |
-|:-----------------------------------------:|:-------:|:---------:|
-| [9Anime](https://9anime.pl)               | SEMI-WORKING | SOME |
-| [Gogo](https://gogoanime.cm)              | WORKING | SOME |
-| [AllAnime](https://allanime.site)         | SEMI-WORKING | SOME |
-| [Zoro](https://zoro.to)                   | WORKING | SOME |
-| [Tenshi](https://tenshi.moe)              | WORKING | YES  |
-| [Kamyroll](https://github.com/kamyroll/Kamyroll-Wiki/wiki)| WORKING | NO   |
-| [AnimePahe](https://animepahe.ru)| SEMI-WORKING | NO   |
-| [ConsumeBili](https://www.bilibili.tv)     | WORKING | NO   |
-| [Haho (18+)](https://haho.moe)                  | WORKING | YES  |
-| [HentaiMama (18+)](https://hentaimama.io)       | WORKING | SOME |
-| [HentaiStream (18+)](https://hentaistream.com)  | WORKING | YES  |
-| [HentaiFF (18+)](https://hentaiff.com)          | WORKING | SOME |
+|                            SITE                            |    STATUS    | DOWNLOADS |
+|:----------------------------------------------------------:|:------------:|:---------:|
+|             [AllAnime](https://allanime.site)              | SEMI-WORKING |   SOME    |
+|                [Gogo](https://gogoanime.cm)                |   WORKING    |   SOME    |
+|                  [Zoro](https://zoro.to)                   |   WORKING    |    NO     |
+|                 [Marin](https://marin.moe)                 |   WORKING    |    YES    |
+| [Kamyroll](https://github.com/kamyroll/Kamyroll-Wiki/wiki) |   WORKING    |    NO     |
+|             [AnimePahe](https://animepahe.ru)              |   WORKING    |    YES    |
+|                [9Anime](https://9anime.pl)                 | NOT WORKING  |   SOME    |
+|           [ConsumeBili](https://www.bilibili.tv)           |   WORKING    |    NO     |
+|               [Haho (18+)](https://haho.moe)               |   WORKING    |    YES    |
+|         [HentaiMama (18+)](https://hentaimama.io)          |   WORKING    |   SOME    |
+|       [HentaiStream (18+)](https://hentaistream.com)       |   WORKING    |    YES    |
+|           [HentaiFF (18+)](https://hentaiff.com)           |   WORKING    |   SOME    |
 
 
 * **Available Manga sources:-**
 
-| SITE                                     | STATUS  |
-|:----------------------------------------:|:-------:|
-| [MangaKakalot](https://mangakakalot.com)| WORKING |
-| [MangaBuddy](https://mangabuddy.com)    | WORKING |
-| [MangaSee](https://mangasee123.com)     | SEMI-WORKING |
-| [MangaPill](https://mangapill.com)      | WORKING |
-| [MangaDex](https://mangadex.org)        | SEMI-WORKING |
-| [MangaReaderTo](https://mangareader.to) | WORKING |
-| [AllAnime](https://allanime.site)       | WORKING |
-| [Comickfun](https://comick.fun)         | WORKING |
-| [MangaHub](https://mangahub.io)         | WORKING |
-| [MangaKatana](https://mangakatana.com)  | WORKING |
-| [Toonily](https://toonily.com/)         | WORKING |
-| [NHentai (18+)](https://nhentai.net)      | NOT WORKING |
-| [NineHentai (18+)](https://ninehentai.net)| WORKING |
-| [Manwha18 (18+)](https://manhwa18.cc)   | WORKING |
+|                    SITE                    |   STATUS    |
+|:------------------------------------------:|:-----------:|
+|  [MangaKakalot](https://mangakakalot.com)  |   WORKING   |
+|    [MangaBuddy](https://mangabuddy.com)    |   WORKING   |
+|    [MangaSee](https://mangasee123.com)     |   WORKING   |
+|     [MangaPill](https://mangapill.com)     |   WORKING   |
+|      [MangaDex](https://mangadex.org)      |   WORKING   |
+|  [MangaReaderTo](https://mangareader.to)   |   WORKING   |
+|     [AllAnime](https://allanime.site)      |   WORKING   |
+|      [Comickfun](https://comick.fun)       |   WORKING   |
+| [Manga4Life](https://manga4life.com/)      |   WORKING   |
+| [MangaRead](https://www.mangaread.org)     |   WORKING   |
+|   [MangaKatana](https://mangakatana.com)   |   WORKING   |
+|      [Toonily](https://toonily.com/)       |   WORKING   |
+|      [MangaHub](https://mangahub.io)       | NOT WORKING |
+|    [NHentai (18+)](https://nhentai.net)    | NOT WORKING |
+| [NineHentai (18+)](https://ninehentai.net) |   WORKING   |
+|   [Manwha18 (18+)](https://manhwa18.cc)    |   WORKING   |
 
 ## Planned Stuff
 
@@ -99,7 +101,6 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 
 - Accent Color Change (Hot Pink Supremacy.)
 
-- Subtitles Customization
 
 ## Help wanted for:
 

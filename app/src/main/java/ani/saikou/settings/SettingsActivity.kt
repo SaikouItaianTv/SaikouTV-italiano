@@ -13,11 +13,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
 import ani.saikou.*
 import ani.saikou.databinding.ActivitySettingsBinding
+import ani.saikou.others.AppUpdater
 import ani.saikou.others.CustomBottomDialog
 import ani.saikou.parsers.AnimeSources
 import ani.saikou.parsers.MangaSources
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -64,7 +68,8 @@ OS Version: $CODENAME $RELEASE ($SDK_INT)
             onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.animeSource.setText(AnimeSources.names[loadData("settings_def_anime_source") ?: 0], false)
+        val animeSource = loadData<Int>("settings_def_anime_source")?.let{ if(it>=AnimeSources.names.size) 0 else it} ?: 0
+        binding.animeSource.setText(AnimeSources.names[animeSource], false)
         binding.animeSource.setAdapter(ArrayAdapter(this, R.layout.item_dropdown, AnimeSources.names))
         binding.animeSource.setOnItemClickListener { _, _, i, _ ->
             saveData("settings_def_anime_source", i)
@@ -89,6 +94,11 @@ OS Version: $CODENAME $RELEASE ($SDK_INT)
             } else saveData("sd_dl", false)
         }
 
+        binding.settingsContinueMedia.isChecked = loadData("continue_media") ?: true
+        binding.settingsContinueMedia.setOnCheckedChangeListener { _, isChecked ->
+            saveData("continue_media", isChecked)
+        }
+
         binding.settingsRecentlyListOnly.isChecked = loadData("recently_list_only") ?: false
         binding.settingsRecentlyListOnly.setOnCheckedChangeListener { _, isChecked ->
             saveData("recently_list_only", isChecked)
@@ -108,7 +118,8 @@ OS Version: $CODENAME $RELEASE ($SDK_INT)
             saveData("settings_prefer_dub", isChecked)
         }
 
-        binding.mangaSource.setText(MangaSources.names[loadData("settings_def_manga_source") ?: 0], false)
+        val mangaSource = loadData<Int>("settings_def_manga_source")?.let{ if(it>=MangaSources.names.size) 0 else it} ?: 0
+        binding.mangaSource.setText(MangaSources.names[mangaSource], false)
         binding.mangaSource.setAdapter(ArrayAdapter(this, R.layout.item_dropdown, MangaSources.names))
         binding.mangaSource.setOnItemClickListener { _, _, i, _ ->
             saveData("settings_def_manga_source", i)
@@ -234,14 +245,6 @@ OS Version: $CODENAME $RELEASE ($SDK_INT)
             uiChp(1, it)
         }
 
-
-        binding.settingsInfo.setOnClickListener {
-            if (binding.settingsInfo.maxLines == 3)
-                binding.settingsInfo.maxLines = 100
-            else
-                binding.settingsInfo.maxLines = 3
-        }
-
         binding.settingBuyMeCoffee.setOnClickListener {
             openLinkInBrowser("https://www.buymeacoffee.com/brahmkshatriya")
         }
@@ -270,17 +273,23 @@ OS Version: $CODENAME $RELEASE ($SDK_INT)
             startActivity(Intent(this, UserInterfaceSettingsActivity::class.java))
         }
 
+        binding.settingsFAQ.setOnClickListener {
+            startActivity(Intent(this, FAQActivity::class.java))
+        }
+
         (binding.settingsLogo.drawable as Animatable).start()
         val array = resources.getStringArray(R.array.tips)
 
         binding.settingsLogo.setSafeOnClickListener {
             (binding.settingsLogo.drawable as Animatable).start()
-            if (Math.random() * 69 < 42.0)
-                toastString(array[(Math.random() * array.size).toInt()], this)
+            toastString(array[(Math.random() * array.size).toInt()], this)
         }
 
         binding.settingsDev.setOnClickListener {
             DevelopersDialogFragment().show(supportFragmentManager, "dialog")
+        }
+        binding.settingsForks.setOnClickListener {
+            ForksDialogFragment().show(supportFragmentManager, "dialog")
         }
         binding.settingsDisclaimer.setOnClickListener {
             val title = getString(R.string.disclaimer)
@@ -295,6 +304,28 @@ OS Version: $CODENAME $RELEASE ($SDK_INT)
                 }
                 show(supportFragmentManager, "dialog")
             }
+        }
+
+        binding.settingsCheckUpdate.isChecked = loadData("check_update") ?: true
+        binding.settingsCheckUpdate.setOnCheckedChangeListener { _, isChecked ->
+            saveData("check_update", isChecked)
+            if (!isChecked) {
+                toastString("You Long Click the button to check for App Update")
+            }
+        }
+
+        binding.settingsLogo.setOnLongClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                AppUpdater.check(this@SettingsActivity, true)
+            }
+            true
+        }
+
+        binding.settingsCheckUpdate.setOnLongClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                AppUpdater.check(this@SettingsActivity, true)
+            }
+            true
         }
     }
 }

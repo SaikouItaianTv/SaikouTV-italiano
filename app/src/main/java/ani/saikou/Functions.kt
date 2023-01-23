@@ -140,10 +140,7 @@ fun initActivity(a: Activity) {
     val window = a.window
     WindowCompat.setDecorFitsSystemWindows(window, false)
     val uiSettings = loadData<UserInterfaceSettings>("ui_settings", toast = false) ?: UserInterfaceSettings().apply {
-        saveData(
-            "ui_settings",
-            this
-        )
+        saveData("ui_settings", this)
     }
     uiSettings.darkMode.apply {
         AppCompatDelegate.setDefaultNightMode(
@@ -839,7 +836,7 @@ fun toast(string: String?, activity: Activity? = null) {
     }
 }
 
-fun toastString(s: String?, activity: Activity? = null) {
+fun toastString(s: String?, activity: Activity? = null, clipboard: String? = null) {
     if (s != null) {
         (activity ?: currActivity())?.apply {
             runOnUiThread {
@@ -856,7 +853,7 @@ fun toastString(s: String?, activity: Activity? = null) {
                         snackBar.dismiss()
                     }
                     setOnLongClickListener {
-                        copyToClipboard(s, false)
+                        copyToClipboard(clipboard ?: s, false)
                         toast("Copiato nella Clipboard")
                         true
                     }

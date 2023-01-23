@@ -23,6 +23,7 @@ data class PlayerSettings(
 
     //TimeStamps
     var timeStampsEnabled: Boolean = true,
+    var useProxyForTimeStamps: Boolean = true,
     var showTimeStampButton: Boolean = true,
 
     //Auto

@@ -1,16 +1,16 @@
 package ani.saikou.parsers.anime
 
-import ani.saikou.FileUrl
 import ani.saikou.client
 import ani.saikou.parsers.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.math.pow
 
 class AnimePahe : AnimeParser() {
 
-    override val hostUrl = "https://animepahe.com"
+    override val hostUrl = "https://animepahe.ru"
     override val name = "AnimePahe"
-    override val saveName = "anime_pahe"
+    override val saveName = "animepahe_ru"
     override val isDubAvailableSeparately = false
 
     override suspend fun search(query: String): List<ShowResponse> {
@@ -24,67 +24,114 @@ class AnimePahe : AnimeParser() {
     override suspend fun loadEpisodes(animeLink: String, extra: Map<String, String>?): List<Episode> {
         val resp = client.get(animeLink).parsed<ReleaseRouteResponse>()
         val releaseId = animeLink.substringAfter("&id=").substringBefore("&sort")
-        return getEpisodes(releaseId, resp.last_page)
+        return (1 until resp.lastPage + 1).map { i->
+            val url = "$hostUrl/api?m=release&id=$releaseId&sort=episode_asc&page=$i"
+            client.get(url).parsed<ReleaseRouteResponse>().data!!.map { ep ->
+                val kwikEpLink = "$hostUrl/api?m=links&id=${ep.anime_id}&session=${ep.session}&p=kwik"
+                Episode(number = ep.episode.toString().substringBefore(".0"), link = kwikEpLink, title = ep.title)
+            }
+        }.flatten()
     }
 
     override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
         val resp = client.get(episodeLink).parsed<KwikUrls>()
-        val servers = mutableListOf<VideoServer>()
-        resp.data.forEach {
-            it.entries.map { o ->
-                servers.add(
-                    VideoServer(
-                        name = "Kwik - ${o.key}p (${if (o.value.audio == "eng") "DUB" else "SUB"})",
-                        embedUrl = o.value.kwik.toString()
+        return resp.data.map {
+            it.entries.map { i ->
+                VideoServer(
+                    name = "Kwik ${i.key}p: ${i.value.fanSub} (${if (i.value.audio == "eng") "DUB" else "SUB"})",
+                    embedUrl = i.value.kwik.toString(),
+                    extraData = mapOf(
+                        "size" to i.value.fileSize.toString(),
+                        "referer" to hostUrl,
+                        "quality" to i.key
                     )
                 )
             }
-        }
-        return servers
+        }.flatten()
     }
 
     override suspend fun getVideoExtractor(server: VideoServer): VideoExtractor = AnimePaheExtractor(server)
 
     class AnimePaheExtractor(override val server: VideoServer) : VideoExtractor() {
 
-        private val kwikRe = Regex("Plyr\\|(.+?)'")
+        private val data = server.extraData as Map<*,*>
+        private val quality = data["quality"] as String
+        private val size = (data["size"] as String).toDoubleOrNull()?.div(1048576)
+        private val ref = data["referer"] as String
+
+        private val redirectRegex = Regex("<a href=\"(.+?)\" .+?>Redirect me</a>")
+        private val paramRegex = Regex("""\(\"(\w+)\",\d+,\"(\w+)\",(\d+),(\d+),(\d+)\)""")
+        private val urlRegex = Regex("action=\"(.+?)\"")
+        private val tokenRegex = Regex("value=\"(.+?)\"")
 
         override suspend fun extract(): VideoContainer {
-            val resp = client.get(server.embed.url, referer = "https://animepahe.com/").text
-            val obfUrl = kwikRe.find(resp, 0)?.groupValues?.get(1)
-            val i = obfUrl?.split('|')?.reversed()!!
-            val m3u8Url = "${i[0]}://${i[1]}-${i[2]}.${i[3]}.${i[4]}.${i[5]}/${i[6]}/${i[7]}/${i[8]}/${i[9]}.${i[10]}"
+
+            val resp = client.get(server.embed.url, referer = ref).text
+            val kwikLink = redirectRegex.find(resp)?.groupValues?.get(1)!!
+
+            val kwikRes = client.get(kwikLink)
+            val cookies = kwikRes.headers.toMultimap()["set-cookie"]!![0]
+            val (fullKey, key, v1, v2) = paramRegex.find(kwikRes.text)?.destructured!!
+
+            val decrypted = decrypt(fullKey,key,v1.toInt(),v2.toInt())
+            val postUrl = urlRegex.find(decrypted)?.groupValues?.get(1)!!
+            val token = tokenRegex.find(decrypted)?.groupValues?.get(1)!!
+
+            val mp4Url = client.post(postUrl,
+                mapOf("referer" to kwikLink, "cookie" to cookies),
+                data = mapOf("_token" to token),
+                allowRedirects = false
+            ).headers["location"]!!
             return VideoContainer(
                 listOf(
-                    Video(null, VideoType.M3U8, FileUrl(m3u8Url, mapOf("Referer" to "https://kwik.cx/", "Accept" to "*/*")))
+                    Video(quality.toInt(), VideoType.CONTAINER, mp4Url, size)
                 )
             )
         }
-    }
 
+        private val map = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/"
 
-    private suspend fun getEpisodes(releaseId: String, lastPage: Int): List<Episode> {
-        val episodes = mutableListOf<Episode>()
-        for (i in 1 until lastPage + 1) {
-            val url = "$hostUrl/api?m=release&id=$releaseId&sort=episode_asc&page=$i"
-            val resp = client.get(url).parsed<ReleaseRouteResponse>()
-            resp.data!!.map { ep ->
-                val kwikEpLink = "$hostUrl/api?m=links&id=${ep.anime_id}&session=${ep.session}&p=kwik"
-                episodes.add(
-                    Episode(number = ep.episode.toString().substringBefore(".0"), link = kwikEpLink, title = ep.title)
-                )
+        private fun getString(content:String,s1:Int):Int{
+            val s2 = 10
+            val slice = map.substring(0,s2)
+            var acc = 0
+            content.reversed().forEachIndexed { index, c ->
+                acc += (if (c.isDigit()) c.toString().toInt() else 0) * s1.toDouble().pow(index).toInt()
             }
+            var k = ""
+            while (acc > 0){
+                k = slice[acc%s2] + k
+                acc = (acc - (acc%s2)) / s2
+            }
+            return k.toIntOrNull() ?: 0
         }
-        return episodes
-    }
 
+        private fun decrypt(fullKey:String, key:String, v1:Int, v2:Int): String{
+            var r = ""
+            var i = 0
+            while (i < fullKey.length) {
+                var s = ""
+                while (fullKey[i] != key[v2]){
+                    s += fullKey[i]
+                    i++
+                }
+                var j = 0
+                while (j < key.length){
+                    s = s.replace(key[j].toString(), j.toString())
+                    j++
+                }
+                r += (getString(s,v2) - v1).toChar()
+                i++
+            }
+            return r
+        }
+    }
 
     @Serializable
     private data class SearchQuery(@SerialName("data") val data: List<SearchQueryData>) {
 
         @Serializable
         data class SearchQueryData(
-            @SerialName("slug") val slug: String,
             @SerialName("title") val title: String,
             @SerialName("poster") val poster: String,
             @SerialName("session") val session: String,
@@ -93,7 +140,7 @@ class AnimePahe : AnimeParser() {
 
     @Serializable
     private data class ReleaseRouteResponse(
-        @SerialName("last_page") val last_page: Int,
+        @SerialName("last_page") val lastPage: Int,
         @SerialName("data") val data: List<ReleaseResponse>?
     ) {
 
@@ -113,7 +160,9 @@ class AnimePahe : AnimeParser() {
         @Serializable
         data class Url(
             @SerialName("audio") val audio: String?,
-            @SerialName("kwik") val kwik: String?,
+            @SerialName("kwik_pahewin") val kwik: String?,
+            @SerialName("fansub") val fanSub : String?,
+            @SerialName("filesize") val fileSize: Long,
         )
     }
 

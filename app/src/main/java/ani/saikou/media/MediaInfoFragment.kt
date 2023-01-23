@@ -114,6 +114,10 @@ class MediaInfoFragment : Fragment() {
                     type = "MANGA"
                     binding.mediaInfoTotalTitle.setText(R.string.total_chaps)
                     binding.mediaInfoTotal.text = (media.manga.totalChapters ?: "~").toString()
+                    media.manga.author?.let {
+                        binding.mediaInfoAuthorContainer.visibility = View.VISIBLE
+                        binding.mediaInfoAuthor.text = it
+                    }
                 }
 
                 val desc = HtmlCompat.fromHtml(
@@ -308,8 +312,8 @@ class MediaInfoFragment : Fragment() {
                                 chip.context,
                                 Intent(chip.context, SearchActivity::class.java)
                                     .putExtra("type", type)
-                                    .putExtra("tag", media.tags[position])
                                     .putExtra("sortBy", "Trending")
+                                    .putExtra("tag", media.tags[position].substringBefore(" :"))
                                     .putExtra("search", true)
                                     .also {
                                         if (media.isAdult) {

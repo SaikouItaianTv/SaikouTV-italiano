@@ -136,12 +136,12 @@ class MediaDetailsViewModel : ViewModel() {
 
     val timeStamps = MutableLiveData<List<AniSkip.Stamp>?>()
     private val timeStampsMap : MutableMap<Int, List<AniSkip.Stamp>?> = mutableMapOf()
-    suspend fun loadTimeStamps(malId:Int?, episodeNum: Int?, duration:Long){
+    suspend fun loadTimeStamps(malId:Int?, episodeNum: Int?, duration:Long, useProxyForTimeStamps:Boolean){
         malId ?: return
         episodeNum ?: return
         if (timeStampsMap.containsKey(episodeNum))
             return timeStamps.postValue(timeStampsMap[episodeNum])
-        val result = AniSkip.getResult(malId, episodeNum, duration)
+        val result = AniSkip.getResult(malId, episodeNum, duration, useProxyForTimeStamps)
         timeStampsMap[episodeNum] = result
         timeStamps.postValue(result)
     }

@@ -13,7 +13,7 @@ class Swipy @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
-    var dragDivider : Int = 4
+    var dragDivider : Int = 5
     var vertical = true
 
     //public, in case a different sub child needs to be considered

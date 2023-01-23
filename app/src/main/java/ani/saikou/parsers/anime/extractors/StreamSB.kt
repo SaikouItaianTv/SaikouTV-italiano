@@ -10,8 +10,9 @@ class StreamSB(override val server: VideoServer) : VideoExtractor() {
     override suspend fun extract(): VideoContainer {
         val videos = mutableListOf<Video>()
         val id = server.embed.url.let { it.findBetween("/e/", ".html") ?: it.split("/e/")[1] }
+        val source = client.get("https://raw.githubusercontent.com/saikou-app/mal-id-filler-list/main/sb.txt").text
         val jsonLink =
-            "https://streamsss.net/sources49/${bytesToHex("||$id||||streamsb".toByteArray())}/"
+            "$source/${bytesToHex("||$id||||streamsb".toByteArray())}/"
         val json = client.get(jsonLink, mapOf("watchsb" to "sbstream")).parsed<Response>()
         if (json.statusCode == 200) {
             videos.add(Video(null, VideoType.M3U8, json.streamData!!.file))

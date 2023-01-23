@@ -41,8 +41,9 @@ class MangaReadAdapter(
         _binding = binding
 
         //Source Selection
-        binding.animeSource.setText(mangaReadSources.names[media.selected!!.source])
-        mangaReadSources[media.selected!!.source].apply {
+        val source = media.selected!!.source.let { if(it>=mangaReadSources.names.size) 0 else it }
+        binding.animeSource.setText(mangaReadSources.names[source])
+        mangaReadSources[source].apply {
             binding.animeSourceTitle.text = showUserText
             showUserTextListener = { MainScope().launch { binding.animeSourceTitle.text = it } }
         }
@@ -143,7 +144,9 @@ class MangaReadAdapter(
         if (binding != null) {
             if (media.manga?.chapters != null) {
                 val chapters = media.manga.chapters!!.keys.toTypedArray()
-                var continueEp = loadData<String>("${media.id}_current_chp") ?: media.userProgress?.plus(1).toString()
+                val anilistEp = (media.userProgress?:0).plus(1)
+                val appEp = loadData<String>("${media.id}_current_chp")?.toIntOrNull() ?: 1
+                var continueEp = (if(anilistEp>appEp) anilistEp else appEp).toString()
                 if (chapters.contains(continueEp)) {
                     binding.animeSourceContinue.visibility = View.VISIBLE
                     handleProgress(

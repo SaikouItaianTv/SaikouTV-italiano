@@ -38,7 +38,7 @@ class ImageViewDialog : BottomSheetDialogFragment() {
         arguments?.let {
             _title = it.getString("title")?.replace(Regex("[\\\\/:*?\"<>|]"), "")
             reload = it.getBoolean("reload")
-            _image = it.getSerializable("image") as FileUrl
+            _image = it.getSerialized("image")!!
         }
     }
 

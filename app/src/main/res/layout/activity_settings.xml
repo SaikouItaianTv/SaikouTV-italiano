@@ -336,6 +336,24 @@
                     app:thumbTint="@color/button_switch_track" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/settingsContinueMedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawableStart="@drawable/ic_round_play_disabled_24"
+                    android:drawablePadding="16dp"
+                    android:elegantTextHeight="true"
+                    android:fontFamily="@font/poppins_bold"
+                    android:minHeight="64dp"
+                    android:text="@string/always_continue_shows"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/bg_opp"
+                    app:cornerRadius="0dp"
+                    app:drawableTint="?attr/colorPrimary"
+                    app:showText="false"
+                    app:thumbTint="@color/button_switch_track" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/settingsRecentlyListOnly"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -714,15 +732,46 @@
                     app:drawableEndCompat="@drawable/ic_round_arrow_drop_down_24"
                     tools:ignore="TextContrastCheck" />
 
-                <TextView
-                    android:id="@+id/settingsInfo"
+                <Button
+                    android:id="@+id/settingsFAQ"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="-32dp"
+                    android:layout_marginEnd="-32dp"
+                    android:background="@drawable/ui_bg"
+                    android:backgroundTint="@color/bg_opp"
+                    android:backgroundTintMode="src_atop"
+                    android:fontFamily="@font/poppins_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:text="@string/faq"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/bg_opp"
+                    app:cornerRadius="0dp"
+                    app:icon="@drawable/ic_round_help_24"
+                    app:iconPadding="16dp"
+                    app:iconTint="?attr/colorPrimary" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/settingsCheckUpdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:alpha="0.58"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:text="@string/desc"
-                    tools:ignore="TextContrastCheck" />
+                    android:checked="true"
+                    android:drawableStart="@drawable/ic_round_new_releases_24"
+                    android:drawablePadding="16dp"
+                    android:elegantTextHeight="true"
+                    android:fontFamily="@font/poppins_bold"
+                    android:minHeight="64dp"
+                    android:text="@string/check_app_updates"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/bg_opp"
+                    app:cornerRadius="0dp"
+                    app:drawableTint="?attr/colorPrimary"
+                    app:showText="false"
+                    app:thumbTint="@color/button_switch_track" />
 
                 <Button
                     android:id="@+id/settingsDev"
@@ -742,6 +791,27 @@
                     android:textColor="@color/bg_opp"
                     app:cornerRadius="0dp"
                     app:icon="@drawable/ic_round_accessible_forward_24"
+                    app:iconPadding="16dp"
+                    app:iconSize="24dp" />
+
+                <Button
+                    android:id="@+id/settingsForks"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="-32dp"
+                    android:layout_marginEnd="-32dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:text="@string/forks"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/bg_opp"
+                    app:cornerRadius="0dp"
+                    app:icon="@drawable/ic_round_restaurant_24"
                     app:iconPadding="16dp"
                     app:iconSize="24dp" />
 
@@ -768,7 +838,6 @@
 
 
             </ani.saikou.others.Xpandable>
-
 
             <TextView
                 android:layout_width="match_parent"

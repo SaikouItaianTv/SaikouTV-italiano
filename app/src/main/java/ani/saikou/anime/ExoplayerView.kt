@@ -1291,13 +1291,14 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         if (exoPlayer.duration < playbackPosition)
             exoPlayer.seekTo(0)
 
-        if (!isTimeStampsLoaded) {
+        if (!isTimeStampsLoaded && settings.timeStampsEnabled) {
             val dur = exoPlayer.duration
             lifecycleScope.launch(Dispatchers.IO) {
                 model.loadTimeStamps(
                     media.idMAL,
                     media.anime?.selectedEpisode?.trim()?.toIntOrNull(),
-                    dur / 1000
+                    dur / 1000,
+                    settings.useProxyForTimeStamps
                 )
             }
         }

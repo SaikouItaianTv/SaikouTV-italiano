@@ -10,7 +10,7 @@ class MangaHub : MangaParser() {
 
     override val name = "MangaHub"
     override val saveName = "manga_hub"
-    override val hostUrl = "https://mangahub.io"
+    override val hostUrl = "https://api.mghubcdn.com/graphql"
 
     override suspend fun search(query: String): List<ShowResponse> {
         val doc = client.get("$hostUrl/search?q=${encode(query)}").document

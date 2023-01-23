@@ -278,8 +278,10 @@ class MediaDetailsActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLi
         tabLayout.selectedItemId = idFromSelect()
         viewPager.setCurrentItem(selected, false)
 
-        if (model.continueMedia == null) model.continueMedia = media.cameFromContinue
-        if (media.cameFromContinue) selected = 1
+        if (model.continueMedia == null && media.cameFromContinue) {
+            model.continueMedia = loadData("continue_media") ?: true
+            selected = 1
+        }
 
         val live = Refresh.activity.getOrPut(this.hashCode()) { MutableLiveData(true) }
         live.observe(this) {

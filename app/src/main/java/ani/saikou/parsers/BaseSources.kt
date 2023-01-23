@@ -9,7 +9,7 @@ import ani.saikou.tryWithSuspend
 abstract class WatchSources : BaseSources() {
 
     override operator fun get(i: Int): AnimeParser {
-        return list[i].get.value as AnimeParser
+        return (list.getOrNull(i)?:list[0]).get.value as AnimeParser
     }
 
     suspend fun loadEpisodesFromMedia(i: Int, media: Media): MutableMap<String, Episode> {
@@ -35,7 +35,7 @@ abstract class WatchSources : BaseSources() {
 abstract class MangaReadSources : BaseSources() {
 
     override operator fun get(i: Int): MangaParser {
-        return list[i].get.value as MangaParser
+        return (list.getOrNull(i)?:list[0]).get.value as MangaParser
     }
 
     suspend fun loadChaptersFromMedia(i: Int, media: Media): MutableMap<String, MangaChapter> {

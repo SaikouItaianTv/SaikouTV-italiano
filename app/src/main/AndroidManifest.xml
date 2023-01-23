@@ -25,46 +25,28 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="m">
-        <activity
-            android:name=".settings.ReaderSettingsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".settings.UserInterfaceSettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".settings.PlayerSettingsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".settings.SettingsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".media.SearchActivity"
-            android:exported="true" />
-        <activity
-            android:name=".media.StudioActivity"
-            android:exported="true" />
-        <activity
-            android:name=".media.CalendarActivity"
-            android:exported="true" />
-        <activity
-            android:name=".user.ListActivity"
-            android:exported="true" />
+        <activity android:name=".settings.FAQActivity" />
+        <activity android:name=".settings.ReaderSettingsActivity" />
+        <activity android:name=".settings.UserInterfaceSettingsActivity" />
+        <activity android:name=".settings.PlayerSettingsActivity" />
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".media.SearchActivity" />
+        <activity android:name=".media.StudioActivity" />
+        <activity android:name=".media.CalendarActivity" />
+        <activity android:name=".user.ListActivity" />
         <activity
             android:name=".manga.mangareader.MangaReaderActivity"
-            android:exported="true" />
-        <activity
-            android:name=".GenreActivity"
-            android:exported="true" />
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/manga"
+            android:launchMode="singleTask" />
+        <activity android:name=".GenreActivity" />
         <activity
             android:name=".media.MediaDetailsActivity"
-            android:exported="true"
             android:theme="@style/Theme.Saikou.NeverCutout" />
-        <activity
-            android:name=".media.CharacterDetailsActivity"
-            android:exported="true" />
-        <activity
-            android:name=".NoInternet"
-            android:exported="true" />
+        <activity android:name=".media.CharacterDetailsActivity" />
+        <activity android:name=".NoInternet" />
         <activity
             android:name=".anime.ExoplayerView"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation"

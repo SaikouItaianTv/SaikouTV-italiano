@@ -45,6 +45,10 @@ object Anilist {
         "MANGA", "NOVEL", "ONE SHOT"
     )
 
+    val authorRoles = listOf(
+        "Original Creator", "Story & Art", "Story"
+    )
+
     private val cal: Calendar = Calendar.getInstance()
     private val currentYear = cal.get(Calendar.YEAR)
     private val currentSeason: Int = when (cal.get(Calendar.MONTH)) {

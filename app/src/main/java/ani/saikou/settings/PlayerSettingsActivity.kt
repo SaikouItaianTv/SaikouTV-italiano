@@ -145,6 +145,12 @@ class PlayerSettingsActivity : AppCompatActivity() {
             saveData(player, settings)
         }
 
+        binding.playerSettingsTimeStampsProxy.isChecked = settings.useProxyForTimeStamps
+        binding.playerSettingsTimeStampsProxy.setOnCheckedChangeListener { _, isChecked ->
+            settings.useProxyForTimeStamps = isChecked
+            saveData(player, settings)
+        }
+
         binding.playerSettingsShowTimeStamp.isChecked = settings.showTimeStampButton
         binding.playerSettingsShowTimeStamp.setOnCheckedChangeListener { _, isChecked ->
             settings.showTimeStampButton = isChecked
