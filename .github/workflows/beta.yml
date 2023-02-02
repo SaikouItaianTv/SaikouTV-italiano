@@ -1,10 +1,9 @@
 name: Android CI Beta
 
 on:
-  workflow_dispatch:
   push:
     paths:
-      - 'abeta.md'
+      - 'beta.md'
 
 jobs:
   build:
@@ -17,6 +16,7 @@ jobs:
       run: |
         VER=$(cat beta.md | head -n1 | sed -e "s/# //")
         echo "VERSION=$VER" >> $GITHUB_ENV
+
     - name: set up JDK 11
       uses: actions/setup-java@v3
       with:
@@ -24,13 +24,21 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Cook KeyStore
+      run:  echo "${{ secrets.KEYSTORE_B64 }}" | base64 -d > $GITHUB_WORKSPACE/signing-key.jks
+
     - name: Enable Reports
       run: sed "s/DisabledReports=true/DisabledReports=false/g" -i app/src/main/java/ani/saikou/others/DisabledReports.kt
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew assembleDebug
+        -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks 
+        -Pandroid.injected.signing.store.password=${{ secrets.PASSWORD }} 
+        -Pandroid.injected.signing.key.alias=key0
+        -Pandroid.injected.signing.key.password=${{ secrets.PASSWORD }}
+      shell: bash
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.0.0
