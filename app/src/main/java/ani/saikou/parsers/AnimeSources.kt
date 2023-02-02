@@ -9,7 +9,7 @@ object AnimeSources : WatchSources() {
         "AnimeWorld" to ::AnimeWorld,
         "AnyPlay" to ::AniPlay,
         "AnimeSaturn" to ::AnimeSaturn,
-        "MULTILINGUA: Kamyroll" to ::Kamyroll,
+        "AnimeUnity" to ::AnimeUnity,
 
         "INGLESE: AllAnime" to ::AllAnime,
         "INGLESE: Gogo" to ::Gogo,
