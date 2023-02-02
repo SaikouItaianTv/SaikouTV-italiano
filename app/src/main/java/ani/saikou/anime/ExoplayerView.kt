@@ -758,14 +758,6 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
             epChanging = !it
         }
 
-        // Subtitle View Margin fix for Kamyroll
-        if(model.watchSources!!.names[media.selected!!.source] == "Kamyroll" && (settings.kamySubType == 0 || settings.kamySubType == 2)) {
-            val marginInt = -19 // This gets rounded to -18dp
-            val margin = (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginInt.toFloat(), resources.displayMetrics)).roundToInt()
-            exoSubtitleView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = margin
-            }
-        }
 
         //Anime Title
         animeTitle.text = media.userPreferredName

@@ -45,9 +45,7 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 |                [Gogo](https://gogoanime.cm)                |   WORKING    |   SOME    |
 |                  [Zoro](https://zoro.to)                   |   WORKING    |    NO     |
 |                 [Marin](https://marin.moe)                 |   WORKING    |    YES    |
-| [Kamyroll](https://github.com/kamyroll/Kamyroll-Wiki/wiki) |   WORKING    |    NO     |
 |             [AnimePahe](https://animepahe.ru)              |   WORKING    |    YES    |
-|                [9Anime](https://9anime.pl)                 | NOT WORKING  |   SOME    |
 |           [ConsumeBili](https://www.bilibili.tv)           |   WORKING    |    NO     |
 |               [Haho (18+)](https://haho.moe)               |   WORKING    |    YES    |
 |         [HentaiMama (18+)](https://hentaimama.io)          |   WORKING    |   SOME    |

@@ -38,42 +38,7 @@ class PlayerSettingsActivity : AppCompatActivity() {
         initActivity(this)
 
         onBackPressedDispatcher.addCallback(this) {
-            val settings = loadData<PlayerSettings>(player, toast = false) ?: PlayerSettings().apply { saveData(player, this) }
-            if(media!=null) {
-                var newSubtitle: Subtitle? = null
-                if(subtitle != null){
-                    // Change Kamyroll Subtitle Type
-                    val oldUrl = subtitle?.url?.url
-                    if (oldUrl?.contains("api.kamyroll.tech", true) == true) {
-                        var newUrl: FileUrl? = subtitle?.url
-                        var newType: SubtitleType? = null
-                        when(settings.kamySubType){
-                            0 -> {
-                                newType = SubtitleType.ASS
-                                newUrl = FileUrl(oldUrl.replace("&out=vtt", "&out=ass").replace("&out=srt", "&out=ass"))
-                            }
-                            1 -> {
-                                newType = SubtitleType.VTT
-                                newUrl = FileUrl(oldUrl.replace("&out=ass", "&out=vtt").replace("&out=srt", "&out=vtt"))
-                            }
-                            2 -> {
-                                newType = SubtitleType.SRT
-                                newUrl = FileUrl(oldUrl.replace("&out=ass", "&out=srt").replace("&out=vtt", "&out=srt"))
-                            }
-                        }
-                        val newLanguage: String = subtitle!!.language
-                        if(newUrl != null && newType != null) newSubtitle = Subtitle(newLanguage, newUrl, newType) }
-                }
-                val intent = Intent(this@PlayerSettingsActivity, ExoplayerView::class.java).apply {
-                    putExtra("media", media)
-                    if(newSubtitle != null) putExtra("subtitle", newSubtitle)
-                }
-                finish()
-                startActivity(intent)
-            }
-            else{
-                finish()
-            }
+            finish()
         }
 
         try {
@@ -295,7 +260,6 @@ class PlayerSettingsActivity : AppCompatActivity() {
             toggleButton(binding.videoSubColorSecondary, isChecked)
             toggleButton(binding.videoSubOutline, isChecked)
             toggleButton(binding.videoSubFont, isChecked)
-            toggleButton(binding.kamyLang, isChecked)
             binding.subtitleFontSizeCard.isEnabled = isChecked
             binding.subtitleFontSizeCard.isClickable = isChecked
             binding.subtitleFontSizeCard.alpha = when (isChecked) {
@@ -321,16 +285,6 @@ class PlayerSettingsActivity : AppCompatActivity() {
             saveData(player, settings)
             toggleSubOptions(isChecked)
             restartApp()
-        }
-        val subtitleTypes =
-            arrayOf("ASS", "VTT", "SRT")
-        val kamyrollSubTypeDialog = AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Kamyroll Subtitle Type")
-        binding.kamySubtitleType.setOnClickListener {
-            kamyrollSubTypeDialog.setSingleChoiceItems(subtitleTypes, settings.kamySubType) { dialog, count ->
-                settings.kamySubType = count
-                saveData(player, settings)
-                dialog.dismiss()
-            }.show()
         }
         val colorsPrimary =
             arrayOf("Black", "Dark Gray", "Gray", "Light Gray", "White", "Red", "Yellow", "Green", "Cyan", "Blue", "Magenta")
@@ -425,32 +379,6 @@ class PlayerSettingsActivity : AppCompatActivity() {
                 settings.font = count
                 saveData(player, settings)
                 dialog.dismiss()
-            }.show()
-        }
-        val locales = arrayOf(
-            "Default (en-US)",
-            "[ja-JP] Japanese",
-            "[en-US] English",
-            "[de-DE] German",
-            "[es-419] Spanish",
-            "[es-ES] Spanish (Spain)",
-            "[fr-FR] French",
-            "[it-IT] Italian",
-            "[ar-SA] Arabic (Saudi Arabia)",
-            "[ar-ME] Arabic (Montenegro)",
-            "[pt-BR] Portuguese (Brazil)",
-            "[pt-PT] Portuguese (Portugal)",
-            "[ru-RU] Russian",
-            "[zh-CN] Chinese",
-            "[tr-TR] Turkish"
-        )
-        val localeDialog = AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Kamyroll Language")
-        binding.kamyLang.setOnClickListener {
-            localeDialog.setSingleChoiceItems(locales, settings.locale) { dialog, count ->
-                settings.locale = count
-                saveData(player, settings)
-                dialog.dismiss()
-                restartApp()
             }.show()
         }
         binding.subtitleFontSize.setText(settings.fontSize.toString())

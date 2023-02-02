@@ -180,20 +180,15 @@
     <string name="resize_mode_button">Default Resize Mode</string>
     <string name="subtitles">Subtitles</string>
     <string name="subtitle_toggle">Subtitles</string>
-    <string name="subtitle_toggle_kamyroll">For this to take effect in Hard-Subbed Kamyroll, please restart the app. (Or use Soft-Sub and select none as subtitle)</string>
-    <string name="kamyroll_subtitle_type_select">Kamyroll Subtitle Type</string>
-    <string name="kamyroll_subtitle_types">ASS - pre-set style from episode \nVTT - customizable subtitles, positioning \nSRT - customizable subtitles, no positioning</string>
     <string name="primary_sub_color_select">Subtitle Color</string>
     <string name="secondary_sub_color_select">Subtitle Outline Color</string>
     <string name="secondary_sub_outline_type_select">Subtitle Outline Type</string>
     <string name="sub_background_color_select">Subtitle Background Color</string>
     <string name="sub_window_color_select">Subtitle Window Color</string>
     <string name="sub_window_color_info">"The subtitle window is the part left and right from them. (where the background isn't)"</string>
-    <string name="sub_color_info"><b>Note:</b> Changing Subtitle formatting only works with Soft-Subbed Sources such as Zoro and Kamyroll!</string>
+    <string name="sub_color_info"><b>Note:</b> Changing Subtitle formatting only works with Soft-Subbed Sources such as Zoro!</string>
     <string name="sub_font_select">Subtitle Font</string>
     <string name="subtitle_font_size">Subtitle Size</string>
-    <string name="kamyroll_language_button">Kamyroll Language</string>
-    <string name="kamyroll_language_info"><b>Note:</b> This changes the episode title and description language. <b>New Episodes won\'t be available with translated titles for up to 2 hours and will not be shown in the episode list. To view them as they release please switch to english.</b> For changes to take effect the app needs to restart. <b>Some languages might not work!</b></string>
 
     <string name="auto">Auto</string>
     <string name="auto_play_next_episode">Autoplay Next Episode</string>
