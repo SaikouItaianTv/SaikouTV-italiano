@@ -1,6 +1,7 @@
-# 1.2.0.25
+# 1.2.0.25.1
 
-- Fixed "Completed" bug in the Media List Dialog Fragment
+- Fixed Manga source
+- Added more extractors 
 
 Saikou main app Updates:
 - Updated to the latest Artifact
