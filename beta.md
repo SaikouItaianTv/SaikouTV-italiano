@@ -4,4 +4,4 @@
 - Added more extractors.
 
 Saikou main app Updates:
-- Updated to the latest Artifact
+- Updated to the latest Artifact.
