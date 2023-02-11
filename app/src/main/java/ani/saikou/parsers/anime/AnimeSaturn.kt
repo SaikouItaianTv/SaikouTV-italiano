@@ -28,7 +28,7 @@ class AnimeSaturn : AnimeParser() {
         }
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val page = client.get(episodeLink).document
         val epLink = page.select("div.card-body > a[href]").find {it1 ->
             it1.attr("href").contains("watch?")

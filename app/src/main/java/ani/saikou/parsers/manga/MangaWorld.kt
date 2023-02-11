@@ -64,7 +64,7 @@ class MangaWorld : MangaParser() {
             jsonData = resp.substringAfter("singleChapters\":").substringBefore("}},{\"f\":1}]")
             Json{ignoreUnknownKeys = true }.decodeFromString<List<ChapterParser>>(jsonData).reversed().forEach { chapter ->
                 val imageData =
-                    "https://cdn.mangaworld.in/chapters/$baseName-$manga/${chapter.chapterSlug}-${chapter.id}/"
+                    "https://cdn.${hostUrl.substringAfter(".")}chapters/$baseName-$manga/${chapter.chapterSlug}-${chapter.id}/"
                 val links = imageData+chapter.pages.joinToString()
                 episodes.add(MangaChapter(number = chapter.name.replace("Capitolo ",""), link = links))
 
@@ -74,7 +74,7 @@ class MangaWorld : MangaParser() {
             Json{ignoreUnknownKeys = true }.decodeFromString<List<VolumesParser>>(jsonData).reversed().forEach { volume ->
                 volume.chapters.reversed().forEach{ chapter ->
                     val imageData =
-                        "https://cdn.mangaworld.in/chapters/$baseName-$manga/${volume.volumeData.volumeSlug}-${volume.volumeData.volumeId}/${chapter.chapterSlug}-${chapter.id}/"
+                        "https://cdn.${hostUrl.substringAfter(".")}chapters/$baseName-$manga/${volume.volumeData.volumeSlug}-${volume.volumeData.volumeId}/${chapter.chapterSlug}-${chapter.id}/"
                     val links = imageData+chapter.pages.joinToString()
                     episodes.add(MangaChapter(number = chapter.name.replace("Capitolo ",""), link = links))
                 }

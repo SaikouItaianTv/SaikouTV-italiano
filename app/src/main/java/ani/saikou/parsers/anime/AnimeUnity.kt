@@ -30,7 +30,7 @@ class AnimeUnity : AnimeParser() {
             drop(1)
             .toList()
     }
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
 
         val expire = (System.currentTimeMillis() / 1000 + 172800).toString()
 

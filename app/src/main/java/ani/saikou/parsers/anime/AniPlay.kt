@@ -37,7 +37,7 @@ class AniPlay : AnimeParser() {
         return Json{ignoreUnknownKeys = true }.decodeFromString<List<ApiEpisode>>(client.get("$url/season/${this.id}").text).mapNotNull { it.toEpisode() }
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val link = client.get(episodeLink).parsed<ApiEpisodeUrl>().url
         return  listOf(VideoServer("AniPlay",  FileUrl(link, mapOf("referer" to hostUrl))))
 

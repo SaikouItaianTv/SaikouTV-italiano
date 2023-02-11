@@ -28,7 +28,7 @@ class HentaiWorld : AnimeParser() {
         }
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val link = client.get(episodeLink, headers = mapOf("x-requested-with " to "XMLHttpRequest")).parsed<AWHtmlResponse>().link ?: return emptyList()
         return  listOf(VideoServer("HentaiWorld", link))
 
