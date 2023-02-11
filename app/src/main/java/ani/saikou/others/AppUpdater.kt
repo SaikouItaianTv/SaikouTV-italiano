@@ -86,6 +86,7 @@ object AppUpdater {
                     1 -> s.toDouble() * 10
                     2 -> s.toDouble()
                     3 -> "0.$s".toDouble()
+                    4 -> "0.0$s".toDouble()
                     else -> s.toDouble()
                 }
             }.sum()

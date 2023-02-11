@@ -1,8 +1,10 @@
 package ani.saikou.parsers.anime
 
 import ani.saikou.client
+import ani.saikou.getSize
 import ani.saikou.media.Media
 import ani.saikou.parsers.*
+import ani.saikou.parsers.anime.extractors.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -20,14 +22,23 @@ class AnimeWorld : AnimeParser() {
         val widget = document.select(".widget.servers")
         return widget.select(".server[data-name=\"9\"] .episode").map {
             val num = it.select("a").attr("data-episode-num")
-            val id = "$hostUrl/api/episode/info?id=${it.select("a").attr("data-id")}"
-            Episode(number = num, link = id)
+            val serverNames = mutableMapOf<String?, String?>()
+            document.select("span.tabs.servers-tabs span").forEach {server -> serverNames[server.attr("data-name")] = server.text() }
+            val linkIds = mutableMapOf<String,String>()
+            document.select("div.server").forEach {server ->
+                val name = serverNames[server.attr("data-name")]!!
+                linkIds[name] =
+                    server.select("li.episode a").toList().first{ ep -> ep.attr("data-episode-num")==num}.attr("data-id")
+            }
+
+            Episode(number = num, link = "$hostUrl$animeLink", extra = linkIds)
         }
     }
 
     override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
-        val link = client.get(episodeLink).parsed<AWHtmlResponse>().link ?: return emptyList()
-        return  listOf(VideoServer("AnimeWorld", link))
+        return extra?.map { id ->
+            client.get("$hostUrl/api/episode/info?id=${id.value}").parsed<AWHtmlResponse>().link?.let { VideoServer(id.key, it) }
+        }?.filterNotNull() ?: listOf()
 
     }
 
@@ -36,16 +47,27 @@ class AnimeWorld : AnimeParser() {
         @SerialName("grabber") val link: String? = null
     )
 
-    override suspend fun getVideoExtractor(server: VideoServer): VideoExtractor = AnimeWorldExtractor(server)
+    override suspend fun getVideoExtractor(server: VideoServer): VideoExtractor? =
+            when (server.name) {
+                "Streamtape"        -> StreamTape(server)
+                "Doodstream"        -> Doodstream(server)
+                "AnimeWorld Server" -> AnimeWorldExtractor(server)
+                "StreamSB"          -> StreamSB(server)
+                "Streamlare"        -> Streamlare(server)
+                "FileMoon"          -> FileMoon(server)
+                else             -> null
+            }
+
+
+
     class AnimeWorldExtractor(override val server: VideoServer) : VideoExtractor() {
         override suspend fun extract(): VideoContainer {
             val type = if (server.embed.url.contains("m3u8")) VideoType.M3U8 else VideoType.CONTAINER
             return VideoContainer(
                 listOf(
-                    Video(null, type, server.embed)
+                    Video(null, type, server.embed, getSize(server.embed))
                 )
             )
-
         }
     }
 

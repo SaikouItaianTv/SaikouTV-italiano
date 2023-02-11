@@ -1,8 +1,11 @@
 package ani.saikou.parsers.anime
 
 import ani.saikou.client
+import ani.saikou.getSize
 import ani.saikou.media.Media
 import ani.saikou.parsers.*
+import ani.saikou.parsers.anime.extractors.StreamSB
+import ani.saikou.parsers.anime.extractors.StreamTape
 import org.jsoup.nodes.Document
 
 class AnimeSaturn : AnimeParser() {
@@ -28,14 +31,8 @@ class AnimeSaturn : AnimeParser() {
         }
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
-        val page = client.get(episodeLink).document
-        val epLink = page.select("div.card-body > a[href]").find {it1 ->
-            it1.attr("href").contains("watch?")
-        }?.attr("href")
-        val episodePage = client.get(epLink!!).document
+    private fun getUrl(episodePage : Document): String?{
         val episodeUrl: String?
-
         if(episodePage.select("video.afterglow > source").isNotEmpty()) //Old player
             episodeUrl = episodePage.select("video.afterglow > source").first()!!.attr("src")
 
@@ -44,20 +41,47 @@ class AnimeSaturn : AnimeParser() {
                 it.toString().contains("jwplayer('player_hls').setup({")
             }!!.toString()
             episodeUrl = script.split(" ").find { it.contains(".m3u8") and !it.contains(".replace") }!!.replace("\"","").replace(",", "")
+        }
+        return episodeUrl
+    }
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
+        val page = client.get(episodeLink).document
+        val epLink = page.select("div.card-body > a[href]").find {it1 ->
+            it1.attr("href").contains("watch?")
+        }?.attr("href")
+        val episodePage = client.get(epLink!!).document
+        val videoServersList = mutableListOf(
+            VideoServer("AnimeSaturn", getUrl(episodePage)?.trim()!!))
+
+        episodePage.select("a.dropdown-item").forEach {
+            val doc = client.get(it.attr("href")).document
+            val serverInfos = doc.select("#wtf > a")
+
+            videoServersList.add(VideoServer(serverInfos.text().substringAfterLast(" "), serverInfos.attr("href")))
 
         }
 
-        return  listOf(VideoServer("AnimeSaturn", episodeUrl?.trim()!!))
+        return  videoServersList
 
     }
 
-    override suspend fun getVideoExtractor(server: VideoServer): VideoExtractor = AniPlayExtractor(server)
-    class AniPlayExtractor(override val server: VideoServer) : VideoExtractor() {
+    override suspend fun getVideoExtractor(server: VideoServer): VideoExtractor? =
+    when (server.name) {
+        "Streamtape"        -> StreamTape(server)
+        "DoodStream"        -> Doodstream(server)
+        "AnimeSaturn"       -> AnimeSaturnExtractor(server)
+        "StreamSB"          -> StreamSB(server)
+        "Streamlare"        -> Streamlare(server)
+        "FileMoon"          -> FileMoon(server)
+        else             -> null
+    }
+
+    class AnimeSaturnExtractor(override val server: VideoServer) : VideoExtractor() {
         override suspend fun extract(): VideoContainer {
             val type = if (server.embed.url.contains("m3u8")) VideoType.M3U8 else VideoType.CONTAINER
             return VideoContainer(
                 listOf(
-                    Video(null, type, server.embed)
+                    Video(null, type, server.embed, getSize(server.embed))
                 )
             )
 
