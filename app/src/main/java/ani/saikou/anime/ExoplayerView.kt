@@ -127,7 +127,10 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
 
     private var orientationListener: OrientationEventListener? = null
 
-    private lateinit var media: Media
+    companion object{
+        lateinit var media : Media
+    }
+
     private lateinit var episode: Episode
     private lateinit var episodes: MutableMap<String, Episode>
     private lateinit var episodeArr: List<String>
@@ -729,12 +732,6 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         }
 
         //Handle Media
-        try {
-            media = (intent.getSerialized("media")) ?: return
-        } catch (e: Exception) {
-            toast(e.toString())
-            return
-        }
         model.setMedia(media)
         title = media.userPreferredName
         episodes = media.anime?.episodes ?: return

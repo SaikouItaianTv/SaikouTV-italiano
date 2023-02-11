@@ -38,7 +38,7 @@ class ConsumeBili : AnimeParser() {
         }
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val extraData = extra as Map<*, *>
         val sourceEpisodeId = extraData["sourceEpisodeId"]
         val sourceMediaId = extraData["sourceMediaId"]
@@ -55,19 +55,19 @@ class ConsumeBili : AnimeParser() {
             val file = FileUrl(url = source.file)
             Video(null, VideoType.DASH, file, null)
         }
-        val modifiedSubtiles = sources.subtitles?.map {
+        val modifiedSubtitles = sources.subtitles?.map {
             Subtitle(
                 language = it.lang,
                 url = it.file,
                 type = SubtitleType.VTT
             )
-        }
+        } ?: listOf()
 
         return listOf(
             VideoServer(
                 name = "Server",
                 embed = FileUrl(url = ""),
-                extraData = mapOf("sources" to modifiedSources, "subtitles" to modifiedSubtiles)
+                extraData = VideoContainer(modifiedSources,modifiedSubtitles)
             )
         )
     }
@@ -78,13 +78,7 @@ class ConsumeBili : AnimeParser() {
 
     class BilibiliExtractor(override val server: VideoServer) : VideoExtractor() {
         override suspend fun extract(): VideoContainer {
-            val extra = server.extraData as Map<*, *>
-            val subtitles = extra["subtitles"] as List<Subtitle>
-            val sources = extra["sources"] as List<Video>
-            return VideoContainer(
-                videos = sources,
-                subtitles = subtitles
-            )
+            return server.extraData as VideoContainer
         }
     }
 

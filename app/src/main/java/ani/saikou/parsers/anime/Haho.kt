@@ -35,7 +35,7 @@ class Haho : AnimeParser() {
         return map.values.toList()
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val htmlResponse = client.get(episodeLink, mapOf(cookieHeader)).document
         return htmlResponse.select("ul.dropdown-menu > li > a.dropdown-item").map {
             var server = it.text().replace(" ", "").replace("/-", "")

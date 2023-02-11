@@ -21,7 +21,7 @@ abstract class AnimeParser : BaseParser() {
      *
      * This returns a Map of "Video Server's Name" & "Link/Data" of all the Video Servers present on the site, which can be further used by loadVideoServers() & loadSingleVideoServer()
      * **/
-    abstract suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer>
+    abstract suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer>
 
 
     /**
@@ -63,7 +63,7 @@ abstract class AnimeParser : BaseParser() {
      *
      * Doesn't need to be overridden, if the parser is following the norm.
      * **/
-    open suspend fun loadByVideoServers(episodeUrl: String, extra: Any?, callback: (VideoExtractor) -> Unit) {
+    open suspend fun loadByVideoServers(episodeUrl: String, extra: Map<String,String>?, callback: (VideoExtractor) -> Unit) {
         tryWithSuspend {
             loadVideoServers(episodeUrl, extra).asyncMap {
                 getVideoExtractor(it)?.apply {
@@ -81,7 +81,7 @@ abstract class AnimeParser : BaseParser() {
      *
      * Doesn't need to be overridden, if the parser is following the norm.
      * **/
-    open suspend fun loadSingleVideoServer(serverName: String, episodeUrl: String, extra: Any?): VideoExtractor? {
+    open suspend fun loadSingleVideoServer(serverName: String, episodeUrl: String, extra: Map<String,String>?): VideoExtractor? {
         return tryWithSuspend {
             loadVideoServers(episodeUrl, extra).apply {
                 find { it.name == serverName }?.also {
@@ -163,7 +163,7 @@ data class Episode(
     /**
      * In case, you want to pass extra data
      * **/
-    val extra: Any? = null,
+    val extra: Map<String,String>? = null,
 ) {
     constructor(
         number: String,
@@ -172,6 +172,6 @@ data class Episode(
         thumbnail: String,
         description: String? = null,
         isFiller: Boolean = false,
-        extra: Any? = null
+        extra: Map<String,String>? = null
     ) : this(number, link, title, FileUrl(thumbnail), description, isFiller, extra)
 }

@@ -19,7 +19,7 @@ class AllAnime : AnimeParser() {
     override val hostUrl = "https://allanime.site"
     override val isDubAvailableSeparately = true
 
-    private val apiHost = "https://blog.allanimenews.com/"
+    private val apiHost = "https://allanimenews.com/"
     private val ytAnimeCoversHost = "https://wp.youtube-anime.com/aln.youtube-anime.com"
     private val idRegex = Regex("${hostUrl}/anime/(\\w+)")
     private val epNumRegex = Regex("/[sd]ub/(\\d+)")
@@ -28,7 +28,7 @@ class AllAnime : AnimeParser() {
     private val idHash = "f73a8347df0e3e794f8955a18de6e85ac25dfc6b74af8ad613edf87bb446a854"
     private val episodeInfoHash = "73d998d209d6d8de325db91ed8f65716dce2a1c5f4df7d304d952fa3f223c9e8"
     private val searchHash = "9c7a8bc1e095a34f2972699e8105f7aaf9082c6e1ccd56eab99c2f1a971152c6"
-    private val videoServerHash = "bfda9b479f7a4810bfeb9e3c8d462c6d09a33f918328b0688eb370e1778f272f"
+    private val videoServerHash = "1f0a5d6c9ce6cd3127ee4efd304349345b0737fbf5ec33a60bbc3d18e3bb7c61"
 
     override suspend fun loadEpisodes(animeLink: String, extra: Map<String, String>?): List<Episode> {
         val responseArray = mutableListOf<Episode>()
@@ -58,12 +58,11 @@ class AllAnime : AnimeParser() {
         return responseArray
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String, String>?): List<VideoServer> {
         val showId = idRegex.find(episodeLink)?.groupValues?.get(1)
         val videoServers = mutableListOf<VideoServer>()
         val episodeNum = epNumRegex.find(episodeLink)?.groupValues?.get(1)
         if (showId != null && episodeNum != null) {
-
             val variables =
                 """{"showId":"$showId","translationType":"${if (selectDub) "dub" else "sub"}","episodeString":"$episodeNum"}"""
             graphqlQuery(
@@ -81,9 +80,9 @@ class AllAnime : AnimeParser() {
 
                 if (source.sourceUrl.toHttpUrlOrNull() == null) {
                     val jsonUrl = """${apiHost}${source.sourceUrl.replace("clock", "clock.json").substring(1)}"""
-                    videoServers.add(VideoServer(serverName, jsonUrl))
+                    videoServers.add(VideoServer(serverName, jsonUrl, source.type))
                 } else {
-                    videoServers.add(VideoServer(serverName, source.sourceUrl))
+                    videoServers.add(VideoServer(serverName, source.sourceUrl, source.type))
                 }
             }
 
@@ -92,6 +91,8 @@ class AllAnime : AnimeParser() {
     }
 
     override suspend fun getVideoExtractor(server: VideoServer): VideoExtractor? {
+        if (server.extraData as? String? == "player")
+            return AllAnimeExtractor(server, true)
         val serverUrl = Uri.parse(server.embed.url)
         val domain = serverUrl.host ?: return null
         val path = serverUrl.path ?: return null
@@ -106,6 +107,50 @@ class AllAnime : AnimeParser() {
             else                -> null
         }
         return extractor
+    }
+
+    private class AllAnimeExtractor(override val server: VideoServer, val direct: Boolean = false) : VideoExtractor() {
+        override suspend fun extract(): VideoContainer {
+            val url = server.embed.url
+            return if (direct)
+                VideoContainer(listOf(Video(null, VideoType.CONTAINER, url, getSize(url))))
+            else {
+                val res = client.get(url).parsed<VideoResponse>()
+                val sub = mutableListOf<Subtitle>()
+                val vid = res.links?.asyncMapNotNull { i ->
+                    i.subtitles?.forEach {
+                        if (it.label?.contains("vtt") == true)
+                            sub.add(Subtitle(it.lang ?: return@forEach, it.src ?: return@forEach))
+                    }
+                    when {
+                        i.crIframe == true -> {
+                            i.portData?.streams?.mapNotNull {
+                                when {
+                                    it.format == "adaptive_dash" && it.hardsubLang == "en-US"
+                                         ->
+                                        Video(null, VideoType.DASH, it.url ?: return@mapNotNull null, null, "DASH")
+                                    it.format == "adaptive_hls" && it.hardsubLang == "en-US"
+                                         ->
+                                        Video(null, VideoType.M3U8, it.url ?: return@mapNotNull null, null, "M3U8")
+                                    else -> null
+                                }
+                            }
+                        }
+                        i.hls == true      -> listOf(
+                            Video(null, VideoType.M3U8, i.link ?: return@asyncMapNotNull null, null, i.resolutionStr)
+                        )
+                        i.mp4 == true      -> listOf(
+                            Video(
+                                null, VideoType.CONTAINER, i.link ?: return@asyncMapNotNull null,
+                                getSize(i.link), i.resolutionStr
+                            )
+                        )
+                        else               -> null
+                    }
+                }?.flatten() ?: listOf()
+                VideoContainer(vid,sub)
+            }
+        }
     }
 
     override suspend fun search(query: String): List<ShowResponse> {
@@ -167,54 +212,6 @@ class AllAnime : AnimeParser() {
         return null
     }
 
-    private class AllAnimeExtractor(override val server: VideoServer) : VideoExtractor() {
-        private val languageRegex = Regex("vo_a_hls_(\\w+-\\w+)")
-
-        override suspend fun extract(): VideoContainer {
-            val url = server.embed.url
-            val rawResponse = client.get(url)
-            val linkList = mutableListOf<String>()
-            if (rawResponse.code < 400) {
-                val response = rawResponse.text
-                Mapper.parse<ApiSourceResponse>(response).links.forEach {
-                    // Avoid languages other than english when multiple urls are provided
-                    val matchesLanguagePattern = languageRegex.find(it.resolutionStr)
-                    val language = matchesLanguagePattern?.groupValues?.get(1)
-                    if (matchesLanguagePattern == null || language?.contains("en") == true) {
-                        (it.src ?: it.link)?.let { fileUrl ->
-                            linkList.add(fileUrl)
-                        }
-                    }
-                }
-            }
-
-            return VideoContainer(toVideoList(linkList))
-        }
-
-        private suspend fun toVideoList(
-            links: List<String>
-        ): List<Video> {
-            val videos = mutableListOf<Video>()
-            val headers = mutableMapOf<String, String>()
-            links.forEach {
-                val fileUrl = FileUrl(it, headers)
-                val urlPath = Uri.parse(it).path
-                if (urlPath != null) {
-                    if (urlPath.endsWith(".m3u8")) {
-                        videos.add(Video(null, VideoType.M3U8, fileUrl))
-                    }
-                    if (urlPath.endsWith(".mp4")) {
-                        if ("king.stronganime" in it) {
-                            headers["Referer"] = "https://allanime.site"
-                        }
-                        videos.add(Video(null, VideoType.CONTAINER, fileUrl, getSize(fileUrl)))
-                    }
-                }
-            }
-            return videos
-        }
-    }
-
     override suspend fun loadSavedShowResponse(mediaId: Int): ShowResponse? {
         return loadData("${saveName}_$mediaId")
     }
@@ -260,16 +257,6 @@ class AllAnime : AnimeParser() {
             // @SerialName("raw") val raw: Int,
         )
 
-        //        data class LastEpisodeInfos(
-        //            @SerialName("sub") val sub: LastEpisodeInfo?,
-        //            @SerialName("dub") val dub: LastEpisodeInfo?,
-        //        )
-        //
-        //        data class LastEpisodeInfo(
-        //            @SerialName("episodeString") val episodeString: String?,
-        //            @SerialName("notes") val notes: String?
-        //        )
-
         @Serializable
         data class AllAnimeEpisode(
             @SerialName("sourceUrls") var sourceUrls: List<SourceUrl>
@@ -277,9 +264,9 @@ class AllAnime : AnimeParser() {
 
         @Serializable
         data class SourceUrl(
-            @SerialName("sourceUrl") val sourceUrl: String,
-            @SerialName("sourceName") val sourceName: String,
-            @SerialName("priority") val priority: String
+            val sourceUrl: String,
+            val sourceName: String,
+            val type: String
         )
     }
 
@@ -301,18 +288,45 @@ class AllAnime : AnimeParser() {
     }
 
     @Serializable
-    private data class ApiSourceResponse(@SerialName("links") val links: List<ApiLink>) {
+    private data class VideoResponse(
+        val links: List<Link>? = null
+    ) {
+        @Serializable
+        data class Link(
+            val link: String? = null,
+            val crIframe: Boolean? = null,
+            val portData: PortData? = null,
+            val resolutionStr: String? = null,
+            val hls: Boolean? = null,
+            val mp4: Boolean? = null,
+            val subtitles: List<Subtitle>? = null
+        )
 
         @Serializable
-        data class ApiLink(
-            @SerialName("link") val link: String?,
-            @SerialName("src") val src: String?,
-            @SerialName("hls") val hls: Boolean?,
-            @SerialName("mp4") val mp4: Boolean?,
-            @SerialName("resolutionStr") val resolutionStr: String,
+        data class PortData(
+            val streams: List<Stream>? = null
+        )
+
+        @Serializable
+        data class Stream(
+            val format: String? = null,
+            val url: String? = null,
+
+            @SerialName("audio_lang")
+            val audioLang: String? = null,
+
+            @SerialName("hardsub_lang")
+            val hardsubLang: String? = null
+        )
+
+        @Serializable
+        data class Subtitle(
+            val lang: String? = null,
+            val src: String? = null,
+            val label: String? = null,
+            val default: String? = null
         )
     }
-
 }
 
 

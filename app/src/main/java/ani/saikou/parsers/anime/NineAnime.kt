@@ -38,7 +38,7 @@ class NineAnime : AnimeParser() {
 
     private val embedHeaders = mapOf("referer" to "$hostUrl/")
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val list = mutableListOf<VideoServer>()
         val body = client.get(episodeLink).parsed<Response>().result
         val document = Jsoup.parse(body)
@@ -84,7 +84,7 @@ class NineAnime : AnimeParser() {
         }
     }
 
-    override suspend fun loadByVideoServers(episodeUrl: String, extra: Any?, callback: (VideoExtractor) -> Unit) {
+    override suspend fun loadByVideoServers(episodeUrl: String, extra: Map<String,String>?, callback: (VideoExtractor) -> Unit) {
         tryWithSuspend {
             val servers = loadVideoServers(episodeUrl, extra).map { getVideoExtractor(it) }
             val mutex = Mutex()

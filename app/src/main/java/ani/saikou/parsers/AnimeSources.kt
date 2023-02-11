@@ -17,7 +17,8 @@ object AnimeSources : WatchSources() {
         "INGLESE: Marin" to ::Marin,
 //        "INGLESE: 9Anime" to ::NineAnime,
         "INGLESE: AnimePahe" to ::AnimePahe,
-        "INGLESE: ConsumeBili" to ::ConsumeBili
+        "INGLESE: ConsumeBili" to ::ConsumeBili,
+        "INGLESE: KickAssAnime" to ::KickAssAnime
 
     )
 }

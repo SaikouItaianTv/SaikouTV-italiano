@@ -47,6 +47,7 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 |                 [Marin](https://marin.moe)                 |   WORKING    |    YES    |
 |             [AnimePahe](https://animepahe.ru)              |   WORKING    |    YES    |
 |           [ConsumeBili](https://www.bilibili.tv)           |   WORKING    |    NO     |
+|           [KickAssAnime](https://www2.kickassanime.ro)     |   WORKING    |   SOME    |
 |               [Haho (18+)](https://haho.moe)               |   WORKING    |    YES    |
 |         [HentaiMama (18+)](https://hentaimama.io)          |   WORKING    |   SOME    |
 |       [HentaiStream (18+)](https://hentaistream.com)       |   WORKING    |    YES    |
