@@ -33,9 +33,9 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assembleDebug
         -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks 
-        -Pandroid.injected.signing.store.password=${{ secrets.PASSWORD }}
+        -Pandroid.injected.signing.store.password=${{ secrets.PASSWORD | base64 -d }}
         -Pandroid.injected.signing.key.alias=key0
-        -Pandroid.injected.signing.key.password=${{ secrets.PASSWORD }}
+        -Pandroid.injected.signing.key.password=${{ secrets.PASSWORD | base64 -d }}
       shell: bash
 
     - name: Upload a Build Artifact
