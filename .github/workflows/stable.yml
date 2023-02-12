@@ -33,11 +33,11 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew assembleRelease
-        -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks 
-        -Pandroid.injected.signing.store.password=${{ secrets.PASSWORD | base64 -d}}
-        -Pandroid.injected.signing.key.alias=key0
-        -Pandroid.injected.signing.key.password=${{ secrets.PASSWORD | base64 -d}}
+      run: echo "${{ secrets.PASSWORD }}" | base64 -d | ./gradlew assembleDebug 
+       -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks 
+       -Pandroid.injected.signing.store.password=$(cat) 
+       -Pandroid.injected.signing.key.alias=key0 
+       -Pandroid.injected.signing.key.password=$(cat)
       shell: bash
 
     - name: Upload a Build Artifact
