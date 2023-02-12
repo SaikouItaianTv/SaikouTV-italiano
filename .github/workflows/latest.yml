@@ -2,7 +2,7 @@ name: Android CI Latest
 
 on:
   push:
-    branches: [  ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -25,6 +25,9 @@ jobs:
     - name: Cook KeyStore
       run:  echo "${{ secrets.KEYSTORE_B64 }}" | base64 -d > $GITHUB_WORKSPACE/signing-key.jks
 
+    - name: Decode password
+      run: echo "${{ secrets.PASSWORD }}" | base64 -d > password.txt
+      
     - name: Enable Reports
       run: sed "s/DisabledReports=true/DisabledReports=false/g" -i app/src/main/java/ani/saikou/others/DisabledReports.kt
 
@@ -33,9 +36,9 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew assembleDebug
         -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks 
-        -Pandroid.injected.signing.store.password=${{ secrets.PASSWORD }} 
+        -Pandroid.injected.signing.store.password=$(cat password.txt)
         -Pandroid.injected.signing.key.alias=key0
-        -Pandroid.injected.signing.key.password=${{ secrets.PASSWORD }}
+        -Pandroid.injected.signing.key.password=$(cat password.txt)
       shell: bash
 
     - name: Upload a Build Artifact
