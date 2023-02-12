@@ -34,13 +34,11 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: |
-        echo "${{ secrets.PASSWORD }}" | base64 -d |
-        ./gradlew assembleDebug \
-          -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks \
-          -Pandroid.injected.signing.store.password=$(cat) \
-          -Pandroid.injected.signing.key.alias=key0 \
-          -Pandroid.injected.signing.key.password=$(cat)
+      run: ./gradlew assembleDebug
+        -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/signing-key.jks 
+        -Pandroid.injected.signing.store.password=$(echo -n ${{ secrets.PASSWORD }} | base64 --decode) 
+        -Pandroid.injected.signing.key.alias=key0
+        -Pandroid.injected.signing.key.password=$(echo -n ${{ secrets.PASSWORD }} | base64 --decode)
       shell: bash
 
 
