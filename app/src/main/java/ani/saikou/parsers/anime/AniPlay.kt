@@ -79,10 +79,17 @@ class AniPlay : AnimeParser() {
 
     private suspend fun ArrayList<String>.getMedia(id: Int, mediaType: String): ShowResponse?{
         this.forEach {
-            val media = getMedia(search(it + mediaType), id)
+            val media = getMedia(search(it + mediaType), id)?:
+            matchDoSearch(it, id, mediaType)
             if (media != null) return media
         }
         return null
+    }
+
+    private suspend fun matchDoSearch(title:String, id: Int, mediaType: String): ShowResponse? {
+        return if (TitleTransform().checkMatch(title)) {
+            getMedia(search(TitleTransform().replaceTitleSeason(title) + mediaType), id)
+        } else null
     }
 
     override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
@@ -93,7 +100,9 @@ class AniPlay : AnimeParser() {
             }
         val media =
             getMedia(search(mediaObj.nameRomaji + mediaType), mediaObj.id)?:
+            matchDoSearch(mediaObj.nameRomaji, mediaObj.id, mediaType)?:
             getMedia(mediaObj.name?.let { it1 -> search(it1 + mediaType) }, mediaObj.id)?:
+            mediaObj.name?.let { it1 -> matchDoSearch(it1, mediaObj.id, mediaType)}?:
             when (mediaObj.typeMAL){
                 "Movie" ->
                     getMedia(search(mediaObj.nameRomaji.substringBeforeLast(":").trim() + mediaType + "&endYear=${mediaObj.endDate?.year}"), mediaObj.id) ?:

@@ -5,6 +5,7 @@ import ani.saikou.getSize
 import ani.saikou.media.Media
 import ani.saikou.parsers.*
 import ani.saikou.parsers.anime.extractors.*
+import com.google.common.net.MediaType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -97,10 +98,17 @@ class AnimeWorld : AnimeParser() {
 
     private suspend fun ArrayList<String>.getMedia(id: Int, mediaType: String): ShowResponse?{
         this.forEach {
-            val media = getMedia(search(it + mediaType), id)
+            val media = getMedia(search(it + mediaType), id)?:
+            matchDoSearch(it, id, mediaType)
             if (media != null) return media
         }
         return null
+    }
+
+    private suspend fun matchDoSearch(title:String, id: Int, mediaType: String): ShowResponse? {
+        return if (TitleTransform().checkMatch(title)) {
+            getMedia(search(TitleTransform().replaceTitleSeason(title) + mediaType), id)
+        } else null
     }
 
     override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
@@ -111,15 +119,18 @@ class AnimeWorld : AnimeParser() {
             }
         val media =
             getMedia(search(mediaObj.nameRomaji + mediaType), mediaObj.id)?:
+            matchDoSearch(mediaObj.nameRomaji, mediaObj.id, mediaType)?:
             getMedia(mediaObj.name?.let { it1 -> search(it1 + mediaType) }, mediaObj.id)?:
+            mediaObj.name?.let { it1 -> matchDoSearch(it1, mediaObj.id, mediaType)}?:
             when (mediaObj.typeMAL){
-                "Movie" ->
-                    getMedia(search(mediaObj.nameRomaji.substringBeforeLast(":").trim() + mediaType + "&year=${mediaObj.endDate?.year}"), mediaObj.id) ?:
-                    getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim() + mediaType + "&year=${mediaObj.endDate?.year}")}, mediaObj.id) ?:
-                    getMedia(search(mediaObj.nameRomaji.substringAfterLast(":").trim() + mediaType), mediaObj.id) ?:
-                    getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim() + mediaType)}, mediaObj.id)                 else -> null
-            } ?:
-            mediaObj.synonyms.getMedia(mediaObj.id, mediaType)
+                    "Movie" ->
+                        getMedia(search(mediaObj.nameRomaji.substringBeforeLast(":").trim() + mediaType + "&year=${mediaObj.endDate?.year}"), mediaObj.id) ?:
+                        getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim() + mediaType + "&year=${mediaObj.endDate?.year}")}, mediaObj.id) ?:
+                        getMedia(search(mediaObj.nameRomaji.substringAfterLast(":").trim() + mediaType), mediaObj.id) ?:
+                        getMedia(mediaObj.name?.let {search(it.substringAfterLast(":").trim() + mediaType)}, mediaObj.id)                 else -> null
+                } ?:
+                mediaObj.synonyms.getMedia(mediaObj.id, mediaType)
+
         if (media != null) {
             saveShowResponse(mediaObj.id, media, true)
         }

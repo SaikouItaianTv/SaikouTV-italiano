@@ -1,7 +1,4 @@
-# 1.2.0.25.1
+# 1.2.0.25.2
 
-- Fixed Manga source
-- Added more extractors 
+- New method to automatically replaces TV series title season names to abbreviated format using regex pattern matching.
 
-Saikou main app Updates:
-- Updated to the latest Artifact

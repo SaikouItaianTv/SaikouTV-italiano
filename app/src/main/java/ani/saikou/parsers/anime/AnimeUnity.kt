@@ -106,17 +106,24 @@ class AnimeUnity : AnimeParser() {
 
     private suspend fun ArrayList<String>.getMedia(id: Int): ShowResponse?{
         this.forEach {
-            val media = getMedia(search(it), id)
+            val media = getMedia(search(it), id)?:
+            matchDoSearch(it, id)
             if (media != null) return media
         }
         return null
     }
+    private suspend fun matchDoSearch(title:String, id: Int): ShowResponse? {
+        return if (TitleTransform().checkMatch(title)) {
+            getMedia(search(TitleTransform().replaceTitleSeason(title)), id)
+        } else null
+    }
 
     override suspend fun autoSearch(mediaObj: Media): ShowResponse? {
-
         val media =
             getMedia(search(mediaObj.nameRomaji), mediaObj.id)?:
+            matchDoSearch(mediaObj.nameRomaji, mediaObj.id)?:
             getMedia(mediaObj.name?.let { it1 -> search(it1) }, mediaObj.id)?:
+            mediaObj.name?.let { it1 -> matchDoSearch(it1, mediaObj.id)}?:
             when (mediaObj.typeMAL){
                 "Movie" ->
                     getMedia(search(mediaObj.nameRomaji.substringBeforeLast(":").trim()), mediaObj.id) ?:
