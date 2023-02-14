@@ -285,8 +285,12 @@ OS Version: $CODENAME $RELEASE ($SDK_INT)
             toastString(array[(Math.random() * array.size).toInt()], this)
         }
 
-        binding.settingsDev.setOnClickListener {
-            DevelopersDialogFragment().show(supportFragmentManager, "dialog")
+        binding.tvLogin.setOnClickListener {
+            startActivity(Intent(this, TVConnectionActivity::class.java))
+        }
+
+        binding.settingsDev.setOnClickListener{
+            DevelopersDialogFragment().show(supportFragmentManager,"dialog")
         }
         binding.settingsForks.setOnClickListener {
             ForksDialogFragment().show(supportFragmentManager, "dialog")

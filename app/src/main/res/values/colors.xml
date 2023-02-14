@@ -21,4 +21,9 @@
     <color name="nav_status">#80FFFFFF</color>
     <color name="fav">#395EE6</color>
     <color name="filler">#54FF8400</color>
+
+    <color name="lb_speech_orb_not_recording">#FF5DAE</color>
+    <color name="lb_speech_orb_not_recording_pulsed">#FF007F</color>
+    <color name="lb_speech_orb_recording">#C50053</color>
+    <color name="lb_speech_orb_not_recording_icon">#EEEEEE</color>
 </resources>

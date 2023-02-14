@@ -6,6 +6,7 @@ import android.app.Activity
 import android.app.Application
 import android.app.DatePickerDialog
 import android.app.DownloadManager
+import android.app.UiModeManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -51,6 +52,7 @@ import ani.saikou.media.Media
 import ani.saikou.others.DisabledReports
 import ani.saikou.parsers.ShowResponse
 import ani.saikou.settings.UserInterfaceSettings
+import ani.saikou.tv.TVMainActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
@@ -235,7 +237,7 @@ fun startMainActivity(activity: Activity) {
     activity.startActivity(
         Intent(
             activity,
-            MainActivity::class.java
+            if (isOnTV(activity)) TVMainActivity::class.java else MainActivity::class.java
         ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     )
 }
@@ -839,26 +841,32 @@ fun toast(string: String?, activity: Activity? = null) {
 fun toastString(s: String?, activity: Activity? = null, clipboard: String? = null) {
     if (s != null) {
         (activity ?: currActivity())?.apply {
-            runOnUiThread {
-                val snackBar = Snackbar.make(window.decorView.findViewById(android.R.id.content), s, Snackbar.LENGTH_LONG)
-                snackBar.view.apply {
-                    updateLayoutParams<FrameLayout.LayoutParams> {
-                        gravity = (Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM)
-                        width = WRAP_CONTENT
+            if (!isOnTV(this)) {
+                runOnUiThread {
+                    val snackBar = Snackbar.make(
+                        window.decorView.findViewById(android.R.id.content),
+                        s,
+                        Snackbar.LENGTH_LONG
+                    )
+                    snackBar.view.apply {
+                        updateLayoutParams<FrameLayout.LayoutParams> {
+                            gravity = (Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM)
+                            width = WRAP_CONTENT
+                        }
+                        translationY = -(navBarHeight.dp + 32f)
+                        translationZ = 32f
+                        updatePadding(16f.px, right = 16f.px)
+                        setOnClickListener {
+                            snackBar.dismiss()
+                        }
+                        setOnLongClickListener {
+                            copyToClipboard(clipboard ?: s, false)
+                            toast("Copied to Clipboard")
+                            true
+                        }
                     }
-                    translationY = -(navBarHeight.dp + 32f)
-                    translationZ = 32f
-                    updatePadding(16f.px, right = 16f.px)
-                    setOnClickListener {
-                        snackBar.dismiss()
-                    }
-                    setOnLongClickListener {
-                        copyToClipboard(clipboard ?: s, false)
-                        toast("Copiato nella Clipboard")
-                        true
-                    }
+                    snackBar.show()
                 }
-                snackBar.show()
             }
         }
         logger(s)
@@ -966,4 +974,9 @@ fun checkCountry(context: Context): Boolean {
         }
         else                              -> false
     }
+}
+
+fun isOnTV(activity: Activity): Boolean {
+    val uiModeManager = activity.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+    return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="Please introduce the number shown on TV"
+            android:layout_marginTop="50dp" />
+
+        <EditText
+            android:id="@+id/ipField"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:digits="0123456789."
+            android:layout_marginTop="50dp"/>
+
+        <Button
+            android:id="@+id/connectButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/advancedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="Advanced Mode"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:layout_marginBottom="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/progressView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@color/bg">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_above="@id/progress"
+            android:layout_marginBottom="30dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Connecting..."
+            android:textSize="16sp"/>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:indeterminate="true"/>
+
+    </LinearLayout>
+</RelativeLayout>

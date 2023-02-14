@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:lb="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/details_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="0dp"
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:descendantFocusability="afterDescendants"
+    >
+    <!--  Used for dimming foreground, round rect and background-->
+    <FrameLayout
+        android:id="@+id/details_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:clipToPadding="false"
+        android:background="?attr/defaultBrandColor"
+        android:elevation="@dimen/lb_details_overview_z"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/details_overview_actions_background"
+                android:background="?attr/defaultBrandColorDark"
+                android:orientation="vertical"
+                >
+                <androidx.leanback.widget.HorizontalGridView
+                    android:id="@+id/details_overview_actions"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:clipToPadding="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:paddingStart="@dimen/lb_details_v2_description_margin_start"
+                    android:paddingEnd="@dimen/lb_details_v2_description_margin_end"
+                    lb:horizontalMargin="16dp"
+                    lb:rowHeight="0dp" />
+            </LinearLayout>
+
+            <ani.saikou.tv.components.NonOverlappingFrameLayout
+                android:id="@+id/details_overview_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:descendantFocusability="afterDescendants"
+                android:gravity="top"
+                android:paddingStart="@dimen/lb_details_v2_description_margin_start"
+                android:paddingEnd="@dimen/lb_details_v2_description_margin_end"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                />
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

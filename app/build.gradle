@@ -14,15 +14,12 @@ android {
         applicationId "ani.saikou"
         minSdk 21
         targetSdk 33
-        versionCode 67
-        versionName "1.2.0.25.2"
+        versionCode 20
+        versionName "1.0.17"
         signingConfig signingConfigs.debug
     }
 
     buildTypes {
-        debug {
-            applicationIdSuffix ".beta"
-        }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -81,5 +78,10 @@ dependencies {
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0'
     implementation 'com.alexvasilkov:gesture-views:2.8.3'
+
+//    TV
+    implementation 'androidx.leanback:leanback:1.2.0-alpha02'
+    implementation 'com.google.android.exoplayer:extension-leanback:2.17.1'
+    implementation 'androidx.tvprovider:tvprovider:1.1.0-alpha01'
 
 }

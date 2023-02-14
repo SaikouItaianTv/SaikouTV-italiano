@@ -1,62 +1,49 @@
 {
   "project_info": {
-    "project_number": "185630514021",
-    "project_id": "saikou-a031d",
-    "storage_bucket": "saikou-a031d.appspot.com"
+    "project_number": "71148296899",
+    "project_id": "saikoutv-f0a81",
+    "storage_bucket": "saikoutv-f0a81.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:185630514021:android:b565f9c8ff5db6d5f55f8c",
+        "mobilesdk_app_id": "1:71148296899:android:10c3ede77ee5e43aafa076",
         "android_client_info": {
           "package_name": "ani.saikou"
         }
       },
       "oauth_client": [
         {
-          "client_id": "185630514021-3imscqs59sk53paki4hrt23lbg3d268o.apps.googleusercontent.com",
+          "client_id": "71148296899-e8kl3j2ieb8b3f2fl95e44bl2ae3srdl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ani.saikou",
+            "certificate_hash": "cd5db26708a5ee22d4e740010f77a70dcb0a8519"
+          }
+        },
+        {
+          "client_id": "71148296899-fk1jokciegdamvjbv97e5tbj5fpe8fal.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ani.saikou",
+            "certificate_hash": "71bc71da9b878fb691da817070c610784b863409"
+          }
+        },
+        {
+          "client_id": "71148296899-3tk4josah9mb0h32u6i276lka6hsbjio.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD0hJ_rziZtLiEYCsxYUS2pC9qSCYTAeQQ"
+          "current_key": "AIzaSyBN7D-3RArG5bQ-HEzrEP_JOcHqFs0sk9g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "185630514021-3imscqs59sk53paki4hrt23lbg3d268o.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:185630514021:android:7e9680cddc590ff3f55f8c",
-        "android_client_info": {
-          "package_name": "ani.saikou.beta"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "185630514021-3imscqs59sk53paki4hrt23lbg3d268o.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD0hJ_rziZtLiEYCsxYUS2pC9qSCYTAeQQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "185630514021-3imscqs59sk53paki4hrt23lbg3d268o.apps.googleusercontent.com",
+              "client_id": "71148296899-3tk4josah9mb0h32u6i276lka6hsbjio.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

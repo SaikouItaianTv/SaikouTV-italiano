@@ -273,6 +273,36 @@
                     android:layout_marginBottom="16dp"
                     android:background="?android:attr/listDivider" />
 
+                <Button
+                    android:id="@+id/tvLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="-32dp"
+                    android:layout_marginEnd="-32dp"
+                    android:background="@drawable/ui_bg"
+                    android:fontFamily="@font/poppins_bold"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:text="@string/tv_login"
+                    android:textAlignment="viewStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/bg_opp"
+                    app:cornerRadius="0dp"
+                    app:icon="@drawable/ic_tvlogin"
+                    app:iconPadding="16dp"
+                    app:iconSize="24dp"
+                    app:iconTint="?attr/colorPrimary" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="-16dp"
+                    android:layout_marginEnd="-16dp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="?android:attr/listDivider" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

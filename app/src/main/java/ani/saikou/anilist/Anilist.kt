@@ -14,7 +14,7 @@ object Anilist {
 
     var token: String? = null
     var username: String? = null
-    var adult: Boolean = false
+    var adult: Boolean = true
     var userid: Int? = null
     var avatar: String? = null
     var bg: String? = null
