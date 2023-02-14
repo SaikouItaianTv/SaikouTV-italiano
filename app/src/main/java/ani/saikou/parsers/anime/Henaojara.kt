@@ -33,7 +33,7 @@ class Henaojara : AnimeParser() {
         }
 
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         logger("Loading video servers for $episodeLink")
         val servers = client.get(episodeLink).document.select("div.TPlayer div").map{
             val embedUrl = it.toString().substringAfter("src=\"").substringBefore("\"").replace("amp;", "")

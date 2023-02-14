@@ -2,75 +2,78 @@ package ani.saikou.others
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.DownloadManager
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Environment
+import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
+import androidx.fragment.app.FragmentActivity
 import ani.saikou.*
+import io.noties.markwon.Markwon
+import io.noties.markwon.SoftBreakAddsNewLinePlugin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.io.File
 
 object AppUpdater {
-    fun check(activity: Activity, post:Boolean=false){
-        try{
-            val version =
-                if(!BuildConfig.DEBUG)
-                    OkHttpClient().newCall(Request.Builder().url("https://raw.githubusercontent.com/Nanoc6/SaikouTV/main/stable.txt").build()).execute().body?.string()?.replace("\n","")?:return
-                else {
-                    OkHttpClient().newCall(
-                        Request.Builder()
-                            .url("https://raw.githubusercontent.com/Nanoc6/SaikouTV/main/app/build.gradle")
-                            .build()
-                    ).execute().body?.string()?.substringAfter("versionName \"")?.substringBefore('"') ?: return
-                }
-            val dontShow = loadData("dont_ask_for_update_$version")?:false
-            if(compareVersion(version) && !dontShow && !activity.isDestroyed) activity.runOnUiThread {
-                AlertDialog.Builder(activity, if(isOnTV(activity)) R.style.TVDialogTheme else R.style.DialogTheme)
-                    .setTitle("A new update is available, do you want to check it out?").apply {
-                        setMultiChoiceItems(
-                            arrayOf("Don't show again for version $version"),
-                            booleanArrayOf(false)
-                        ) { _, _, isChecked ->
-                            if (isChecked) {
-                                saveData("dont_ask_for_update_$version", isChecked)
-                            }
-                        }
-                        setPositiveButton("Let's Go") { _: DialogInterface, _: Int ->
-                            if(!BuildConfig.DEBUG) {
-                                MainScope().launch(Dispatchers.IO){
+    suspend fun check(activity: FragmentActivity,post:Boolean=false) {
+        if(post) toastString("Checking for Update")
+        val repo = activity.getString(R.string.repo)
+        tryWithSuspend {
+            val md =
+                client.get("https://raw.githubusercontent.com/$repo/main/${if (!BuildConfig.DEBUG) "stable" else "beta"}.md").text
 
-                                    try{
-                                        OkHttpClient().newCall(Request.Builder().url("https://api.github.com/repos/Nanoc6/SaikouTV/releases/tags/v$version"+"-tv").build()).execute().body?.string()?.apply {
-                                            substringAfter("\"browser_download_url\":\"").substringBefore('"').apply {
-                                                if (endsWith("apk")) activity.downloadUpdate(this)
-                                                else openLinkInBrowser("https://github.com/Nanoc6/SaikouTV/releases/")
-                                            }
-                                        }
-                                    }catch (e:Exception){
-                                        toastString(e.toString())
+            val version = md.substringAfter("# ").substringBefore("\n")
+            logger("Git Version : $version")
+            val dontShow = loadData("dont_ask_for_update_$version") ?: false
+            if (compareVersion(version) && !dontShow && !activity.isDestroyed) activity.runOnUiThread {
+                CustomBottomDialog.newInstance().apply {
+                    setTitleText("${if (!BuildConfig.DEBUG) "" else "Beta "}Aggiornamento Disponibile")
+                    addView(
+                        TextView(activity).apply {
+                            val markWon = Markwon.builder(activity).usePlugin(SoftBreakAddsNewLinePlugin.create()).build()
+                            markWon.setMarkdown(this, md)
+                        }
+                    )
+
+                    setCheck("Non mostrare più per la versione $version", false) { isChecked ->
+                        if (isChecked) {
+                            saveData("dont_ask_for_update_$version", isChecked)
+                        }
+                    }
+                    setPositiveButton("Let's Go") {
+                        MainScope().launch(Dispatchers.IO) {
+                            try {
+                                client.get("https://api.github.com/repos/$repo/releases/tags/v$version")
+                                    .parsed<GithubResponse>().assets?.find {
+                                        it.browserDownloadURL.endsWith("apk")
+                                    }?.browserDownloadURL.apply {
+                                        if (this != null) activity.downloadUpdate(version, this)
+                                        else openLinkInBrowser("https://github.com/repos/$repo/releases/tag/v$version")
                                     }
-                                }
+                            } catch (e: Exception) {
+                                logError(e)
                             }
-                            else openLinkInBrowser( "https://discord.com/channels/902174389351620629/946852010198728704")
                         }
-                        setNegativeButton("Cope") { dialogInterface: DialogInterface, _: Int ->
-                            dialogInterface.dismiss()
-                        }
-                    }.show()
+                        dismiss()
+                    }
+                    setNegativeButton("No grazie") {
+                        dismiss()
+                    }
+                    show(activity.supportFragmentManager, "dialog")
+                }
             }
             else{
                 if(post) toastString("No Update Found")
             }
-        }
-        catch (e:Exception){
-            toastString(e.toString())
         }
     }
 
@@ -107,7 +110,7 @@ object AppUpdater {
             .setTitle("Scaricando Saikou $version")
             .setDestinationInExternalPublicDir(
                 Environment.DIRECTORY_DOWNLOADS,
-                "Saikou.apk"
+                "Saikou $version.apk"
             )
             .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             .setAllowedOverRoaming(true)
@@ -155,7 +158,7 @@ object AppUpdater {
     }
 
     fun openApk(context: Context, uri: Uri) {
-        try{
+        try {
             uri.path?.let {
                 val contentUri = FileProvider.getUriForFile(
                     context,
@@ -170,8 +173,19 @@ object AppUpdater {
                 }
                 context.startActivity(installIntent)
             }
-        }catch (e:Exception){
-            toastString(e.toString())
+        } catch (e: Exception) {
+            logError(e)
         }
+    }
+
+    @Serializable
+    data class GithubResponse(
+        val assets: List<Asset>? = null
+    ) {
+        @Serializable
+        data class Asset(
+            @SerialName("browser_download_url")
+            val browserDownloadURL: String
+        )
     }
 }

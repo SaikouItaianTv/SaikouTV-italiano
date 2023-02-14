@@ -33,7 +33,7 @@ class Animelatinohd : AnimeParser() {
         }
 
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val animeJson = client.get(episodeLink).document.selectFirst("script#__NEXT_DATA__")!!.data()
         val lang = when(selectDub){
             true -> 1

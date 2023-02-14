@@ -34,7 +34,7 @@ class TioAnime:AnimeParser() {
 
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val document = client.get(episodeLink).document
         val serverList = document.selectFirst("script:containsData(var videos =)")!!.data()
             .substringAfter("var videos = [[").substringBefore("]];")

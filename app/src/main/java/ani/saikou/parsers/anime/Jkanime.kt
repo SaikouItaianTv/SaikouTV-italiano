@@ -46,7 +46,7 @@ class Jkanime : AnimeParser() {
 
 
     @SuppressLint("SuspiciousIndentation")
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val videos = mutableListOf<VideoServer>()
           client.get(episodeLink).document.select("div.col-lg-12.rounded.bg-servers.text-white.p-3.mt-2 a").forEach{ it ->
             val server = it.text()

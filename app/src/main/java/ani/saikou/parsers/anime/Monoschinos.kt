@@ -31,7 +31,7 @@ class Monoschinos : AnimeParser() {
         }
 
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         return client.get(episodeLink).document.select("ul.dropcaps li").map{
             val server = it.select("a").text()
             val urlBase64 = it.select("a").attr("data-player")

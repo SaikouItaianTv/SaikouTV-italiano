@@ -71,7 +71,7 @@ class Animefenix : AnimeParser() {
     }
 
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val document = client.get(episodeLink).document
         return document.select("ul.is-borderless.episode-page__servers-list li").map {
             val serverName = it.select("a").attr("title")
