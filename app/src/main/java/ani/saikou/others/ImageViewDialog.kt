@@ -51,7 +51,7 @@ class ImageViewDialog : BottomSheetDialogFragment() {
         val (title, image) = (_title to _image)
         if (image == null || title == null) {
             dismiss()
-            toastString("Error getting Image Data")
+            toastString("Errore nel ricevere Dati Immagine")
             return
         }
         if (reload) {

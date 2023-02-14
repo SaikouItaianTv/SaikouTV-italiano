@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
             doubleBackToExitPressedOnce = true
-            toastString("Please perform BACK again to Exit")
+            toastString("BACK Ancora una volta per uscire")
             Handler(Looper.getMainLooper()).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
         }
 
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (!isOnline(this)) {
-            toastString("No Internet Connection")
+            toastString("Connessione internet Assente")
             startActivity(Intent(this, NoInternet::class.java))
         } else {
             val model: AnilistHomeViewModel by viewModels()
@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity() {
                                         ).putExtra("media", media as Serializable)
                                     )
                                 } else {
-                                    toastString("Seems like that wasn't found on Anilist.")
+                                    toastString("Non trovato su Anilist.")
                                 }
                             }
                         }

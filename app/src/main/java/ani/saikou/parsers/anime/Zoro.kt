@@ -39,7 +39,7 @@ class Zoro : AnimeParser() {
 
     private val embedHeaders = mapOf("referer" to "$hostUrl/")
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val res = client.get("$hostUrl/ajax/v2/episode/servers?episodeId=$episodeLink", header).parsed<HtmlResponse>()
         val element = Jsoup.parse(res.html ?: return listOf())
 

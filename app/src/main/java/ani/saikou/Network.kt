@@ -34,7 +34,7 @@ fun initializeNetwork(context: Context) {
     val dns = loadData<Int>("settings_dns", context)
     cache = Cache(
         File(context.cacheDir, "http_cache"),
-        50L * 1024L * 1024L // 50 MiB
+        5 * 1024L * 1024L // 5 MiB
     )
     okHttpClient = OkHttpClient.Builder()
         .followRedirects(true)
@@ -88,17 +88,13 @@ object Mapper : ResponseParser {
     }
 }
 
-//fun <K, V, R> Map<out K, V>.asyncMap(f: suspend (Map.Entry<K, V>) -> R): List<R> = runBlocking {
-//    map { withContext(Dispatchers.IO) { async { f(it) } } }.map { it.await() }
-//}
-
 fun <A, B> Collection<A>.asyncMap(f: suspend (A) -> B): List<B> = runBlocking {
     map { async { f(it) } }.map { it.await() }
 }
 
-//fun <A, B> Collection<A>.asyncMapNotNull(f: suspend (A) -> B?): List<B> = runBlocking {
-//    map { async { f(it) } }.mapNotNull { it.await() }
-//}
+fun <A, B> Collection<A>.asyncMapNotNull(f: suspend (A) -> B?): List<B> = runBlocking {
+    map { async { f(it) } }.mapNotNull { it.await() }
+}
 
 fun logError(e: Exception) {
     val sw = StringWriter()

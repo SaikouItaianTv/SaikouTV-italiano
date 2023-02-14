@@ -132,7 +132,7 @@ fun <T> loadData(fileName: String, activity: Context? = null, toast: Boolean = t
                 return data
             }
     } catch (e: Exception) {
-        if (toast) toastString("Error loading data $fileName")
+        if (toast) toastString("Errore nel caricare $fileName")
         e.printStackTrace()
     }
     return null
@@ -275,7 +275,7 @@ class InputFilterMinMax(private val min: Double, private val max: Double, privat
     @SuppressLint("SetTextI18n")
     private fun isInRange(a: Double, b: Double, c: Double): Boolean {
         if (c == b) {
-            status?.setText("COMPLETED", false)
+            status?.setText("COMPLETATO", false)
             status?.parent?.requestLayout()
         }
         return if (b > a) c in a..b else c in b..a
@@ -634,9 +634,9 @@ fun download(activity: Activity, episode: Episode, animeTitle: String) {
             }
             request.setTitle("$title:$aTitle")
             manager.enqueue(request)
-            toast("Started Downloading\n$title : $aTitle")
+            toast("Download iniziato di \n$title : $aTitle")
         } catch (e: SecurityException) {
-            toast("Please give permission to access Files & Folders from Settings, & Try again.")
+            toast("Si prega di autorizzare l'accesso a file e cartelle da Impostazioni e riprovare.")
         } catch (e: Exception) {
             toast(e.toString())
         }
@@ -677,7 +677,7 @@ fun saveImage(image: Bitmap, path: String, imageFileName: String): File? {
         image.compress(Bitmap.CompressFormat.PNG, 0, fOut)
         fOut.close()
         scanFile(imageFile.absolutePath, currActivity()!!)
-        toast("Saved to:\n$path")
+        toast("Salvato in:\n$path")
         imageFile
     }
 }
@@ -698,13 +698,13 @@ fun updateAnilistProgress(media: Media, number: String) {
                     a,
                     status = if (media.userStatus == "REPEATING") media.userStatus else "CURRENT"
                 )
-                toast("Setting progress to $a")
+                toast("Progresso impostato to $a")
             }
             media.userProgress = a
             Refresh.all()
         }
     } else {
-        toast("Please Login into anilist account!")
+        toast("Accedi all'account anilist!")
     }
 }
 
@@ -736,7 +736,7 @@ fun copyToClipboard(string: String, toast: Boolean = true) {
     val clipboard = getSystemService(activity, ClipboardManager::class.java)
     val clip = ClipData.newPlainText("label", string)
     clipboard?.setPrimaryClip(clip)
-    if (toast) toastString("Copied \"$string\"")
+    if (toast) toastString("Copiato \"$string\"")
 }
 
 @SuppressLint("SetTextI18n")
@@ -744,17 +744,17 @@ fun countDown(media: Media, view: ViewGroup) {
     if (media.anime?.nextAiringEpisode != null && media.anime.nextAiringEpisodeTime != null && (media.anime.nextAiringEpisodeTime!! - System.currentTimeMillis() / 1000) <= 86400 * 7.toLong()) {
         val v = ItemCountDownBinding.inflate(LayoutInflater.from(view.context), view, false)
         view.addView(v.root, 0)
-        v.mediaCountdownText.text = "Episode ${media.anime.nextAiringEpisode!! + 1} will be released in"
+        v.mediaCountdownText.text = "L' episodio ${media.anime.nextAiringEpisode!! + 1} sarà rilasciato tra"
         object : CountDownTimer((media.anime.nextAiringEpisodeTime!! + 10000) * 1000 - System.currentTimeMillis(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val a = millisUntilFinished / 1000
                 v.mediaCountdown.text =
-                    "${a / 86400} days ${a % 86400 / 3600} hrs ${a % 86400 % 3600 / 60} mins ${a % 86400 % 3600 % 60} secs"
+                    "${a / 86400} giorni ${a % 86400 / 3600} ore ${a % 86400 % 3600 / 60} min ${a % 86400 % 3600 % 60} sec"
             }
 
             override fun onFinish() {
                 v.mediaCountdownContainer.visibility = View.GONE
-                toastString("Congrats Vro")
+                toastString("Buona Visione!")
             }
         }.start()
     }

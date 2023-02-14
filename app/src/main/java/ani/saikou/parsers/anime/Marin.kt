@@ -10,7 +10,7 @@ import java.net.URLDecoder.decode
 open class Marin : AnimeParser() {
 
     override val name: String = "Marin"
-    override val saveName: String = "marin_boe"
+    override val saveName: String = "marin"
     override val hostUrl: String = "https://marin.moe"
     override val malSyncBackupName: String = "Tenshi"
     override val isDubAvailableSeparately: Boolean = false
@@ -18,22 +18,24 @@ open class Marin : AnimeParser() {
     private var cookie:String?=null
     private var token:String?=null
     private val ddosCookie = ";__ddg1_=;__ddg2_=;"
-    private suspend fun getCookieHeaders(): List<Pair<String,String>> {
-        if(cookie==null)
+    private suspend fun getCookieHeaders(): Map<String,String> {
+        if(cookie==null) {
             cookie = client.head(hostUrl, mapOf("cookie" to ddosCookie)).headers.toMultimap()["set-cookie"]!!.joinToString(";")
             cookie?.plus(ddosCookie)
-        token = decode(cookie?.findBetween("XSRF-TOKEN=", ";")!!)
-        return listOf("cookie" to cookie!!,"x-xsrf-token" to token!!)
+            token = decode(cookie?.findBetween("XSRF-TOKEN=", ";")!!)
+            cookie?.plus("cutemarinmoe_session=$token")
+        }
+        return mapOf("cookie" to cookie!!,"x-xsrf-token" to token!!)
     }
 
     inline fun <reified T> parse(res:NiceResponse):T{
         val htmlRes = res.document.selectFirst("div#app")!!.attr("data-page")
-        return Mapper.parse(decode(htmlRes))
+        return Mapper.parse(decode(htmlRes).also { println(it) })
     }
 
     override suspend fun search(query: String): List<ShowResponse> {
         val res = client.post("$hostUrl/anime",
-            getCookieHeaders().toMap(),
+            getCookieHeaders(),
             data = mapOf("search" to query, "sort" to "vtt-d")
         )
         val json = parse<Json>(res)
@@ -69,7 +71,7 @@ open class Marin : AnimeParser() {
         return map.values.toList()
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val res = parse<Json>(client.get(episodeLink))
         return res.props?.videoList?.data!!.map {
             VideoServer(

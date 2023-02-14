@@ -74,18 +74,37 @@ object AppUpdater {
         }
     }
 
-    private fun compareVersion(version:String):Boolean{
-        return try{ version.replace(".","").toInt() > BuildConfig.VERSION_NAME.replace(".","").toInt() } catch (e:Exception){ false }
+    private fun compareVersion(version: String): Boolean {
+
+        fun toDouble(list: List<String>): Double {
+            return list.mapIndexed { i: Int, s: String ->
+                when (i) {
+                    0 -> s.toDouble() * 100
+                    1 -> s.toDouble() * 10
+                    2 -> s.toDouble()
+                    3 -> "0.$s".toDouble()
+                    4 -> "0.0$s".toDouble()
+                    else -> s.toDouble()
+                }
+            }.sum()
+        }
+
+        val new = toDouble(version.split("."))
+        val curr = toDouble(BuildConfig.VERSION_NAME.split("."))
+        return new > curr
     }
 
 
     //Blatantly kanged from https://github.com/LagradOst/CloudStream-3/blob/master/app/src/main/java/com/lagradost/cloudstream3/utils/InAppUpdater.kt
-    private fun Activity.downloadUpdate(url: String): Boolean {
+    private fun Activity.downloadUpdate(version: String, url: String): Boolean {
+
+        toast("Scaricando L'aggiornamento $version")
+
         val downloadManager = this.getSystemService<DownloadManager>()!!
 
         val request = DownloadManager.Request(Uri.parse(url))
             .setMimeType("application/vnd.android.package-archive")
-            .setTitle("Saikou Update")
+            .setTitle("Scaricando Saikou $version")
             .setDestinationInExternalPublicDir(
                 Environment.DIRECTORY_DOWNLOADS,
                 "Saikou.apk"

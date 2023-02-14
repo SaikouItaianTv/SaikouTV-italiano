@@ -57,8 +57,31 @@ class MediaListDialogSmallFragment : BottomSheetDialogFragment() {
         binding.mediaListProgressBar.visibility = View.GONE
         binding.mediaListLayout.visibility = View.VISIBLE
 
-        val statuses: Array<String> = resources.getStringArray(R.array.status)
-        binding.mediaListStatus.setText(if (media.userStatus != null) media.userStatus else statuses[0])
+        val statuses: Array<String> = resources.getStringArray(R.array.status).toList().map {
+            when(it){
+                "CURRENT" -> if (media?.manga==null) "GUARDANDO" else "LEGGENDO"
+                "PLANNING" -> "PIANIFICATO"
+                "COMPLETED" -> "COMPLETATO"
+                "DROPPED" -> "ABBANDONATO"
+                "PAUSED" -> "IN PAUSA"
+                "REPEATING" -> if (media?.manga==null) "RIGUARDANDO" else "RILEGGENDO"
+                else -> ""
+            }}.toTypedArray()
+
+        val statusText =
+            if (media!!.userStatus != null) {
+                when(media!!.userStatus){
+                    "CURRENT" -> if (media?.manga==null) "GUARDANDO" else "LEGGENDO"
+                    "PLANNING" -> "PIANIFICATO"
+                    "COMPLETED" -> "COMPLETATO"
+                    "DROPPED" -> "ABBANDONATO"
+                    "PAUSED" -> "IN PAUSA"
+                    "REPEATING" -> if (media?.manga==null) "RIGUARDANDO" else "RILEGGENDO"
+                    else -> ""
+                }}
+            else statuses[0]
+
+        binding.mediaListStatus.setText(statusText)
         binding.mediaListStatus.setAdapter(
             ArrayAdapter(
                 requireContext(),
@@ -130,12 +153,22 @@ class MediaListDialogSmallFragment : BottomSheetDialogFragment() {
                         if (_binding?.mediaListScore?.text.toString() != "") (_binding?.mediaListScore?.text.toString()
                             .toDouble() * 10).toInt() else null,
                         null,
-                        if (_binding?.mediaListStatus?.text.toString() != "") _binding?.mediaListStatus?.text.toString() else null,
+                        if (_binding?.mediaListStatus?.text.toString() != "") when(_binding?.mediaListStatus?.text.toString()){
+                            "GUARDANDO" -> "CURRENT"
+                            "LEGGENDO" -> "CURRENT"
+                            "PIANIFICATO" -> "PLANNING"
+                            "COMPLETATO" -> "COMPLETED"
+                            "ABBANDONATO" -> "DROPPED"
+                            "IN PAUSA" -> "PAUSED"
+                            "RIGUARDANDO" -> "REPEATING"
+                            "RILEGGENDO" -> "REPEATING"
+                            else -> ""
+                        } else null,
                         media.isListPrivate
                     )
                 }
                 Refresh.all()
-                toastString("List Updated")
+                toastString("Lista Aggiornata")
                 dismissAllowingStateLoss()
             }
         }

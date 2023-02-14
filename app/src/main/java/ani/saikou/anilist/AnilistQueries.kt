@@ -67,10 +67,17 @@ data class SearchResults(
     fun toChipList(): List<SearchChip> {
         val list = mutableListOf<SearchChip>()
         sort?.let {
-            list.add(SearchChip("SORT", "Sort : $it"))
+            list.add(SearchChip
+                ("SORT", "Ordine : ${
+                    when(it) {
+                        "Score" -> "Voto"
+                        else    -> it
+                    }
+                }")
+            )
         }
         format?.let {
-            list.add(SearchChip("FORMAT", "Format : $it"))
+            list.add(SearchChip("FORMAT", "Formato : $it"))
         }
         season?.let {
             list.add(SearchChip("SEASON", it))
@@ -82,13 +89,13 @@ data class SearchResults(
             list.add(SearchChip("GENRE", it))
         }
         excludedGenres?.forEach {
-            list.add(SearchChip("EXCLUDED_GENRE", "Not $it"))
+            list.add(SearchChip("EXCLUDED_GENRE", "Escludi $it"))
         }
         tags?.forEach {
             list.add(SearchChip("TAG", it))
         }
         excludedTags?.forEach {
-            list.add(SearchChip("EXCLUDED_TAG", "Not $it"))
+            list.add(SearchChip("EXCLUDED_TAG", "Escludi $it"))
         }
         return list
     }
@@ -201,7 +208,11 @@ class AnilistQueries {
                                             name = i.node?.name?.userPreferred,
                                             image = i.node?.image?.medium,
                                             banner = media.banner ?: media.cover,
-                                            role = i.role.toString()
+                                            role = when (i.role.toString()){
+                                                "MAIN" -> "PROTAGONISTA"
+                                                "SUPPORTING" -> "SECONDARIO"
+                                                else -> i.role.toString()
+                                            }
                                         )
                                     )
                                 }
@@ -293,13 +304,13 @@ class AnilistQueries {
 
                     if (response.data?.media != null) parse()
                     else {
-                        toastString("Adult Stuff? ( ͡° ͜ʖ ͡°)")
+                        toastString("Roba da Adulti? ( ͡° ͜ʖ ͡°)")
                         response = executeQuery(query, force = true, useToken = false)
                         if (response?.data?.media != null) parse()
-                        else toastString("What did you even open?")
+                        else toastString("Ma che hai aperto?")
                     }
                 } else {
-                    toastString("Error getting Data from Anilist.")
+                    toastString("Errore nel ricevere dati da Anilist.")
                 }
             }
             val mal = async {
@@ -692,7 +703,7 @@ query (${"$"}page: Int = 1, ${"$"}id: Int, ${"$"}type: MediaType, ${"$"}isAdult:
                 page = pageInfo.currentPage.toString().toIntOrNull() ?: 0,
                 hasNextPage = pageInfo.hasNextPage == true,
             )
-        } else toastString("Empty Response, Does your internet perhaps suck?")
+        } else toastString("Richiesta fallita, forse la tua connessione fa schifo?")
         return null
     }
 

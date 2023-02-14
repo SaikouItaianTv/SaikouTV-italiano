@@ -94,7 +94,7 @@ data class Video(
     /**
      * The direct url to the Video
      *
-     * Supports mp4,mkv, dash & m3u8, afaik
+     * Supports mp4, mkv, dash & m3u8, afaik
      * **/
     val url: FileUrl,
 

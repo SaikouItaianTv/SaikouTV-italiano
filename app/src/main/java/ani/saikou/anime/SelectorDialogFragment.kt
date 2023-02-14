@@ -74,7 +74,7 @@ class SelectorDialogFragment : BottomSheetDialogFragment() {
                             dismiss()
                         }
                         fun fail() {
-                            toastString("Couldn't auto select the server, Please try again!")
+                            toastString("Impossibile selezionare automaticamete il server, riprova!")
                             binding.selectorCancel.performClick()
                         }
 
@@ -156,9 +156,8 @@ class SelectorDialogFragment : BottomSheetDialogFragment() {
         dismiss()
         if (launch!!) {
             stopAddingToList()
-            val intent = Intent(activity, ExoplayerView::class.java).apply {
-                putExtra("media", media)
-            }
+            val intent = Intent(activity, ExoplayerView::class.java)
+            ExoplayerView.media = media
             startActivity(intent)
         } else {
             model.setEpisode(media.anime!!.episodes!![media.anime.selectedEpisode!!]!!, "startExo no launch")

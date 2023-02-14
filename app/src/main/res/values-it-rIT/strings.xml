@@ -1,0 +1,315 @@
+<resources>
+
+    <string name="repo">antonydp/saikou-italiano</string>
+
+    <string name="app_name">Saikou IT</string>
+    <string name="slogan">La Miglior app per Anime &amp; Manga per Android.</string>
+
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+
+    <string name="discord">https://discord.gg/5TXAWTU5qr</string>
+    <string name="telegram">https://telegram.me/saikou_app</string>
+    <string name="github">https://github.com/saikou-app/saikou</string>
+
+    <string name="home">Home</string>
+    <string name="anime">Anime</string>
+    <string name="browse_anime">Browse Anime</string>
+    <string name="manga">Manga</string>
+    <string name="browse_manga">Browse Manga</string>
+    <string name="info">Info</string>
+    <string name="watch">Guarda</string>
+    <string name="read">Leggi</string>
+
+    <string name="anime_list">Lista Anime</string>
+    <string name="manga_list">Lista Manga</string>
+
+    <string name="sad">X(</string>
+    <string name="oh">:o</string>
+    <string name="colon">\u0008:\u0008</string>
+
+    <string name="no_internet">Connessione Internet Assente</string>
+    <string name="refresh">Ricarica</string>
+
+    <string name="search_results">Risultati di Ricerca</string>
+    <string name="sort_by">Ordina per</string>
+    <string name="genre">Genere</string>
+    <string name="top_score">Punteggio</string>
+    <string name="trending_anime">Anime di Tendenza</string>
+    <string name="popular_anime">Anime Popolari</string>
+    <string name="trending_manga">Manga di Tendenza</string>
+    <string name="trending_novel">Novel di Tendenza</string>
+    <string name="popular_manga">Manga Popolari</string>
+
+    <string name="username">Username</string>
+    <string name="chapters_read">Capitoli Letti\u0008</string>
+    <string name="episodes_watched">Episodi Guardati\u0008</string>
+    <string name="continue_reading">Continua a Leggere</string>
+    <string name="continue_watching">Continua a Guardare</string>
+    <string name="recommended">Consigliati</string>
+
+    <string name="get_recommendations">Guarda/Leggi alcuni anime o manga per ottenere consigli</string>
+    <string name="empty">All caught up, when New?</string>
+
+    <string name="add">Aggiungi alla Lista</string>
+    <string name="list_editor">Editor di Lista</string>
+    <string name="add_fav">Aggiungi ai Preferiti</string>
+    <string name="notifications">Notifiche</string>
+    <string name="status">STATUS</string>
+    <string-array name="status">
+        <item>PLANNING</item>
+        <item>CURRENT</item>
+        <item>COMPLETED</item>
+        <item>REPEATING</item>
+        <item>PAUSED</item>
+        <item>DROPPED</item>
+    </string-array>
+    <string name="progress">PROGRESSO</string>
+    <string name="score">VOTO</string>
+    <string name="score_suffix">\u0008/ 10</string>
+    <string name="completed_at">COMPLETATO IL</string>
+    <string name="save">Salva</string>
+    <string name="delete">Elimina</string>
+
+    <string name="name">Nome</string>
+    <string name="name_romaji">Nome Romaji</string>
+    <string name="format">Formato</string>
+    <string name="status_title">Stato</string>
+    <string name="total_eps">Numero di Episodi</string>
+    <string name="total_chaps">Numero di Capitoli</string>
+    <string name="ep_duration">Durata Media</string>
+    <string name="min">\u0008min</string>
+    <string name="season">Stagione</string>
+    <string name="start_date">Data di Inizio</string>
+    <string name="end_date">Data di Fine</string>
+    <string name="source">Fonte</string>
+    <string name="main_studio">Studio</string>
+    <string name="genres">Genere</string>
+    <string name="description">Sinossi</string>
+    <string name="characters">Personaggi</string>
+
+    <string name="roles">Ruoli</string>
+    <string name="details">Dettagli</string>
+
+    <string name="play_yt">Riproduci su Youtube</string>
+    <string name="ep">Episodio</string>
+    <string name="chap">Capitolo</string>
+    <string name="wrong"><u>Titolo Sbagliato?</u></string>
+    <string name="source_not_found">"         Nessun Elemento Trovato. X(           Prova con un altra fonte.     "</string>
+    <string name="not_supported">%1$s non è ancora supportato!</string>
+    <string name="server_selector">Seleziona il Server</string>
+    <string name="auto_select_server">Server automatico</string>
+    <string name="make_default">Rendi Predefinito</string>
+    <string name="filler">Filler</string>
+    <string name="adult">Adult</string>
+    <string name="list_only">Solo in Lista</string>
+    <string name="tag">Tag</string>
+    <string name="tags">Tags</string>
+    <string name="trailer">Trailer</string>
+    <string name="opening">Opening</string>
+    <string name="ending">Ending</string>
+    <string name="prequel">Prequel</string>
+    <string name="sequel">Sequel</string>
+
+    <string name="anilist_settings">Impostazioni di Anilist</string>
+    <string name="downloads">Downloads</string>
+    <string name="settings">Impostazioni</string>
+    <string name="player_settings">Impostazioni del Player</string>
+    <string name="recentlyListOnly">Mostra solo I miei Shows in Aggiornati di Recente</string>
+    <string name="downloadInSd">Scarica su SD card</string>
+    <string name="noSdFound">SD card Non Trovata.</string>
+    <string name="reader_settings">Impostazioni Reader</string>
+    <string name="default_source">Fonte di Default</string>
+    <string name="show_yt">Mostra il Link di Youtube</string>
+    <string name="default_ep_view">Layout Episodi Predefinito</string>
+    <string name="default_chp_view">Layout Capitoli Predefinito</string>
+    <string name="ui">Interfaccia utente</string>
+    <string name="common">Common</string>
+    <string name="about">Riguardo a</string>
+    <string name="desc">\u0008\u0008\u0008 Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an Anilist only client, which also lets you stream-download Anime &amp; Manga.\nSaikou literally means the \"best\" in japanese. Well, we would like to say this is the best open source app for anime and manga on Android, what would you say?</string>
+    <string name="devs">Sviluppatori</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="full_disclaimer">
+         - Saikou only scrapes links from various websites and makes it easier for users to find anime and manga.
+        \n\n - Saikou or any of its developer/staff doesn\'t host any of the contents found inside Saikou. Any and all images and anime/manga information found in the app are taken from various public APIs (AniList, MyAnimeList, Kitsu).
+        \n\n - Furthermore, all of the anime/manga links found in Saikou are taken from various 3rd party anime hosting websites.
+        \n\n - Saikou or it\'s owners aren\'t liable for any misuse of any of the contents found inside or outside of the app and cannot be held accountable for the distribution of any of the contents found inside the app.
+        \n\n - By using Saikou, you comply to the fact that the developer of the app is not responsible for any of the contents found in the app; nonetheless they may or may not be from their legitimate sources.
+        \n\n - If the internet infringement issues are involved, please contact the source website. The developer does not assume any legal responsibility.
+    </string>
+    <string name="version_current">Version %1$s</string>
+    <string-array name="tips">
+        <item>You can Long Click an episode/chapter to Mark it as Read.</item>
+        <item>Long Clicking Shows can directly open List Editor.</item>
+        <item>There are few easter eggs hidden in the App.</item>
+        <item>Internet sucks? search taking too much time? try spam-Clicking the Progress Bar</item>
+        <item>Challenge: Go to the very bottom of the Popular Anime &amp; Manga</item>
+        <item>Try Long Clicking the Show\'s Title.</item>
+        <item>Damn, why are you wasting your Time?</item>
+        <item>Looks like someone likes this Animation.</item>
+        <item>You can Long Click to copy this Message.</item>
+        <item>Saikou!</item>
+        <item>OMG LOOK YOU! FOUND AN EASTER EGG!?!?</item>
+        <item>You know who else likes this Animation?</item>
+        <item>My Mom!</item>
+        <item>9anime be crying</item>
+        <item>MAL support? bruh.</item>
+        <item>Novels? more like NO vels.</item>
+    </string-array>
+
+    <string name="video">Video</string>
+    <string name="video_info">Mostra Info Video</string>
+    <string name="video_info_info">Mostra qual è la risoluzione del video attualmente in riproduzione, utile per i server <b>\"Multi Quality\"</b>.</string>
+    <string name="default_quality">Selezione Automatica della Qualità</string>
+    <string name="height">Altezza</string>
+    <string name="width">Larghezza</string>
+    <string name="default_quality_info">Utilizza automaticamente la qualità più vicina a quella predefinita, SOLO per i server \"Multi Quality\". Cambia automaticamente durante la riproduzione di un video.</string>
+    <string name="default_playback_speed">Velocità di riproduzione predefinita - %1$s</string>
+    <string name="cursed_speeds">Cursed Speeds</string>
+    <string name="resize_mode_button">Modalità di ridimensionamento predefinita</string>
+    <string name="subtitles">Sottotitoli</string>
+    <string name="subtitle_toggle">Sottotitoli</string>
+    <string name="subtitle_toggle_kamyroll">Affinché ciò abbia effetto in Kamyroll Hard-Subbed, riavvia l\'app. (Oppure usa Soft-Sub e seleziona nessuno come sottotitolo)</string>
+    <string name="kamyroll_subtitle_type_select">Tipo di sottotitoli Kamyroll</string>
+    <string name="kamyroll_subtitle_types">ASS - pre-set style from episode \nVTT - customizable subtitles, positioning \nSRT - customizable subtitles, no positioning</string>
+    <string name="primary_sub_color_select">"Colore dei Sottotitoli "</string>
+    <string name="secondary_sub_color_select">Colore di Contorno dei Sottotitoli</string>
+    <string name="secondary_sub_outline_type_select">Tipo di Contorno dei Sottotitoli</string>
+    <string name="sub_background_color_select">"Colore del Background dei Sottotitoli  "</string>
+    <string name="sub_window_color_select">Colore della Finestra dei Sottotitoli</string>
+    <string name="sub_window_color_info">La finestra dei sottotitoli è la parte alla loro sinistra e destra. (dove lo sfondo non c\'è)</string>
+    <string name="sub_color_info"><b>Note:</b> Changing Subtitle formatting only works with Soft-Subbed Sources such as Zoro and Kamyroll!</string>
+    <string name="sub_font_select">Font Sottotitoli</string>
+    <string name="subtitle_font_size">Grandezza Sottotitoli</string>
+    <string name="kamyroll_language_button">Lingua Kamyroll</string>
+    <string name="kamyroll_language_info"><b>Nota:</b> questo cambia il titolo dell\'episodio e la lingua della descrizione. <b>I nuovi episodi non saranno disponibili con titoli tradotti per un massimo di 2 ore e non verranno visualizzati nell\'elenco degli episodi. Per visualizzarli mentre vengono rilasciati, passa all\'inglese.</b> Affinché le modifiche abbiano effetto, l\'app deve essere riavviata. <b>Alcune lingue potrebbero non funzionare!</b></string>
+
+    <string name="auto">Auto</string>
+    <string name="auto_play_next_episode">Autoplay Prossimo Episodio</string>
+    <string name="auto_play_next_episode_info">Si disattiva automaticamente se non c\'è interazione per più di 1 ora.</string>
+    <string name="auto_skip_fillers">Skip Fillers Automaticamente</string>
+    <string name="auto_skip_fillers_info">Salta i filler quando si passa all\'episodio successivo.</string>
+
+    <string name="update_progress">Aggiorna Progresso</string>
+    <string name="ask_update_progress_anime">Richiedi per ogni Anime \"individualmente\"</string>
+    <string name="ask_update_progress_manga">Richiedi per ogni Manga \"individualmente\"</string>
+    <string name="ask_update_progress_info_ep">Disattivandolo i progressi si  aggiorneranno automaticamente quando l\'episodio viene guardato.</string>
+    <string name="ask_update_progress_info_chap">Disattivandolo i progressi si  aggiorneranno automaticamente quando il capitolo viene letto.</string>
+    <string name="ask_update_progress_hentai">Aggiorna i progressi per Hentai</string>
+    <string name="ask_update_progress_doujin">Aggiorna i progressi per Doujins</string>
+    <string name="very_bold">molto audace da parte tua sar</string>
+    <string name="watch_complete_percentage_info">La percentuale alla quale i tuoi progressi di Anilist dovrebbero essere aggiornati dopo aver visto un episodio. Questo imposta anche il \\% per quando precaricare i collegamenti per il prossimo episodio.</string>
+
+    <string name="behaviour">Comportamento</string>
+    <string name="always_continue">Continua Sempre da dove hai Lasciato</string>
+    <string name="pause_video_focus">Pausa quando non in Focus</string>
+    <string name="gestures">Gestures di Volume &amp; Luminosità</string>
+    <string name="double_tap">"Doppio tocco per andare avanti o indietro "</string>
+    <string name="double_tap_info">"Disattivandoli appariranno pulsanti avanti veloce &amp;  di riavvolgimento "</string>
+    <string name="seek_time">Seek Time</string>
+    <string name="seek_time_info">"di quanti secondi andare avanti &amp; indietro veloce "</string>
+    <string name="skip_time">Tempo di Skip</string>
+    <string name="skip_time_info">Se 0, nasconde il pulsante Salta.</string>
+    <string name="show_cast_button_info">Richiede l\'app  \"Web Video Caster\".</string>
+    <string name="picture_in_picture">Picture in Picture</string>
+    <string name="always_minimize">Minimizza Sempre</string>
+    <string name="always_minimize_info">Richiede che PiP sia abilitato, fa in modo che il player si comporti come Youtube Player ma meglio. Nasconde anche il pulsante PiP.</string>
+
+    <string name="app">App</string>
+    <string name="immersive_mode">Nascondi la Barra di Stato</string>
+    <string name="immersive_mode_info">Richiede il riavvio.</string>
+    <string name="home_layout_show">Mostra/Nascondi layout in Home</string>
+    <string-array name="home_layouts">
+        <item>Continue Watching</item>
+        <item>Favourite Anime</item>
+        <item>Planned Anime</item>
+        <item>Continue Reading</item>
+        <item>Favourite Manga</item>
+        <item>Planned Manga</item>
+        <item>Recommended</item>
+    </string-array>
+
+    <string name="startUpTab">Tab di Avvio Predefinita</string>
+    <string name="small_view">Small View in Trending Shows</string>
+    <string name="animations">Animazioni</string>
+    <string name="banner_animations">Animazioni Banner</string>
+    <string name="layout_animations">Animazioni Layout</string>
+    <string name="animation_speed">Velocità Generale</string>
+    <string name="empty_fav">Looks like you don\'t like anything,\nTry Hearting a show to keep it here.</string>
+    <string name="fav_anime">Anime Preferiti</string>
+    <string name="fav_manga">Manga Preferiti</string>
+    <string name="restart_app">Riavviare l\'app?</string>
+    <string name="next">Prossimo</string>
+    <string name="previous">Precedente</string>
+    <string name="current_page">Pagina Corrente</string>
+    <string name="dubbed">Doppiato</string>
+    <string name="none">None</string>
+    <string name="selected_dns">DNS Selezionato</string>
+    <string name="layout">Layout</string>
+    <string name="spaced_pages">Pagine Distanziate</string>
+    <string name="direction">Direzione</string>
+
+    <string name="general">Generale</string>
+    <string name="show_system_bars">Mostra Status &amp;  Bar di Navigazione</string>
+    <string name="auto_detect_webtoon">Auto Detect Webtoon</string>
+    <string name="auto_detect_webtoon_info">Se il manga non proviene dal Giappone, il lettore utilizzerà per impostazione predefinita le impostazioni di Webtoon Reader</string>
+    <string name="default_settings">Impostazioni Predefinite</string>
+    <string name="horizontal_scroll_bar">Scroll Bar orizzontale</string>
+    <string name="dual_page">Doppia Pagina</string>
+    <string name="dual_page_info">Mostra 2 immagini in 1 pagina, strano se le immagini non hanno le stesse dimensioni</string>
+    <string name="true_colors">Colori Reali</string>
+    <string name="true_colors_info">(Modalità colore a 32 bit) Riduce il banding sulle immagini, può influire sulle prestazioni.</string>
+    <string name="image_rotation">Rotazione dell\'Immagine</string>
+    <string name="sort_by_title">Ordina per Titolo</string>
+    <string name="sort_by_score">Ordina per Voto</string>
+    <string name="over_scroll">Scorrere per passare al capitolo successivo/precedente</string>
+    <string name="volume_buttons">Cambia pagina con i Pulsanti Volume</string>
+    <string name="list_private">Privato</string>
+    <string name="wrap_images_info">Principalmente utile per dispositivi più grandi, rimuove lo spazio tra le immagini, se esistono.</string>
+    <string name="reload">Ricarica</string>
+    <string name="share">Condividi</string>
+    <string name="skip">Skip</string>
+    <string name="show_skip_time_stamp_button">Mostra il pulsante Skip Time Stamp</string>
+    <string name="always_load_time_stamps">Carica sempre i Time Stamps</string>
+    <string name="timestamps">Time Stamps</string>
+    <string name="other">Altro</string>
+    <string name="auto_skip_op_ed">Auto Skip OP / ED</string>
+    <string name="requires_time_stamps_to_be_enabled">Richiede che i Time Stamps siano abilitati</string>
+    <string name="total_repeats">TOTAL REPEATS</string>
+    <string name="custom_lists">"Lista Custom "</string>
+    <string name="donate_desc">Want to support Saikou\'s Creator?\nConsider Donating</string>
+    <string name="donate_goal">(We just reached a goal of $100!)</string>
+    <string name="filter">Filtro</string>
+    <string name="year">Anno</string>
+    <string name="this_season">Stagione Corrente</string>
+    <string name="next_season">Stagione Successiva</string>
+    <string name="previous_season">Stagione Precedente</string>
+    <string name="include_media_in_list">Includi Lista</string>
+    <string name="release_calendar">Calendario</string>
+    <string name="planned_anime">Anime Da Vedere</string>
+    <string name="planned_manga">Manga Da Vedere</string>
+    <string name="search">Cerca</string>
+    <string name="updated">Aggiornati di Recente</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="started_at">INIZIATO IL</string>
+    <string name="mean_score">Voto Medio</string>
+    <string name="relations">Correlati</string>
+    <string name="eps">Episodi</string>
+    <string name="chaps">Capitoli</string>
+    <string name="synonyms">Synonyms</string>
+    <string name="theme">Tema</string>
+    <string name="ui_settings">Impostazioni Interfaccia</string>
+    <string name="source_info">Mostra il Nome della Fonte</string>
+    <string name="watch_complete_percentage">Watch Update Percentage</string>
+    <string name="show_cast_button">Mostra il Pulsante Cast</string>
+    <string name="prefer_dub">Preferisci gli Anime Doppiati</string>
+    <string name="dns_info">Cambialo, se il tuo ISP blocca una fonte</string>
+    <string name="keep_screen_on">Mantieni lo Schermo Acceso</string>
+    <string name="hide_page_numbers">Nascondi i Numeri di Pagina</string>
+    <string name="sort_by_last_updated">Ordina per Ultimi Aggiornati</string>
+    <string name="wrap_images">Esegui il Wrap delle Immagini</string>
+    <string name="apply">Applica</string>
+    <string name="cancel">Annulla</string>
+    <string name="image_long_clicking">Apri L\'immagine tenendo premuto</string>
+
+</resources>

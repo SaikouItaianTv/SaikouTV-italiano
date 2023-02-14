@@ -15,7 +15,7 @@ suspend fun getUserId(update: Runnable) {
         if (Anilist.query.getUserData())
             update.run()
         else
-            toastString("Error loading Data")
+            toastString("Errore nel caricare Data")
     } else update.run()
 }
 

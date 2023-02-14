@@ -1,26 +1,4 @@
-# 1.2.0.24
+# 1.2.0.25.2
 
-- Fixed Small App Crash
-- Added ConsumeBili Source (Api Currently Down) by @hoangvu12
-- Added Toonily by @scrazzz
-- Removed AnimixPlay, 9anime & MangaHub
-- Fixed StreamSB Extractor
-- Added support for Keyboard in Video Player
-- Planned Anime & Manga can be seen on home now (Changeable in UI Settings)
-- Update Kamyroll to Post Requests by @Adolar0042
-- Made Seasons automatically update based on time
-- Long Clicking Seasons Chip will show more results
-- Fixed Filter Button looking weird for Blind People
-- Clicking Tags in Show Info, now opens search
-- Fix scrolling to previous chapter in right to left swipe mode
-- Added toggle to disable long clicking images in Manga Reader
-- Fixed Timestamps Disabling & Added Proxy Time Stamps for HandShake Errors
-- Fixed AllAnime, AnimePahe, Tenshi (Name changed to Marin)
-- Auto Continue from Anilist Last Read/Watched given priority
-- Added Toggle to disable Auto Continue
-- Added Toggle to disable Checking for App Updates
-- Added Author Name for Manga
-- Added Forks Button
-- Added FAQs(Frequently Asked Questions) thanks to SunglassJerry
-- Fixed Custom Lists not showing in Lists
-- Fixed Manga Katana, AllAnime(Manga), Comick Fun
+- New method that automatically replaces TV series title season names to abbreviated format in autosearch, using regex pattern matching.
+- Fixed Github Actions.

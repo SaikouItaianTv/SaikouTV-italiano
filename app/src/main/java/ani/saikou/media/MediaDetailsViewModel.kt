@@ -182,7 +182,7 @@ class MediaDetailsViewModel : ViewModel() {
                 if (media.anime?.episodes?.get(i) != null) {
                     media.anime.selectedEpisode = i
                 } else {
-                    toastString("Couldn't find episode : $i")
+                    toastString("Impossibile trovare l'episodio : $i")
                     return@post
                 }
                 media.selected = this.loadSelected(media)

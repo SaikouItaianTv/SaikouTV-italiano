@@ -259,7 +259,7 @@ class MangaReaderToTransformation : Transformation<File> {
         }
 
         // Write the bitmap to a file and return the file
-        val newFile = File(context.cacheDir, file.name)
+        val newFile = File(context.cacheDir.absolutePath+"/img", "t_"+file.name)
         newFile.createNewFile()
         val bos = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.PNG, 0, bos)
@@ -280,7 +280,7 @@ class MangaReaderToTransformation : Transformation<File> {
             }
 
             override fun recycle() {
-                //                newFile.delete()
+//                newFile.delete()
             }
         }
     }

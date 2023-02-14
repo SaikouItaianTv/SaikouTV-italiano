@@ -171,13 +171,13 @@ class MediaDetailsActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLi
             val text = SpannableStringBuilder().apply {
                 val white = ContextCompat.getColor(this@MediaDetailsActivity, R.color.bg_opp)
                 if (media.userStatus != null) {
-                    append(if (media.anime != null) "Watched " else "Read ")
+                    append(if (media.anime != null) "Guardati " else "Letti ")
                     val typedValue = TypedValue()
                     theme.resolveAttribute(R.attr.colorSecondary, typedValue, true)
                     bold { color(typedValue.data) { append("${media.userProgress}") } }
-                    append(" out of ")
+                    append(if (media.anime != null) " Episodi su " else " Capitoli su ")
                 } else {
-                    append("Total of ")
+                    append(if (media.anime != null) "Episodi: " else "Capitoli: ")
                 }
                 if (media.anime != null) {
                     if (media.anime!!.nextAiringEpisode != null) {
@@ -194,7 +194,15 @@ class MediaDetailsActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLi
         fun progress() {
             if (media.userStatus != null) {
                 binding.mediaTotal.visibility = View.VISIBLE
-                binding.mediaAddToList.text = media.userStatus
+                binding.mediaAddToList.text = when(media!!.userStatus){
+                    "CURRENT" -> if (media?.manga==null) "GUARDANDO" else "LEGGENDO"
+                    "PLANNING" -> "PIANIFICATO"
+                    "COMPLETED" -> "COMPLETATO"
+                    "DROPPED" -> "ABBANDONATO"
+                    "PAUSED" -> "IN PAUSA"
+                    "REPEATING" -> if (media?.manga==null) "RIGUARDANDO" else "RILEGGENDO"
+                    else -> ""
+                }
             } else {
                 binding.mediaAddToList.setText(R.string.add)
             }
@@ -203,11 +211,11 @@ class MediaDetailsActivity : AppCompatActivity(), AppBarLayout.OnOffsetChangedLi
                 if (Anilist.userid != null) {
                     if (supportFragmentManager.findFragmentByTag("dialog") == null)
                         MediaListDialogFragment().show(supportFragmentManager, "dialog")
-                } else toastString("Please Login with Anilist!")
+                } else toastString("Per favore logga con Anilist!")
             }
             binding.mediaAddToList.setOnLongClickListener {
                 saveData("${media.id}_progressDialog", true)
-                toastString("Auto Update Progress has now been Reset-ed ")
+                toastString("Le impostazioni sull'aggiornamento automatico sono state ripristinate al valore predefinito ")
                 true
             }
         }

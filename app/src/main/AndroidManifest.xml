@@ -86,7 +86,7 @@
             android:configChanges="orientation|screenSize|layoutDirection"
             android:exported="true"
             android:launchMode="singleTask">
-            <intent-filter android:label="Read on Saikou">
+            <intent-filter android:label="Leggi con Saikou">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -98,7 +98,7 @@
                 <data android:host="myanimelist.net" />
                 <data android:pathPrefix="/manga" />
             </intent-filter>
-            <intent-filter android:label="Watch on Saikou">
+            <intent-filter android:label="Guarda con Saikou">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />

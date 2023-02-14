@@ -202,7 +202,7 @@ class MangaFragment : Fragment() {
                 if (it.hasNextPage)
                     progressAdaptor.bar?.visibility = View.VISIBLE
                 else {
-                    toastString("DAMN! YOU TRULY ARE JOBLESS\nYOU REACHED THE END")
+                    toastString("CAVOLO! HAI TROPPO TEMPO LIBERO\nSEI ARRIVATO ALLA FINE")
                     progressAdaptor.bar?.visibility = View.GONE
                 }
                 loading = false

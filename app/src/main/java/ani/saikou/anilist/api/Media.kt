@@ -203,7 +203,14 @@ enum class MediaStatus {
     FINISHED, RELEASING, NOT_YET_RELEASED, CANCELLED, HIATUS;
 
     override fun toString(): String {
-        return super.toString().replace("_", " ")
+        return when(super.toString()){
+            "FINISHED" -> "FINITO"
+            "RELEASING" -> "IN CORSO"
+            "NOT_YET_RELEASED" -> "ANCORA NON RILASCIATO"
+            "CANCELLED" -> "CANCELLATO"
+            "HIATUS" -> "HIATUS"
+            else -> ""
+        }
     }
 }
 
@@ -435,7 +442,17 @@ enum class MediaRelation {
     ADAPTATION, PREQUEL, SEQUEL, PARENT, SIDE_STORY, CHARACTER, SUMMARY, ALTERNATIVE, SPIN_OFF, OTHER, SOURCE, COMPILATION, CONTAINS;
 
     override fun toString(): String {
-        return super.toString().replace("_", " ")
+        return when(super.toString()){
+            "ADAPTATION" -> "ADATTAMENTO"
+            "PARENT" -> "ORIGINE"
+            "CHARACTER" -> "PERSONAGGIO"
+            "SUMMARY" -> "RIASSUNTO"
+            "ALTERNATIVE" -> "ALTERNATIVA"
+            "OTHER" -> "ALTRO"
+            "SOURCE" -> "FONTE"
+            "CONTAINS" -> "CONTIENE"
+            else -> super.toString().replace("_", " ")
+        }
     }
 }
 

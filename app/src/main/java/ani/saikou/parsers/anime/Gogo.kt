@@ -38,7 +38,7 @@ class Gogo : AnimeParser() {
         else text
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
         val list = mutableListOf<VideoServer>()
         client.get(episodeLink).document.select("div.anime_muti_link > ul > li").forEach {
             val name = it.select("a").text().replace("Choose this server", "")
@@ -55,6 +55,7 @@ class Gogo : AnimeParser() {
         val extractor: VideoExtractor? = when {
             "gogo" in domain    -> GogoCDN(server)
             "goload" in domain  -> GogoCDN(server)
+            "playgo" in domain  -> GogoCDN(server)
             "sb" in domain      -> StreamSB(server)
             "sss" in domain      -> StreamSB(server)
             "fplayer" in domain -> FPlayer(server)

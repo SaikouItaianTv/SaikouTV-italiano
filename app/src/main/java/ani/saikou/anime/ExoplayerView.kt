@@ -127,7 +127,10 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
 
     private var orientationListener: OrientationEventListener? = null
 
-    private lateinit var media: Media
+    companion object{
+        lateinit var media : Media
+    }
+
     private lateinit var episode: Episode
     private lateinit var episodes: MutableMap<String, Episode>
     private lateinit var episodeArr: List<String>
@@ -399,7 +402,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         exoSkipOpEd.alpha = if (settings.autoSkipOPED) 1f else 0.3f
         exoSkipOpEd.setOnClickListener {
             settings.autoSkipOPED = if (settings.autoSkipOPED) {
-                toastString("Disabled Auto Skipping OP & ED")
+                toastString("Auto Skipping OP & ED Disabilitato")
                 false
             } else {
                 toastString("Auto Skipping OP & ED")
@@ -729,12 +732,6 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         }
 
         //Handle Media
-        try {
-            media = (intent.getSerialized("media")) ?: return
-        } catch (e: Exception) {
-            toast(e.toString())
-            return
-        }
         model.setMedia(media)
         title = media.userPreferredName
         episodes = media.anime?.episodes ?: return
@@ -822,7 +819,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
             if (currentEpisodeIndex > 0) {
                 change(currentEpisodeIndex - 1)
             } else
-                toastString("This is the 1st Episode!")
+                toastString("Questo è il primo Episodio!")
         }
 
         model.getEpisode().observe(this) {
@@ -950,11 +947,11 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         preloading = false
         val showProgressDialog = if (settings.askIndividual) loadData<Boolean>("${media.id}_progressDialog") ?: true else false
         if (showProgressDialog && Anilist.userid != null && if (media.isAdult) settings.updateForH else true)
-            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Auto Update progress for ${media.userPreferredName}?")
+            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Aggiornare automaticamete i progressi su Anilist? ${media.userPreferredName}?")
                 .apply {
                     setOnCancelListener { hideSystemBars() }
                     setCancelable(false)
-                    setPositiveButton("Yes") { dialog, _ ->
+                    setPositiveButton("Si") { dialog, _ ->
                         saveData("${media.id}_progressDialog", false)
                         saveData("${media.id}_save_progress", true)
                         dialog.dismiss()
@@ -963,7 +960,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
                     setNegativeButton("No") { dialog, _ ->
                         saveData("${media.id}_progressDialog", false)
                         saveData("${media.id}_save_progress", false)
-                        toast("You can long click List Editor button to Reset Auto Update")
+                        toast("Tieni premuto il pulsante di edit della Lista per resettare l'Update Automatico")
                         dialog.dismiss()
                         model.setEpisode(episodes[media.anime!!.selectedEpisode!!]!!, "invoke")
                     }
@@ -1134,7 +1131,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
                     )
                 )
             )
-            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Continue from ${time}?").apply {
+            AlertDialog.Builder(this, R.style.DialogTheme).setTitle("Continua da ${time}?").apply {
                 setCancelable(false)
                 setPositiveButton("Yes") { d, _ ->
                     buildExoplayer()
@@ -1389,7 +1386,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
         isBuffering = playbackState == Player.STATE_BUFFERING
         if (playbackState == Player.STATE_ENDED && settings.autoPlay) {
             if (interacted) exoNext.performClick()
-            else toast("Autoplay cancelled, no Interaction for more than 1 Hour.")
+            else toast("Autoplay disabilitato, nessuna interazione per più di 1 ora.")
         }
         super.onPlaybackStateChanged(playbackState)
     }
@@ -1413,7 +1410,7 @@ class ExoplayerView : AppCompatActivity(), Player.Listener {
                 i++
             } else {
                 if (toast)
-                    toast("No next Episode Found!")
+                    toast("Episodio successivo non trovato!")
                 isFiller = false
             }
         }
