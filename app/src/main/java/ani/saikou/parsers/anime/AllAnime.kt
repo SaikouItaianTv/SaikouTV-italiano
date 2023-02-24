@@ -15,11 +15,11 @@ import java.text.DecimalFormat
 
 class AllAnime : AnimeParser() {
     override val name = "AllAnime"
-    override val saveName = "all_anime"
-    override val hostUrl = "https://allanime.site"
+    override val saveName = "allanime"
+    override val hostUrl = "https://allanime.to"
     override val isDubAvailableSeparately = true
 
-    private val apiHost = "https://allanimenews.com/"
+    private val apiHost = "https://api.allanime.co/"
     private val ytAnimeCoversHost = "https://wp.youtube-anime.com/aln.youtube-anime.com"
     private val idRegex = Regex("${hostUrl}/anime/(\\w+)")
     private val epNumRegex = Regex("/[sd]ub/(\\d+)")
@@ -111,7 +111,7 @@ class AllAnime : AnimeParser() {
 
     private class AllAnimeExtractor(override val server: VideoServer, val direct: Boolean = false) : VideoExtractor() {
         override suspend fun extract(): VideoContainer {
-            val url = server.embed.url
+            val url = "https://allanimenews.com/apivtwo${server.embed.url.substringAfter("apivtwo")}"
             return if (direct)
                 VideoContainer(listOf(Video(null, VideoType.CONTAINER, url, getSize(url))))
             else {
@@ -194,7 +194,7 @@ class AllAnime : AnimeParser() {
             .build().toString()
         return client.get(
             graphqlUrl,
-            mapOf("Host" to "allanime.site")
+            mapOf("Host" to hostUrl.toHttpUrl().host)
         ).parsed()
     }
 

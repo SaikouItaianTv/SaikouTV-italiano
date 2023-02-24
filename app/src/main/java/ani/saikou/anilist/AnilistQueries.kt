@@ -6,7 +6,6 @@ import ani.saikou.anilist.Anilist.authorRoles
 import ani.saikou.anilist.api.FuzzyDate
 import ani.saikou.anilist.api.Page
 import ani.saikou.anilist.api.Query
-import ani.saikou.anilist.api.User
 import ani.saikou.media.Character
 import ani.saikou.media.Media
 import ani.saikou.media.Studio
@@ -354,22 +353,26 @@ class AnilistQueries {
     }
 
     suspend fun favMedia(anime: Boolean): ArrayList<Media> {
-        val responseArray = arrayListOf<Media>()
-        try {
+        var hasNextPage = true
+        var page = 0
+
+        suspend fun getNextPage(page:Int): List<Media> {
             val response =
-                executeQuery<Query.User>("""{User(id:${Anilist.userid}){id favourites{${if (anime) "anime" else "manga"}(page:0){edges{favouriteOrder node{id idMal isAdult mediaListEntry{ progress private score(format:POINT_100) status } chapters isFavourite episodes nextAiringEpisode{episode}meanScore isFavourite title{english romaji userPreferred}type status(version:2)bannerImage coverImage{large}}}}}}}""")
-            val user: User = response?.data?.user ?: return responseArray
-            val favourites = user.favourites
+                executeQuery<Query.User>("""{User(id:${Anilist.userid}){id favourites{${if (anime) "anime" else "manga"}(page:$page){pageInfo{hasNextPage}edges{favouriteOrder node{id idMal isAdult mediaListEntry{ progress private score(format:POINT_100) status } chapters isFavourite episodes nextAiringEpisode{episode}meanScore isFavourite title{english romaji userPreferred}type status(version:2)bannerImage coverImage{large}}}}}}}""")
+            val favourites = response?.data?.user?.favourites
             val apiMediaList = if (anime) favourites?.anime else favourites?.manga
-            apiMediaList?.edges?.forEach {
-                it.node?.apply {
-                    val media = Media(this)
-                    media.isFav = true
-                    responseArray.add(media)
+            hasNextPage = apiMediaList?.pageInfo?.hasNextPage ?: false
+            return apiMediaList?.edges?.mapNotNull {
+                it.node?.let { i->
+                    Media(i).apply { isFav = true }
                 }
-            }
-        } catch (e: Exception) {
-            logError(e)
+            } ?: return listOf()
+        }
+
+        val responseArray = arrayListOf<Media>()
+        while(hasNextPage){
+            page++
+            responseArray.addAll(getNextPage(page))
         }
         return responseArray
     }
@@ -468,22 +471,8 @@ class AnilistQueries {
         unsorted.forEach {
             if(!sorted.containsKey(it.key)) sorted[it.key] = it.value
         }
-        val favResponse =
-            executeQuery<Query.User>("""{User(id:$userId){id favourites{${if (anime) "anime" else "manga"}(page:0){edges{favouriteOrder node{id idMal isAdult mediaListEntry{progress private score(format:POINT_100)status}chapters isFavourite episodes nextAiringEpisode{episode}meanScore isFavourite title{english romaji userPreferred}type status(version:2)bannerImage coverImage{large}}}}}}}""")
 
-
-        favResponse?.data?.user?.apply {
-            sorted["Favourites"] = arrayListOf()
-            val apiMediaList = if (anime) favourites?.anime else favourites?.manga
-            apiMediaList?.edges?.forEach {
-                it.node?.apply {
-                    val media = Media(this)
-                    media.isFav = true
-                    sorted["Favourites"]?.add(media)
-                }
-            }
-        }
-
+        sorted["Favourites"] = favMedia(anime)
         sorted["Favourites"]?.sortWith(compareBy { it.userFavOrder })
 
         sorted["All"] = all
