@@ -18,15 +18,7 @@ object AnimeSources : WatchSources() {
 //        "INGLESE: 9Anime" to ::NineAnime,
         "INGLESE: AnimePahe" to ::AnimePahe,
         "INGLESE: ConsumeBili" to ::ConsumeBili,
-        "INGLESE: KickAssAnime" to ::KickAssAnime,
-        "SPAGNOLO: Animefenix" to ::Animefenix,
-        "SPAGNOLO: Animelatinohd" to ::Animelatinohd,
-        "SPAGNOLO: Henaojara" to ::Henaojara,
-        "SPAGNOLO: Jkanime" to ::Jkanime,
-        "SPAGNOLO: TioAnime" to ::TioAnime,
-        "SPAGNOLO: Monoschinos" to ::Monoschinos
-
-
+        "INGLESE: KickAssAnime" to ::KickAssAnime
 
     )
 }
