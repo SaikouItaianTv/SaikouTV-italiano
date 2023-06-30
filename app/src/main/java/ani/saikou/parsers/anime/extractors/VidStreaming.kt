@@ -17,8 +17,8 @@ class VidStreaming(override val server: VideoServer) : VideoExtractor() {
                 .replace("load.php", "loadserver.php")
 
         val res = client
-                .get(url, mapOf("Referer" to "https://goload.one"))
-                .document.select("ul.list-server-items > li.linkserver")
+            .get(url, mapOf("Referer" to "https://goload.one"))
+            .document.select("ul.list-server-items > li.linkserver")
 
         return VideoContainer(
             res.asyncMapNotNull { server ->

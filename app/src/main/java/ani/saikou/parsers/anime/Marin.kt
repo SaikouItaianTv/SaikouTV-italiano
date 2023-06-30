@@ -20,17 +20,17 @@ open class Marin : AnimeParser() {
     private val ddosCookie = ";__ddg1_=;__ddg2_=;"
     private suspend fun getCookieHeaders(): Map<String,String> {
         if(cookie==null) {
-            cookie = client.head(hostUrl, mapOf("cookie" to ddosCookie)).headers.toMultimap()["set-cookie"]!!.joinToString(";")
-            cookie?.plus(ddosCookie)
+            cookie = ddosCookie
+            cookie += client.head(hostUrl, mapOf("cookie" to ddosCookie)).headers.toMultimap()["set-cookie"]!!
+                .joinToString(";") { decode(it) }
             token = decode(cookie?.findBetween("XSRF-TOKEN=", ";")!!)
-            cookie?.plus("cutemarinmoe_session=$token")
         }
         return mapOf("cookie" to cookie!!,"x-xsrf-token" to token!!)
     }
 
-    inline fun <reified T> parse(res:NiceResponse):T{
+    inline fun <reified T> parse(res: NiceResponse):T{
         val htmlRes = res.document.selectFirst("div#app")!!.attr("data-page")
-        return Mapper.parse(decode(htmlRes).also { println(it) })
+        return Mapper.parse(decode(htmlRes.replace("%","%25")))
     }
 
     override suspend fun search(query: String): List<ShowResponse> {
@@ -40,44 +40,44 @@ open class Marin : AnimeParser() {
         )
         val json = parse<Json>(res)
         return json.props?.animeList?.data!!.map {
-            ShowResponse(it.title, it.slug, it.cover)
+            ShowResponse(it.title, it.slug, FileUrl(it.cover,getCookieHeaders()))
         }
     }
 
 
     override suspend fun loadEpisodes(animeLink: String, extra: Map<String, String>?): List<Episode> {
         val map = mutableMapOf<String, Episode>()
-        val res = parse<Json>(client.get("$hostUrl/anime/$animeLink"))
+        val res = parse<Json>(client.get("$hostUrl/anime/$animeLink",getCookieHeaders()))
         (1..res.props?.episodeList?.meta?.total!!).forEach {
             val num = it.toString()
             map[num] = (Episode(num, "$hostUrl/anime/$animeLink/$num"))
         }
-        fun add(list:List<Json.Props.EpisodeList.Datum>){
+        suspend fun add(list:List<Json.Props.EpisodeList.Datum>){
             list.forEach {
                 val num = it.slug!!
                 val link = "$hostUrl/anime/$animeLink/$num"
                 val title = it.title
-                val thumb = it.cover!!
+                val thumb = FileUrl(it.cover!!, getCookieHeaders())
                 map[num] = Episode(num, link, title, thumb)
             }
         }
         add(res.props.episodeList.data!!)
         res.props.episodeList.meta.also {
             if(it.currentPage!! != it.lastPage!!) {
-                val lastRes = parse<Json>(client.get("$hostUrl/anime/$animeLink?eps_page=${it.lastPage}"))
+                val lastRes = parse<Json>(client.get("$hostUrl/anime/$animeLink?eps_page=${it.lastPage}",getCookieHeaders()))
                 add(lastRes.props?.episodeList?.data!!)
             }
         }
         return map.values.toList()
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
-        val res = parse<Json>(client.get(episodeLink))
+    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+        val res = parse<Json>(client.get(episodeLink,getCookieHeaders()))
         return res.props?.videoList?.data!!.map {
             VideoServer(
                 "${it.title} : ${it.source?.name} - [${if(it.audio?.code=="jp") "Sub" else "Dub"}]",
-                FileUrl(episodeLink,getCookieHeaders().toMap()),
-                it.slug!!
+                FileUrl(episodeLink, getCookieHeaders()),
+                mapOf("video" to it.slug!!)
             )
         }
     }
@@ -93,13 +93,14 @@ open class Marin : AnimeParser() {
                 server.embed.url,
                 server.embed.headers,
                 server.embed.url,
-                data = mapOf("video" to server.extraData as String)
+                data = server.extraData as Map<String, String>?
             )).props?.video?.data?.mirror?.map {
+                val file = FileUrl(it.code!!.file!!,server.embed.headers)
                 Video(
-                    it.code!!.height?.toInt(),
+                    it.code.height?.toInt(),
                     VideoType.CONTAINER,
-                    it.code.file!!,
-                    getSize(it.code.file)
+                    file,
+                    getSize(file)
                 )
             }
             return VideoContainer(videos!!)

@@ -1,14 +1,14 @@
-# **Saikou**
+# **Saikou TV**
 <p align="center">
-   <a href="https://discord.gg/saikou-app"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
-   <a href="https://telegram.me/saikou_app" ><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"></a> 
-   <a href="https://github.com/saikou-app/saikou/releases"><img src="https://img.shields.io/github/downloads/saikou-app/saikou/total?color=%233DDC84&logo=android&logoColor=%23fff&style=for-the-badge"></a>
+   <a href="https://discord.gg/2T7TunuwFZ"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
+   <a href="https://telegram.me/saikou_app" ><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"></a>
+   <a href="https://github.com/siennaXD/SaikouTV/releases"><img src="https://img.shields.io/github/downloads/saikou-app/saikou/total?color=%233DDC84&logo=android&logoColor=%23fff&style=for-the-badge"></a>
 </p>
 
-Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [Anilist](https://anilist.co/) only client, which also lets you stream-download Anime & Manga. 
+Saikou TV is crafted based on simplistic yet state-of-the-art elegance. It is an [Anilist](https://anilist.co/) only client, which also lets you stream-download Anime & Manga.
 <br><br>
-<i>Saikou (最高; Sai-kō) literally means the best in japanese. Well, we would like to say this is the best open source app for anime and manga on Android, but hey, Try it out yourself & judge!
-</i> 
+<i>Saikou (最高; Sai-kō) literally means the best in japanese. Well, we would like to say this is the best open source app for anime and manga on Android, but hey, Try it out yourself & judge! If you would like to support the main developer of this project, please contribute by buying a coffee below!
+</i>
 <br>
 <br>
 <a href="https://www.buymeacoffee.com/brahmkshatriya"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=brahmkshatriya&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" /></a>
@@ -16,28 +16,25 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 ### 🌟STAR THIS REPOSITORY TO SUPPORT THE DEVELOPER AND ENCOURAGE THE DEVELOPMENT OF THE APPLICATION!
 
 > **Warning**
-> 
+>
 > Please do not attempt to upload Saikou or any of it's forks on Playstore or any other Android appstores on the internet. Doing so, may infringe their terms and conditions. This may result to legal action or immediate take-down of the app.
-
-<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-175525.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-175542.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-175551.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-175600.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-183102.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-183112.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-183120.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-182352.png?raw=true" style="width: 23%;margin:16px;" />&nbsp;&nbsp;<img src="https://github.com/saikou-app/saikou-app.github.io/blob/main/assets/Screenshot_20220330-182421.png?raw=true" style="width: 23%;margin:16px;" />
-
 
 ## APP FEATURES
 
 - Easy and functional way to both, watch anime and read manga, Ad Free.
 
-- A completely open source app with a nice UI & Animations :)
+- A completely open source app with clean animations and an easy to navigate UI.
 
-- The most Efficient scraping for anime and manga from multiple sources. (_Spoiler Alert : No web-views were harmed_)
+- The most efficient scraping for anime and manga from multiple sources. (_Spoiler Alert : No web-views were harmed_)
 
-- Synchronize anime and manga real-time with AniList. Easily categorise anime and manga based on your current status. (Powered by AniList)
+- Synchronize anime and manga in real-time with AniList. Easily categorise anime and manga based on your current status. (Powered by AniList)
 
 - Find all shows using thoroughly and frequently updated list of all trending, popular and ongoing anime based on scores.
 
 - View extensive details about anime shows, movies and manga titles. It also features ability to countdown to the next episode of airing anime. (Powered by AniList & MyAnimeList)
 
 
-* **Available Anime sources:-**
+* **Available Anime sources:**
 
 |                            SITE                            |    STATUS    | DOWNLOADS |
 |:----------------------------------------------------------:|:------------:|:---------:|
@@ -82,20 +79,20 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 - Offline Video Player & Reader
 
 - Source Subscribe (will notify when new chapter/ep is released)
-  
+
   - setting to change time in hrs to check for new episode/chapter/notification
 
 - Add novel sources (1lib.in)?? Dk
- 
+
 
 ## Rejected Stuff
 
 - Sources of any language except English
 
 - News Section in the App
-   
+
 - More Search Options
-   
+
 - Comment Section
 
 - Accent Color Change (Hot Pink Supremacy.)
@@ -104,13 +101,14 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 ## Help wanted for:
 
 - TV support
-  
+
 - Multi Quality Download
 
 - Bulk Download
 
 - Novel Reader
 
+(Source list updated as of 11/06/2023)
 ## WANT TO CONTRIBUTE?
 
 - All contributions are welcome, from code to documentation to graphics to design suggestions to bug reports. Please use GitHub to its fullest; contribute Pull Requests, contribute tutorials or other content- whatever you have to offer, we can use it!
@@ -120,8 +118,8 @@ Saikou is crafted based on simplistic yet state-of-the-art elegance. It is an [A
 ### Official Discord Server
 
 <p align="center">
- <a href="https://discord.gg/5TXAWTU5qr">
-  <img src="https://invidget.switchblade.xyz/5TXAWTU5qr">
+ <a href="https://discord.gg/2T7TunuwFZ">
+  <img src="https://invidget.switchblade.xyz/2T7TunuwFZ">
  </a>
 </p>
 
@@ -135,15 +133,17 @@ https://saikou.me/
 
 ## DISCLAIMER
 
-* Saikou only scrapes links from various websites and makes it easier for users to find anime and manga. 
+* Sources will be updated from time to time to ensure users can still experience and enjoy the vast anime library. Feel free to reach out to me on Discord @ sienna#7777 if there is an issue with this TV fork.
 
-* Saikou or any of its developer/staff doesn't host any of the contents found inside Saikou. Any and all images and anime/manga information found in the app are taken from various public APIs (AniList, MyAnimeList, Kitsu). 
+* Saikou only scrapes links from various websites and makes it easier for users to find anime and manga.
+
+* Saikou or any of its developer/staff doesn't host any of the contents found inside Saikou. Any and all images and anime/manga information found in the app are taken from various public APIs (AniList, MyAnimeList, Kitsu).
 
 * Furthermore, all of the anime/manga links found in Saikou are taken from various 3rd party anime hosting websites.
 
-* Saikou or it's owners aren't liable for any misuse of any of the contents found inside or outside of the app and cannot be held accountable for the distribution of any of the contents found inside the app. 
+* Saikou or it's owners aren't liable for any misuse of any of the contents found inside or outside of the app and cannot be held accountable for the distribution of any of the contents found inside the app.
 
-* By using Saikou, you comply to the fact that the developer of the app is not responsible for any of the contents found in the app; nonetheless they may or may not be from their legitimate sources. 
+* By using Saikou, you comply to the fact that the developer of the app is not responsible for any of the contents found in the app; nonetheless they may or may not be from their legitimate sources.
 
 * If the internet infringement issues are involved, please contact the source website. The developer does not assume any legal responsibility.
 

@@ -29,27 +29,34 @@ class AnimePahe : AnimeParser() {
         return (1 until resp.lastPage + 1).map { i->
             val url = "$hostUrl/api?m=release&id=$releaseId&sort=episode_asc&page=$i"
             client.get(url).parsed<ReleaseRouteResponse>().data!!.map { ep ->
-                val kwikEpLink = "$hostUrl/api?m=links&id=${ep.anime_id}&session=${ep.session}&p=kwik"
-                Episode(number = ep.episode.toString().substringBefore(".0"), link = kwikEpLink, title = ep.title)
+                val kwikEpLink = "$hostUrl/play/${releaseId}/${ep.session}"
+                Episode(ep.episode.toString().substringBefore(".0"), kwikEpLink, ep.title, ep.snapshot)
             }
         }.flatten()
     }
 
-    override suspend fun loadVideoServers(episodeLink: String, extra: Map<String,String>?): List<VideoServer> {
-        val resp = client.get(episodeLink).parsed<KwikUrls>()
-        return resp.data.map {
-            it.entries.map { i ->
-                VideoServer(
-                    name = "Kwik ${i.key}p: ${i.value.fanSub} (${if (i.value.audio == "eng") "DUB" else "SUB"})",
-                    embedUrl = i.value.kwik.toString(),
-                    extraData = mapOf(
-                        "size" to i.value.fileSize.toString(),
-                        "referer" to hostUrl,
-                        "quality" to i.key
-                    )
+    private val epRegex = Regex("(.+) · (.+)p \\((.+)MB\\) ?(.*)")
+    override suspend fun loadVideoServers(episodeLink: String, extra: Any?): List<VideoServer> {
+        return client.get(episodeLink).document.select("#pickDownload > a").map {
+            val (subgroup,quality,mb, audio) = epRegex.find(it.text())?.destructured!!
+            VideoServer(
+                name = "$subgroup ${if(audio.isNotEmpty())"($audio) " else "" }- ${quality}p",
+                embedUrl = it.attr("href"),
+                extraData = mapOf(
+                    "size" to mb,
+                    "referer" to hostUrl,
+                    "quality" to quality
                 )
-            }
-        }.flatten()
+            )
+        }
+    }
+
+    //Responses get deprecated after a week, so we do not load them if they are half a week old
+    override suspend fun loadSavedShowResponse(mediaId: Int): ShowResponse? {
+        val loaded = loadData<ShowResponse>("${saveName}_$mediaId")
+        return if ((loaded?.extra?.get("t")?.toLongOrNull()?.minus(System.currentTimeMillis())?.absoluteValue?:0) <= 302400000)
+            loaded
+        else null
     }
 
     //Responses get deprecated after a week, so we do not load them if they are half a week old
@@ -66,7 +73,7 @@ class AnimePahe : AnimeParser() {
 
         private val data = server.extraData as Map<*,*>
         private val quality = data["quality"] as String
-        private val size = (data["size"] as String).toDoubleOrNull()?.div(1048576)
+        private val size = (data["size"] as String).toDoubleOrNull()
         private val ref = data["referer"] as String
 
         private val redirectRegex = Regex("<a href=\"(.+?)\" .+?>Redirect me</a>")
@@ -161,18 +168,6 @@ class AnimePahe : AnimeParser() {
             @SerialName("title") val title: String,
             @SerialName("snapshot") val snapshot: String,
             @SerialName("session") val session: String,
-        )
-    }
-
-    @Serializable
-    private data class KwikUrls(@SerialName("data") val data: List<Map<String, Url>>) {
-
-        @Serializable
-        data class Url(
-            @SerialName("audio") val audio: String?,
-            @SerialName("kwik_pahewin") val kwik: String?,
-            @SerialName("fansub") val fanSub : String?,
-            @SerialName("filesize") val fileSize: Long,
         )
     }
 

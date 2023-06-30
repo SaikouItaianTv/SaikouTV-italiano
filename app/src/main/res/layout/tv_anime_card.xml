@@ -53,7 +53,7 @@
                     android:id="@+id/imageView2"
                     android:layout_width="12dp"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_round_star_24"
+                    android:src="@drawable/ic_round_star_24"
                     tools:ignore="ContentDescription" />
 
             </LinearLayout>
